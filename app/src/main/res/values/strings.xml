@@ -33,6 +33,16 @@
     <string name="wavve">Wavve</string>
     <string name="warning">SNS계정으로 간편하게 가입하여 서비스를 이용하실 수 있습니다.\n기존 POOQ 계정 또는 Wavve 계정과는 연동되지 않으니 이용에 참고하세요.</string>
 
+    <!-- MyPage -->
+    <string name="signup_offer">첫 결제 시 첫 달 100원!</string>
+    <string name="purchase_action">구매하기 ></string>
+    <string name="no_subscription">현재 보유하신 이용권이 없습니다.</string>
+    <string name="purchase_hide">구매하기 ></string>
+    <string name="show_history">전체 시청내역</string>
+    <string name="no_watch_history">시청내역이 없어요.</string>
+    <string name="favorite_program">관심 프로그램</string>
+    <string name="no_favorite_program">관심 프로그램이 없어요.</string>
+
     <!--바텀 네비게이션-->
     <string name="bottom_home_title">홈</string>
     <string name="bottom_search_title">검색</string>
