@@ -1,5 +1,12 @@
-package org.sopt.and.presentation.screen.signin
+package org.sopt.and.presentation.ui.signin
 
+import android.content.Intent
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,55 +31,84 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import org.sopt.and.GlobalApplication
 import org.sopt.and.R
-import org.sopt.and.presentation.component.LogoToolbar
 import org.sopt.and.presentation.component.RoundedButton
 import org.sopt.and.presentation.component.SignTextField
 import org.sopt.and.presentation.component.Toolbar
+import org.sopt.and.presentation.ui.signup.SignupActivity
+import org.sopt.and.presentation.ui.mypage.MyPageActivity
+import org.sopt.and.ui.theme.ANDANDROIDTheme
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.White
 
+class SigninActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            SignInScreen()
+        }
+    }
+}
+
 @Composable
-fun SignInScreen(
-    navigateUp: () -> Unit,
-    navigateSignUp: () -> Unit,
-    navigateMyPage: () -> Unit,
-//    signUpEmail: String,
-//    signUpPwd: String,
-    signInEmail: String,
-    signInPwd: String,
-    onEmailChange: (String) -> Unit,
-    onPwdChange: (String) -> Unit,
-    isPwdVisibility: Boolean,
-    isPwdVisible: () -> Unit,
-    isLogin: (String, String) -> Unit,
-    signInSuccess: Boolean,
-    snackbarHostState: SnackbarHostState
-) {
+fun SignInScreen() {
+    var saveEmail = ""
+    var savePwd = ""
+    val email = remember { mutableStateOf("") }
+    val pwd = remember { mutableStateOf("") }
+    val isPwdVisible = remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+    val dataStore = GlobalApplication.getInstance().getDataStore()
+
+    LaunchedEffect(Unit) {
+        saveEmail = dataStore.getEmail().first().toString()
+        savePwd = dataStore.getPwd().first().toString()
+    }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()) { res ->
+        val data = res.data
+        email.value = data?.getStringExtra("email") ?: ""
+        pwd.value = data?.getStringExtra("pwd") ?: ""
+    }
+
+    val snackBarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+        snackbarHost = { SnackbarHost(hostState = snackBarHostState) }
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Black)
+                .padding(innerPadding)
                 .statusBarsPadding()
                 .navigationBarsPadding()
                 .imePadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            // 툴바
-            LogoToolbar(
+            Toolbar(
+                content = stringResource(R.string.wavve),
                 leadingIcon = {
-                    IconButton(onClick = navigateUp) {
+                    IconButton(onClick = {}) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                             contentDescription = null,
@@ -85,32 +121,41 @@ fun SignInScreen(
             )
             Spacer(modifier = Modifier.height(40.dp))
 
-            // 이메일 입력
+            // email 입력
             SignTextField(
-                value = signInEmail,
-                onValueChange = onEmailChange,
+                value = email.value,
+                onValueChange = { newValue -> email.value = newValue },
                 isPwdVisible = true,
                 placeholder = stringResource(R.string.id_placeholder),
-                modifier = Modifier.padding(horizontal = 10.dp)
+                modifier = Modifier.padding(10.dp)
             )
-            Spacer(Modifier.height(8.dp))
 
-            // 비밀번호 입력
+            // pwd 입력
             SignTextField(
-                value = signInPwd,
-                onValueChange = onPwdChange,
-                isPwdVisible = isPwdVisibility,
-                onPwdVisibilityChange = isPwdVisible,
+                value = pwd.value,
+                onValueChange = { newValue -> pwd.value = newValue },
                 placeholder = stringResource(R.string.pwd_placeholder),
-                modifier = Modifier.padding(horizontal = 10.dp)
+                isPwdVisible = isPwdVisible.value,
+                onPwdVisibilityChange = {
+                    isPwdVisible.value = !isPwdVisible.value
+                },
+                modifier = Modifier.padding(10.dp)
             )
-            Spacer(Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-            // 로그인 버튼
             RoundedButton(
                 content = stringResource(R.string.signin),
                 onClick = {
-                    isLogin(signInEmail, signInPwd)
+                    coroutineScope.launch {
+                        if (saveEmail == email.value && savePwd == pwd.value) {
+                            snackBarHostState.showSnackbar("로그인 성공")
+                            val intent = Intent(context, MyPageActivity::class.java)
+                            intent.putExtra("email", email.value)
+                            context.startActivity(intent)
+                        } else {
+                            snackBarHostState.showSnackbar("로그인 실패")
+                        }
+                    }
                 }
             )
 
@@ -131,7 +176,8 @@ fun SignInScreen(
                     text = stringResource(R.string.signup),
                     style = TextStyle(color = White),
                     modifier = Modifier.clickable {
-                       navigateSignUp() // 클릭시 회원가입으로 이동
+                        val intent = Intent(context, SignupActivity::class.java)
+                        launcher.launch(intent)
                     }
                 )
             }
@@ -150,19 +196,19 @@ fun SignInScreen(
             ) {
                 Image(
                     painter = painterResource(R.drawable.btn_kakao),
-                    contentDescription = "카카오",
+                    contentDescription = null,
                     modifier = Modifier
                         .size(32.dp)
                 )
                 Image(
                     painter = painterResource(R.drawable.btn_naver),
-                    contentDescription = "네이버",
+                    contentDescription = null,
                     modifier = Modifier
                         .size(32.dp)
                 )
                 Image(
                     painter = painterResource(R.drawable.btn_google),
-                    contentDescription = "구글",
+                    contentDescription = null,
                     modifier = Modifier
                         .size(32.dp)
                 )
@@ -177,17 +223,12 @@ fun SignInScreen(
             )
         }
     }
+}
 
-    // 로그인 성공 시 화면 전환
-    if (signInSuccess) {
-        LaunchedEffect(Unit) {
-            navigateMyPage() // 로그인 성공 시 마이페이지 화면으로 이동
-        }
+@Preview(showSystemUi = true)
+@Composable
+fun GreetingPreview3() {
+    ANDANDROIDTheme {
+        SignInScreen()
     }
-
-//    // ViewModel에서 저장된 로그인 정보를 불러오기
-//    LaunchedEffect(Unit) {
-//        viewModel.loadSignInInfo()
-//    }
-
 }

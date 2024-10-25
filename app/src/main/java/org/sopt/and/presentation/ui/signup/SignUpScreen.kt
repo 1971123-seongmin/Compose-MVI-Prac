@@ -1,11 +1,6 @@
-package org.sopt.and.presentation.screen.signup
+package org.sopt.and.presentation.ui.signup
 
-import android.content.Intent
-import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,96 +21,49 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.sopt.and.GlobalApplication
 import org.sopt.and.R
 import org.sopt.and.presentation.component.RoundedButton
 import org.sopt.and.presentation.component.SignTextField
 import org.sopt.and.presentation.component.Toolbar
-import org.sopt.and.presentation.screen.signin.SigninActivity
-import org.sopt.and.ui.theme.ANDANDROIDTheme
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.White
 
-
-class SignupActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            ANDANDROIDTheme {
-                SignUpScreen()
-            }
-        }
-    }
-}
-
-fun isValidEmail(email: String): Boolean {
-    val emailRegex = "^[A-Za-z](.*)([@])(.+)(\\.)(.+)"
-    return email.matches(emailRegex.toRegex())
-}
-
-fun isValidPwd(pwd: String): Boolean {
-    if (pwd.length !in 8..20) return false
-
-    var upperCase = false
-    var lowerCase = false
-    var num = false
-    var specialChar = false
-
-    pwd.forEach {
-        when {
-            it.isUpperCase() -> upperCase = true
-            it.isLowerCase() -> lowerCase = true
-            it.isDigit() -> num = true
-            "!@#\$%^&*()_+-=[]{}|;:'\",.<>?/~`".contains(it) -> specialChar = true
-        }
-    }
-
-    val validCheck = listOf(upperCase, lowerCase, num, specialChar).count { it }
-
-    return validCheck >= 3
-}
-
-fun login(email: String, pwd: String) : Boolean {
-    return isValidEmail(email) && isValidPwd(pwd)
-}
-
 @Composable
-fun SignUpScreen() {
-    val email = remember { mutableStateOf("") }
-    val pwd = remember { mutableStateOf("") }
-    val isPwdVisible = remember { mutableStateOf(false) }
-    val context = LocalContext.current
+fun SignUpScreen(
+    navigateUp: () -> Unit,
+    navigateSignIn: () -> Unit,
+    signUpEmail: String,
+    signUpPwd: String,
+    onEmailChange: (String) -> Unit,
+    onPwdChange: (String) -> Unit,
+    isPwdVisibility: Boolean,
+    isPwdVisible: () -> Unit,
+    isSignUp: (String, String) -> Unit,
+    signUpSuccess: Boolean
+) {
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Black)
-            .statusBarsPadding()
-            .navigationBarsPadding()
-            .imePadding(),
-        horizontalAlignment = Alignment.CenterHorizontally
+    modifier = Modifier
+    .fillMaxSize()
+    .background(Black)
+    .statusBarsPadding()
+    .navigationBarsPadding()
+    .imePadding(),
+    horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Toolbar(
             content = stringResource(R.string.signup),
             leadingIcon = {
-                IconButton(onClick = {}) {
+                IconButton(onClick = navigateUp) {
                     Icon(
-                       imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
                         contentDescription = null,
                         tint = White,
                         modifier = Modifier
@@ -137,8 +85,8 @@ fun SignUpScreen() {
 
         // Email 입력
         SignTextField(
-            value = email.value,
-            onValueChange = { newValue -> email.value = newValue },
+            value = signUpEmail,
+            onValueChange = onEmailChange,
             isPwdVisible = true,
             placeholder = stringResource(R.string.signup_id_placeholder),
             modifier = Modifier.padding(10.dp)
@@ -152,14 +100,12 @@ fun SignUpScreen() {
 
         // Password 입력
         SignTextField(
-            value = pwd.value,
-            onValueChange = { newValue -> pwd.value = newValue },
+            value = signUpPwd,
+            onValueChange = onPwdChange,
             placeholder = stringResource(R.string.signup_pwd_placeholder),
             modifier = Modifier.padding(10.dp),
-            isPwdVisible = isPwdVisible.value,
-            onPwdVisibilityChange = {
-                isPwdVisible.value = !isPwdVisible.value
-            }
+            isPwdVisible = isPwdVisibility,
+            onPwdVisibilityChange = isPwdVisible
         )
         Text(
             color = White,
@@ -214,30 +160,16 @@ fun SignUpScreen() {
         RoundedButton(
             content = stringResource(R.string.signup),
             onClick = {
-                if(login(email.value, pwd.value)) {
-                    val dataStore = GlobalApplication.getInstance().getDataStore()
-
-                    CoroutineScope(Dispatchers.IO).launch {
-                        dataStore.saveEmail(email.value)
-                        dataStore.savePwd(pwd.value)
-
-                        withContext(Dispatchers.Main) {
-                            val intent = Intent(context, SigninActivity::class.java)
-                            context.startActivity(intent)
-                        }
-                    }
-                } else {
-                    Toast.makeText(context,"잘못된 형식입니다.", Toast.LENGTH_SHORT).show()
-                }
+                isSignUp(signUpEmail, signUpPwd)
             }
         )
     }
-}
 
-@Preview(showSystemUi = true)
-@Composable
-fun GreetingPreview2() {
-    ANDANDROIDTheme {
-        SignUpScreen()
+    if (signUpSuccess) {
+        LaunchedEffect(Unit) {
+            navigateSignIn() // 회원가입 성공 시 navigateSignIn 호출
+            Log.d("로그","LaunchedEffect navigateSignIn")
+        }
     }
+
 }

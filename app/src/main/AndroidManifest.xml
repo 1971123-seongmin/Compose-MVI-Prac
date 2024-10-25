@@ -14,22 +14,22 @@
         android:theme="@style/Theme.ANDANDROID"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.screen.mypage.MyPageActivity"
+            android:name=".presentation.ui.mypage.MyPageActivity"
             android:exported="false"
             android:label="MyPageActivity"
             android:theme="@style/Theme.ANDANDROID" />
         <activity
-            android:name=".presentation.screen.signup.SignupActivity"
+            android:name=".presentation.ui.signup.SignupActivity"
             android:exported="false"
             android:label="SignupActivity"
             android:theme="@style/Theme.ANDANDROID" />
         <activity
-            android:name=".presentation.screen.signin.SigninActivity"
+            android:name=".presentation.ui.signin.SigninActivity"
             android:exported="false"
             android:label="SigninActivity"
             android:theme="@style/Theme.ANDANDROID" />
         <activity
-            android:name=".presentation.screen.MainActivity"
+            android:name=".presentation.ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.ANDANDROID">

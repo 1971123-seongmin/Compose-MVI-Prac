@@ -1,4 +1,4 @@
-package org.sopt.and.presentation.screen.search
+package org.sopt.and.presentation.ui.search
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

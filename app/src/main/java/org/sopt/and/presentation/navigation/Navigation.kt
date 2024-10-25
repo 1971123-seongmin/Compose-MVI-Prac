@@ -11,11 +11,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import org.sopt.and.presentation.screen.home.HomeScreen
-import org.sopt.and.presentation.screen.mypage.MyPageScreen
-import org.sopt.and.presentation.screen.search.SearchScreen
-import org.sopt.and.presentation.screen.signin.SignInScreen
-import org.sopt.and.presentation.screen.signup.SignUpScreen
+import org.sopt.and.presentation.ui.home.HomeScreen
+import org.sopt.and.presentation.ui.mypage.MyPageScreen
+import org.sopt.and.presentation.ui.search.SearchScreen
+import org.sopt.and.presentation.ui.signin.SignInScreen
+import org.sopt.and.presentation.ui.signup.SignUpScreen
 import org.sopt.and.presentation.viewmodel.SignInViewModel
 import org.sopt.and.presentation.viewmodel.SignUpViewModel
 
