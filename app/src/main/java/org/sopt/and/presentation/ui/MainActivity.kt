@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +32,7 @@ import org.sopt.and.presentation.navigation.Routes
 import org.sopt.and.ui.theme.ANDANDROIDTheme
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.DoubleDarkGray
+import org.sopt.and.ui.theme.MoreDarkGray
 import org.sopt.and.ui.theme.White
 
 class MainActivity : ComponentActivity() {
@@ -83,6 +85,13 @@ fun BottomNavigation(
                         contentDescription = stringResource(id = item.title)
                     )
                 },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = White,
+                    unselectedIconColor = MoreDarkGray,
+                    selectedTextColor = White,
+                    unselectedTextColor = MoreDarkGray,
+                    indicatorColor = Black
+                ),
                 onClick = {
                     navController.navigate(item.screenRoute) {
                         navController.graph.startDestinationRoute?.let {
@@ -105,15 +114,15 @@ fun MyApp() {
         Scaffold(
             modifier = Modifier
                 .fillMaxSize()
-                .background(DoubleDarkGray),
+                .background(Black),
             bottomBar = {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
                 if (currentRoute != Routes.SignInScreen.route && currentRoute != Routes.SignUpScreen.route) {
                     BottomNavigation(
-                        contentColor = Black,
-                        containerColor = White,
-                        indicatorColor = White,
+                        containerColor = Black,
+                        contentColor = White,
+                        indicatorColor = Black,
                         navController = navController
                     )
                 }
