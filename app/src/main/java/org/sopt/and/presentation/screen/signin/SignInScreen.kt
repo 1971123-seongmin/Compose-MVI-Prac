@@ -32,6 +32,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
+import org.sopt.and.presentation.component.LogoToolbar
 import org.sopt.and.presentation.component.RoundedButton
 import org.sopt.and.presentation.component.SignTextField
 import org.sopt.and.presentation.component.Toolbar
@@ -69,8 +70,7 @@ fun SignInScreen(
         ) {
 
             // 툴바
-            Toolbar(
-                content = stringResource(R.string.wavve),
+            LogoToolbar(
                 leadingIcon = {
                     IconButton(onClick = navigateUp) {
                         Icon(
@@ -91,8 +91,9 @@ fun SignInScreen(
                 onValueChange = onEmailChange,
                 isPwdVisible = true,
                 placeholder = stringResource(R.string.id_placeholder),
-                modifier = Modifier.padding(10.dp)
+                modifier = Modifier.padding(horizontal = 10.dp)
             )
+            Spacer(Modifier.height(8.dp))
 
             // 비밀번호 입력
             SignTextField(
@@ -101,8 +102,9 @@ fun SignInScreen(
                 isPwdVisible = isPwdVisibility,
                 onPwdVisibilityChange = isPwdVisible,
                 placeholder = stringResource(R.string.pwd_placeholder),
-                modifier = Modifier.padding(10.dp)
+                modifier = Modifier.padding(horizontal = 10.dp)
             )
+            Spacer(Modifier.height(16.dp))
 
             // 로그인 버튼
             RoundedButton(
