@@ -35,11 +35,6 @@ class SignInViewModel : ViewModel() {
 
             val isLoginSuccess = (savedEmail == _signInState.value.email) &&
                     (savedPassword == _signInState.value.password)
-            Log.d("로그","isLoginSuccess $isLoginSuccess")
-            Log.d("로그","savedEmail $savedEmail")
-            Log.d("로그","savedPassword $savedPassword")
-            Log.d("로그","_signInState.value.email ${_signInState.value.email}")
-            Log.d("로그","_signInState.value.password ${_signInState.value.password}")
 
             if(isLoginSuccess) {
                 _signInState.value = _signInState.value.copy(loginStatus = isLoginSuccess)
