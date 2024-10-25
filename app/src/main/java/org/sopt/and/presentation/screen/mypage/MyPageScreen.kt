@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -30,12 +32,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.ui.theme.Black
-import org.sopt.and.ui.theme.Gray
-import org.sopt.and.ui.theme.PurpleGrey40
+import org.sopt.and.ui.theme.Gray100
+import org.sopt.and.ui.theme.Gray300
 import org.sopt.and.ui.theme.White
 
 @Composable
-fun MyPageScreen (
+fun MyPageScreen(
 
 ) {
     Column(
@@ -47,16 +49,16 @@ fun MyPageScreen (
             .imePadding(),
     ) {
 
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = PurpleGrey40)
+                .background(color = Gray300)
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp, vertical = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
@@ -75,31 +77,31 @@ fun MyPageScreen (
                 )
                 IconButton(onClick = { }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_notifications_white_24),
-                        contentDescription = null,
+                        imageVector = Icons.Outlined.Notifications,
+                        contentDescription = "알림 목록",
                         tint = White
                     )
                 }
                 IconButton(onClick = { }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_settings_white_24),
-                        contentDescription = null,
+                        imageVector = Icons.Outlined.Settings,
+                        contentDescription = "설정",
                         tint = White
                     )
                 }
             }
 
             Text(
-                text = "첫 결제 시 첫 달 100원!",
-                color = White,
+                text = stringResource(R.string.signup_offer),
+                color = Gray100,
                 fontSize = 14.sp,
                 modifier = Modifier.padding(start = 8.dp, top = 4.dp)
             )
             Text(
-                text = "구매하기 >",
+                text = stringResource(R.string.purchase_action),
                 color = White,
                 fontSize = 14.sp,
-                modifier = Modifier.padding(start = 8.dp, top = 4.dp, bottom = 8.dp)
+                modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)
             )
             Spacer(
                 modifier = Modifier
@@ -109,23 +111,23 @@ fun MyPageScreen (
             )
 
             Text(
-                text = "현재 보유하신 이용권이 없습니다.",
-                color = Gray,
+                text = stringResource(R.string.no_subscription),
+                color = Gray100,
                 fontSize = 14.sp,
                 modifier = Modifier.padding(start = 8.dp, top = 4.dp)
             )
             Text(
-                text = "구매하기 >",
+                text = stringResource(R.string.purchase_hide),
                 color = White,
                 fontSize = 14.sp,
-                modifier = Modifier.padding(start = 8.dp, top = 4.dp, bottom = 8.dp)
+                modifier = Modifier.padding(start = 8.dp, bottom = 8.dp)
             )
         }
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(24.dp))
 
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(
-                text = "전체 시청내역",
+                text = stringResource(R.string.show_history),
                 color = White,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
@@ -142,17 +144,22 @@ fun MyPageScreen (
                     Icon(
                         painter = painterResource(id = R.drawable.ic_error_gray_24),
                         contentDescription = "No Watch History",
-                        tint = Gray,
+                        tint = Gray100,
                         modifier = Modifier.size(50.dp)
                     )
-                    Text(text = "시청내역이 없어요.", color = Gray, fontSize = 14.sp)
+                    Text(
+                        text = stringResource(R.string.no_watch_history),
+                        color = Gray100,
+                        fontSize = 14.sp,
+                        modifier = Modifier.padding(top = 12.dp)
+                    )
                 }
             }
         }
 
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(
-                text = "관심 프로그램",
+                text = stringResource(R.string.favorite_program),
                 color = White,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
@@ -169,10 +176,15 @@ fun MyPageScreen (
                     Icon(
                         painter = painterResource(id = R.drawable.ic_error_gray_24),
                         contentDescription = "No Interest Program",
-                        tint = Gray,
+                        tint = Gray100,
                         modifier = Modifier.size(50.dp)
                     )
-                    Text(text = "관심 프로그램이 없어요.", color = Gray, fontSize = 14.sp)
+                    Text(
+                        text = stringResource(R.string.no_favorite_program),
+                        color = Gray100,
+                        fontSize = 14.sp,
+                        modifier = Modifier.padding(top = 12.dp)
+                    )
                 }
             }
         }
