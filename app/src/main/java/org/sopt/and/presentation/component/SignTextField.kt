@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -39,6 +40,7 @@ fun SignTextField(
         onValueChange = onValueChange,
         modifier = modifier
             .fillMaxWidth()
+            .height(56.dp)
             .background(
                 color = DoubleDarkGray,
                 shape = RoundedCornerShape(10.dp)
