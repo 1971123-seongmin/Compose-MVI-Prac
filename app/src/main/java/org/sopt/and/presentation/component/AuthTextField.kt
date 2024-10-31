@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,12 +21,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.ui.theme.DoubleDarkGray
-import org.sopt.and.ui.theme.Gray
 import org.sopt.and.ui.theme.LittleGray
 import org.sopt.and.ui.theme.White
 
 @Composable
-fun SignTextField(
+fun AuthTextField(
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String,

@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.presentation.component.LogoToolbar
 import org.sopt.and.presentation.component.RoundedButton
-import org.sopt.and.presentation.component.SignTextField
+import org.sopt.and.presentation.component.AuthTextField
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.White
 
@@ -85,7 +85,7 @@ fun SignInScreen(
             Spacer(modifier = Modifier.height(40.dp))
 
             // 이메일 입력
-            SignTextField(
+            AuthTextField(
                 value = signInEmail,
                 onValueChange = onEmailChange,
                 isPwdVisible = true,
@@ -95,7 +95,7 @@ fun SignInScreen(
             Spacer(Modifier.height(8.dp))
 
             // 비밀번호 입력
-            SignTextField(
+            AuthTextField(
                 value = signInPwd,
                 onValueChange = onPwdChange,
                 isPwdVisible = isPwdVisibility,

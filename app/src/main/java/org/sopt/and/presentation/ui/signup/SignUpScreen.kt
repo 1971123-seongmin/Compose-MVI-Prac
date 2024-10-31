@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.presentation.component.RoundedButton
-import org.sopt.and.presentation.component.SignTextField
+import org.sopt.and.presentation.component.AuthTextField
 import org.sopt.and.presentation.component.Toolbar
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.White
@@ -88,7 +88,7 @@ fun SignUpScreen(
 
         item {
             // Email 입력
-            SignTextField(
+            AuthTextField(
                 value = signUpEmail,
                 onValueChange = onEmailChange,
                 isPwdVisible = true,
@@ -105,7 +105,7 @@ fun SignUpScreen(
 
         item {
             // Password 입력
-            SignTextField(
+            AuthTextField(
                 value = signUpPwd,
                 onValueChange = onPwdChange,
                 placeholder = stringResource(R.string.signup_pwd_placeholder),
