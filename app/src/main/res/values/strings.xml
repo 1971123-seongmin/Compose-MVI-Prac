@@ -38,9 +38,11 @@
 
     <!-- MyPage -->
     <string name="signup_offer">첫 결제 시 첫 달 100원!</string>
-    <string name="purchase_action">구매하기 ></string>
+    <string name="certification_title">본인인증하면 첫 달 100원! 추가 2개월  간 50% 할인!</string>
+    <string name="certification_hide">인증하기 ></string>
     <string name="no_subscription">현재 보유하신 이용권이 없습니다.</string>
     <string name="purchase_hide">구매하기 ></string>
+    <string name="purchase_action">구매하기 ></string>
     <string name="show_history">전체 시청내역</string>
     <string name="no_watch_history">시청내역이 없어요.</string>
     <string name="favorite_program">관심 프로그램</string>
@@ -64,5 +66,9 @@
     <string name="content_desc_naver">네이버 소셜 로그인</string>
     <string name="content_desc_facebook">페이스북 소셜 로그인</string>
     <string name="content_desc_apple">애플 소셜 로그인</string>
+    <string name="content_desc_my_profile_img">내 프로필 이미지</string>
+    <string name="content_desc_alarm_list">알림 목록</string>
+    <string name="content_desc_settings">설정</string>
+    <string name="content_desc_no_content">내역이 없습니다.</string>
 
 </resources>
