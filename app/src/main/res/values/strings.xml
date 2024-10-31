@@ -14,7 +14,9 @@
     <string name="id_placeholder">이메일 주소 또는 아이디</string>
     <string name="pwd_placeholder">비밀번호</string>
     <string name="find_id">아이디 찾기</string>
+    <string name="find_pwd">비밀번호 찾기</string>
     <string name="reset_pwd">비밀번호 재설정</string>
+    <string name="signin_divider">|</string>
 
     <!--마이페이지-->
     <string name="first_payment_event">첫 결제 시 첫 달 100원!</string>
@@ -32,7 +34,7 @@
     <string name="hide">hide</string>
     <string name="show">show</string>
     <string name="wavve">Wavve</string>
-    <string name="warning">SNS계정으로 간편하게 가입하여 서비스를 이용하실 수 있습니다.\n기존 POOQ 계정 또는 Wavve 계정과는 연동되지 않으니 이용에 참고하세요.</string>
+    <string name="warning">SNS계정으로 간편하게 가입하여 서비스를 이용하실 수 있습니다. 기존 POOQ 계정 또는 Wavve 계정과는 연동되지 않으니 이용에 참고하세요.</string>
 
     <!-- MyPage -->
     <string name="signup_offer">첫 결제 시 첫 달 100원!</string>
