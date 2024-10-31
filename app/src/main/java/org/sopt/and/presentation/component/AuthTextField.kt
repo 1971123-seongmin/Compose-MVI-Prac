@@ -20,8 +20,8 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.ui.theme.DoubleDarkGray
-import org.sopt.and.ui.theme.LittleGray
+import org.sopt.and.ui.theme.Gray100
+import org.sopt.and.ui.theme.Gray200
 import org.sopt.and.ui.theme.White
 
 @Composable
@@ -40,16 +40,19 @@ fun AuthTextField(
             .fillMaxWidth()
             .height(56.dp)
             .background(
-                color = DoubleDarkGray,
+                color = Gray200,
                 shape = RoundedCornerShape(10.dp)
             ),
-        textStyle = TextStyle(color = White, fontSize = 16.sp),
+        textStyle = TextStyle(
+            color = White,
+            fontSize = 16.sp
+        ),
         singleLine = true,
         decorationBox = { innerTextField ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp, horizontal = 16.dp),
+                    .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
@@ -58,7 +61,10 @@ fun AuthTextField(
                     if(value.isEmpty()) {
                         Text(
                             text = placeholder,
-                            style = TextStyle(color = LittleGray, fontSize = 16.sp),
+                            style = TextStyle(
+                                color = Gray100,
+                                fontSize = 16.sp
+                            ),
                         )
                     }
                     innerTextField()
