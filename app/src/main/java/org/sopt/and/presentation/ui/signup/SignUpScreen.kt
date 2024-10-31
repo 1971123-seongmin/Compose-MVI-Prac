@@ -37,6 +37,7 @@ import org.sopt.and.R
 import org.sopt.and.presentation.component.AuthTextField
 import org.sopt.and.presentation.component.SignUpToolbar
 import org.sopt.and.presentation.component.SocialLoginRow
+import org.sopt.and.presentation.component.SocialLoginTextDriver
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.DoubleDarkGray
 import org.sopt.and.ui.theme.Explain
@@ -185,39 +186,6 @@ fun WarningTextGuide(@StringRes content: Int) {
             modifier = Modifier
                 .padding(start = 4.dp)
                 .offset(y = (-3).dp) // 위로 조정
-        )
-    }
-}
-
-// 소셜 로그인 제목 driver
-@Composable
-fun SocialLoginTextDriver(@StringRes content: Int) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        HorizontalDivider(
-            modifier = Modifier
-                .weight(1f),
-            thickness = 1.dp,
-            color = Gray200
-        )
-
-        Text(
-            text = stringResource(content),
-            fontSize = 14.sp,
-            color = Gray100,
-            modifier = Modifier
-                .padding(horizontal = 8.dp)
-        )
-
-        HorizontalDivider(
-            modifier = Modifier
-                .weight(1f),  // 남은 공간을 모두 차지
-            thickness = 1.dp,
-            color = Gray200
         )
     }
 }
