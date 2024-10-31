@@ -33,7 +33,7 @@ fun SocialLoginTextDriver(@StringRes content: Int) {
 
         Text(
             text = stringResource(content),
-            fontSize = 14.sp,
+            fontSize = 16.sp,
             color = Gray100,
             modifier = Modifier
                 .padding(horizontal = 8.dp)
