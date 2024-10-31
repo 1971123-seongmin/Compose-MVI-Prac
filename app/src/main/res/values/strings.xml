@@ -4,10 +4,11 @@
 
     <!--회원가입-->
     <string name="signup_title">이메일과 비밀번호만으로\nWavve를 즐길 수 있어요!</string>
-    <string name="signup_id_warning">! 로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해주세요.</string>
-    <string name="signup_pwd_warning">! 비밀번호는 8-20자 이내로 영문 대소문자, 숫자, 특수문자 중 3가지 이상 혼용하여 입력해 주세요.</string>
+    <string name="signup_id_warning">로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해주세요.</string>
+    <string name="signup_pwd_warning">비밀번호는 8-20자 이내로 영문 대소문자, 숫자, 특수문자 중 3가지 이상 혼용하여 입력해 주세요.</string>
     <string name="signup_id_placeholder">wavve@example.com</string>
     <string name="signup_pwd_placeholder">Wavve 비밀번호 설정</string>
+    <string name="signup_btn_name">Wavve 회원가입</string>
 
     <!--로그인-->
     <string name="id_placeholder">이메일 주소 또는 아이디</string>
@@ -54,5 +55,12 @@
     <string name="home_title_section_3">오직 웨이브에서</string>
     <string name="home_title_section_4">오늘의 TOP 20</string>
     <string name="home_title_section_5">당한 대로 갚아 줄게</string>
+
+    <!-- contentDescription -->
+    <string name="content_desc_kakao">카카오 소셜 로그인</string>
+    <string name="content_desc_t_world">티월드 소셜 로그인</string>
+    <string name="content_desc_naver">네이버 소셜 로그인</string>
+    <string name="content_desc_facebook">페이스북 소셜 로그인</string>
+    <string name="content_desc_apple">애플 소셜 로그인</string>
 
 </resources>
