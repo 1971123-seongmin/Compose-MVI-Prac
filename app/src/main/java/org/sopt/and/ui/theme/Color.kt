@@ -27,3 +27,8 @@ val LittleGray = Color(0xFFDCDCDC)
 val MoreDarkGray = Color(0xFFBCBCBC)
 val DoubleDarkGray = Color(0xFF696969)
 val PlayerGray = Color(0xFF8F8F8F)
+
+val Gray100 = Color(0xFF8C8C8C)
+val Gray200 = Color(0xFF393939)
+val Gray300 = Color(0xFF282828)
+val GrayBlack = Color(0xFF101010)

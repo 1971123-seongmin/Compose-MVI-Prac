@@ -1,9 +1,11 @@
-package org.sopt.and.component
+package org.sopt.and.presentation.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -38,6 +40,7 @@ fun SignTextField(
         onValueChange = onValueChange,
         modifier = modifier
             .fillMaxWidth()
+            .height(56.dp)
             .background(
                 color = DoubleDarkGray,
                 shape = RoundedCornerShape(10.dp)
@@ -65,15 +68,13 @@ fun SignTextField(
 
                 // 비밀번호 show/hide
                 if (onPwdVisibilityChange != null) {
-                    TextButton(
-                        onClick = onPwdVisibilityChange,
-                        modifier = Modifier.padding(start = 8.dp),
-                    ) {
-                        Text(
-                            text = if (isPwdVisible) stringResource(R.string.show) else stringResource(R.string.hide),
-                            color = White
-                        )
-                    }
+                    Text(
+                        text = if (isPwdVisible) stringResource(R.string.show) else stringResource(R.string.hide),
+                        color = White,
+                        modifier = Modifier
+                            .clickable { onPwdVisibilityChange() }  // 클릭 가능하게 설정
+                            .padding(start = 8.dp)  // 여백 추가
+                    )
                 }
             }
         },
