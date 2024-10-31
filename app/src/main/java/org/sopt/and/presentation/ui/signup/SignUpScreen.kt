@@ -140,9 +140,9 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                color = White,
+                color = Gray100,
                 text = stringResource(R.string.warning),
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
