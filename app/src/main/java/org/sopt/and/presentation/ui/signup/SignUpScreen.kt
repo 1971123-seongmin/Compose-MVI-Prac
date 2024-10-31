@@ -1,9 +1,12 @@
 package org.sopt.and.presentation.ui.signup
 
 import android.util.Log
-import androidx.compose.foundation.Image
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,12 +14,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.outlined.Close
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -24,15 +29,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.presentation.component.RoundedButton
 import org.sopt.and.presentation.component.AuthTextField
-import org.sopt.and.presentation.component.Toolbar
+import org.sopt.and.presentation.component.SignUpToolbar
+import org.sopt.and.presentation.component.SocialLoginRow
 import org.sopt.and.ui.theme.Black
+import org.sopt.and.ui.theme.DoubleDarkGray
+import org.sopt.and.ui.theme.Explain
+import org.sopt.and.ui.theme.Gray100
+import org.sopt.and.ui.theme.Gray200
+import org.sopt.and.ui.theme.MoreDarkGray
+import org.sopt.and.ui.theme.PlayerGray
 import org.sopt.and.ui.theme.White
 
 @Composable
@@ -48,22 +59,28 @@ fun SignUpScreen(
     isSignUp: (String, String) -> Unit,
     signUpSuccess: Boolean
 ) {
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Black)
             .statusBarsPadding()
-            .navigationBarsPadding()
             .imePadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        item {
-            Toolbar(
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            SignUpToolbar(
                 content = stringResource(R.string.signup),
-                leadingIcon = {
+                trailingIcon = {
                     IconButton(onClick = navigateUp) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                            imageVector = Icons.Outlined.Close,
                             contentDescription = null,
                             tint = White,
                             modifier = Modifier
@@ -72,9 +89,9 @@ fun SignUpScreen(
                     }
                 }
             )
-        }
 
-        item {
+            // Title Text
+            Spacer(Modifier.height(28.dp))
             Text(
                 color = White,
                 text = stringResource(R.string.signup_title),
@@ -82,108 +99,147 @@ fun SignUpScreen(
                 lineHeight = 32.sp,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 20.dp)
+                    .padding(horizontal = 16.dp)
             )
-        }
 
-        item {
-            // Email 입력
+            // Email 입력 TextField
+            Spacer(Modifier.height(24.dp))
             AuthTextField(
                 value = signUpEmail,
                 onValueChange = onEmailChange,
                 isPwdVisible = true,
-                placeholder = stringResource(R.string.signup_id_placeholder),
-                modifier = Modifier.padding(10.dp)
+                placeholder = R.string.signup_id_placeholder,
+                modifier = Modifier
+                    .padding(horizontal = 12.dp)
             )
-            Text(
-                color = White,
-                text = stringResource(R.string.signup_id_warning),
-                fontSize = 14.sp,
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp)
-            )
-        }
+            Spacer(Modifier.height(8.dp))
+            WarningTextGuide(R.string.signup_id_warning)
 
-        item {
-            // Password 입력
+            // Password 입력 TextField
+            Spacer(Modifier.height(8.dp))
             AuthTextField(
                 value = signUpPwd,
                 onValueChange = onPwdChange,
-                placeholder = stringResource(R.string.signup_pwd_placeholder),
-                modifier = Modifier.padding(10.dp),
+                placeholder = R.string.signup_pwd_placeholder,
+                modifier = Modifier
+                    .padding(horizontal = 12.dp),
                 isPwdVisible = isPwdVisibility,
                 onPwdVisibilityChange = isPwdVisible
             )
-            Text(
-                color = White,
-                text = stringResource(R.string.signup_pwd_warning),
-                fontSize = 14.sp,
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp)
-            )
-        }
+            Spacer(Modifier.height(8.dp))
+            WarningTextGuide(R.string.signup_pwd_warning)
 
-        item {
-            Spacer(modifier = Modifier.height(20.dp))
-            Text(
-                color = White,
-                text = stringResource(R.string.sign_social),
-                fontSize = 14.sp
-            )
-            Row(
-                modifier = Modifier
-                    .padding(top = 20.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.btn_kakao),
-                    contentDescription = "kakao",
-                    modifier = Modifier
-                        .size(32.dp)
+            // 소셜 로그인 Title
+            Spacer(modifier = Modifier.height(32.dp))
+            SocialLoginTextDriver(R.string.sign_social)
 
-                )
-                Image(
-                    painter = painterResource(R.drawable.btn_naver),
-                    contentDescription = "naver",
-                    modifier = Modifier
-                        .size(32.dp)
-                )
-                Image(
-                    painter = painterResource(R.drawable.btn_google),
-                    contentDescription = "Google",
-                    modifier = Modifier
-                        .size(32.dp)
-                )
-            }
-        }
+            // 소셜 로그인 버튼 Row
+            Spacer(modifier = Modifier.height(16.dp))
+            SocialLoginRow()
 
-        item {
-            Spacer(modifier = Modifier.height(40.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             Text(
                 color = White,
                 text = stringResource(R.string.warning),
                 fontSize = 14.sp,
-                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 8.dp)
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
         }
 
         // 회원가입 버튼
-        item {
-            Spacer(modifier = Modifier.height(16.dp))
-            RoundedButton(
-                content = stringResource(R.string.signup),
-                onClick = {
-                    isSignUp(signUpEmail, signUpPwd)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            )
+        SignupButton(
+            R.string.signup_btn_name,
+            onClick = {
+                isSignUp(signUpEmail, signUpPwd)
+            }
+        )
+
+
+        if (signUpSuccess) {
+            LaunchedEffect(Unit) {
+                navigateSignIn() // 회원가입 성공 시 navigateSignIn 호출
+                Log.d("로그", "LaunchedEffect navigateSignIn")
+            }
         }
     }
+}
 
-    if (signUpSuccess) {
-        LaunchedEffect(Unit) {
-            navigateSignIn() // 회원가입 성공 시 navigateSignIn 호출
-            Log.d("로그", "LaunchedEffect navigateSignIn")
-        }
+// 경고 문구 컴포넌트
+@Composable
+fun WarningTextGuide(@StringRes content: Int) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.Info,
+            contentDescription = null,
+            tint = Gray100,
+            modifier = Modifier.size(20.dp)
+        )
+        Text(
+            color = Gray100,
+            text = stringResource(content),
+            fontSize = 14.sp,
+            modifier = Modifier
+                .padding(start = 4.dp)
+                .offset(y = (-3).dp) // 위로 조정
+        )
+    }
+}
+
+// 소셜 로그인 제목 driver
+@Composable
+fun SocialLoginTextDriver(@StringRes content: Int) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        HorizontalDivider(
+            modifier = Modifier
+                .weight(1f),
+            thickness = 1.dp,
+            color = Gray200
+        )
+
+        Text(
+            text = stringResource(content),
+            fontSize = 14.sp,
+            color = Gray100,
+            modifier = Modifier
+                .padding(horizontal = 8.dp)
+        )
+
+        HorizontalDivider(
+            modifier = Modifier
+                .weight(1f),  // 남은 공간을 모두 차지
+            thickness = 1.dp,
+            color = Gray200
+        )
+    }
+}
+
+// 회원가입 버튼
+@Composable
+fun SignupButton(
+    @StringRes content: Int,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(48.dp)
+            .background(DoubleDarkGray)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = stringResource(content),
+            color = White,
+            textAlign = TextAlign.Center
+        )
     }
 }
