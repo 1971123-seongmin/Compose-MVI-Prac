@@ -1,5 +1,6 @@
 package org.sopt.and.presentation.component
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -28,7 +29,7 @@ import org.sopt.and.ui.theme.White
 fun AuthTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    placeholder: String,
+    @StringRes placeholder: Int,
     modifier: Modifier = Modifier,
     isPwdVisible: Boolean = false,
     onPwdVisibilityChange: (() -> Unit)? = null
@@ -38,10 +39,10 @@ fun AuthTextField(
         onValueChange = onValueChange,
         modifier = modifier
             .fillMaxWidth()
-            .height(56.dp)
+            .height(52.dp)
             .background(
                 color = Gray200,
-                shape = RoundedCornerShape(10.dp)
+                shape = RoundedCornerShape(4.dp)
             ),
         textStyle = TextStyle(
             color = White,
@@ -60,10 +61,10 @@ fun AuthTextField(
                 ) {
                     if(value.isEmpty()) {
                         Text(
-                            text = placeholder,
+                            text = stringResource(placeholder),
                             style = TextStyle(
                                 color = Gray100,
-                                fontSize = 16.sp
+                                fontSize = 14.sp
                             ),
                         )
                     }
@@ -74,7 +75,10 @@ fun AuthTextField(
                 if (onPwdVisibilityChange != null) {
                     Text(
                         text = if (isPwdVisible) stringResource(R.string.show) else stringResource(R.string.hide),
-                        color = White,
+                        style = TextStyle(
+                            color = White,
+                            fontSize = 14.sp
+                        ),
                         modifier = Modifier
                             .clickable { onPwdVisibilityChange() }  // 클릭 가능하게 설정
                             .padding(start = 8.dp)  // 여백 추가
