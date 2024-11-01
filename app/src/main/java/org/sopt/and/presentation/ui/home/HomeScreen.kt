@@ -1,5 +1,6 @@
 package org.sopt.and.presentation.ui.home
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,15 +28,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.presentation.component.BottomFixView
 import org.sopt.and.presentation.component.BoxOverlayImage
 import org.sopt.and.presentation.component.HomeSectionHeader
 import org.sopt.and.presentation.component.MovieListRow
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.MoreDarkGray
+import org.sopt.and.ui.theme.Teal200
 import org.sopt.and.ui.theme.White
 
 @Composable
@@ -91,42 +95,7 @@ fun HomeScreen(
         ) {
             // 첫 번째 아이템 -> 상단 바
             item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Icon(   // Wavve
-                        painter = painterResource(id = R.drawable.ic_wavve_logo),
-                        contentDescription = "wave_logo",
-                        tint = White,
-                        modifier = Modifier
-                            .fillMaxWidth(0.3f) // 화면 width 30%
-                            .padding(start = 12.dp)
-                    )
-                    Row(   // 우측 아이콘 두 개
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_wifi_connect_black), // wifi
-                            contentDescription = "tv_live",
-                            tint = White,
-                            modifier = Modifier
-                                .size(40.dp)
-                                .padding(end = 16.dp)
-                        )
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_tv_live_black), // tv
-                            contentDescription = "TV Icon",
-                            tint = White,
-                            modifier = Modifier
-                                .size(32.dp)
-                                .padding(end = 8.dp)
-                        )
-                    }
-                }
+                HomeToolbar()
             }
 
 
@@ -251,7 +220,75 @@ fun HomeScreen(
         }
 
         // 하단 뷰
-        BottomFixView()
+        HomeBottomFixView(R.string.signup_offer)
     }
 }
 
+@Composable
+fun HomeToolbar() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Icon(   // Wavve
+            painter = painterResource(id = R.drawable.ic_wavve_logo),
+            contentDescription = "wave_logo",
+            tint = White,
+            modifier = Modifier
+                .fillMaxWidth(0.3f) // 화면 width 30%
+                .padding(start = 12.dp)
+        )
+        Row(   // 우측 아이콘 두 개
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.cast_24dp), // wifi
+                contentDescription = stringResource(R.string.content_desc_cast),
+                tint = White,
+                modifier = Modifier
+                    .size(40.dp)
+                    .padding(end = 16.dp)
+            )
+            Icon(
+                painter = painterResource(id = R.drawable.live_tv_24dp), // tv
+                contentDescription = stringResource(R.string.content_desc_tv_live),
+                tint = White,
+                modifier = Modifier
+                    .size(32.dp)
+                    .padding(end = 8.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun HomeBottomFixView(
+    @StringRes content: Int
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(60.dp)
+            .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp))
+            .background(Teal200),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Icon(
+            imageVector = Icons.Filled.MailOutline,
+            contentDescription = null,
+            tint = White,
+            modifier = Modifier
+                .padding(end = 8.dp)
+        )
+        Text(
+            text = stringResource(content),
+            color = White,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+        )
+    }
+}
