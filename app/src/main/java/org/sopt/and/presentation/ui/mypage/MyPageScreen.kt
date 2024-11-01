@@ -41,7 +41,7 @@ import org.sopt.and.ui.theme.White
 
 @Composable
 fun MyPageScreen(
-
+    email: String
 ) {
     Column(
         modifier = Modifier
@@ -56,7 +56,7 @@ fun MyPageScreen(
                 .background(color = Gray300)
         ) {
             // 컴포넌트 - 프로필 row
-            MyProfileRow()
+            MyProfileRow(email)
 
             // 인증하기 >
             MyPageActionText(
@@ -97,6 +97,7 @@ fun MyPageScreen(
 @Composable
 fun MyProfileRow(
     // 이메일 , 알림 클릭, 설정 클릭
+    email: String
 ) {
     Row(
         modifier = Modifier
@@ -113,7 +114,7 @@ fun MyProfileRow(
         )
         Spacer(Modifier.width(4.dp))
         Text(
-            text = stringResource(R.string.signup_id_placeholder),
+            text = email,
             style = TextStyle(
                 color = White,
                 fontSize = 16.sp
