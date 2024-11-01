@@ -72,5 +72,6 @@
     <string name="content_desc_no_content">내역이 없습니다.</string>
     <string name="content_desc_cast">인터넷 연결</string>
     <string name="content_desc_tv_live">실시간 TV 연결</string>
+    <string name="content_desc_banner_image">배너 이미지</string>
 
 </resources>

@@ -128,7 +128,7 @@ fun HomeScreen(
                     items(bannerList.size) { index ->
                         Image(
                             painter = painterResource(bannerList[index]),
-                            contentDescription = "배너",
+                            contentDescription = stringResource(R.string.content_desc_banner_image),
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
                                 .fillParentMaxWidth()
