@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
@@ -107,13 +108,11 @@ fun HomeScreen(
                 .weight(1f)
                 .fillMaxWidth()
         ) {
-            // 첫 번째 아이템 -> 상단 바
+            // 상단 바
             item {
                 HomeToolbar()
             }
 
-
-            // 두 번째 아이템 -> 카테고리 (뉴클래식, 드라마, 영화, 예능, 애니, 해외시리즈)
             item {
                 Spacer(modifier = Modifier.height(16.dp))
                 MovieCategories(categories)
@@ -127,9 +126,9 @@ fun HomeScreen(
                         .fillMaxHeight(0.2f),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(bannerList.size) { index ->
+                    items(bannerList) { banner ->
                         Image(
-                            painter = painterResource(bannerList[index]),
+                            painter = painterResource(banner),
                             contentDescription = stringResource(R.string.content_desc_banner_image),
                             contentScale = ContentScale.Crop,
                             modifier = Modifier
@@ -160,12 +159,11 @@ fun HomeScreen(
                 HomeSectionWithMovieList(stringResource(R.string.home_title_section_3), postList3)
             }
 
-            // 홈 섹션 4 - 오늘의 TOP 20
             item {
                 Spacer(Modifier.height(24.dp))
                 HomeSectionHeader(stringResource(R.string.home_title_section_4))
             }
-            // 홈 섹션 4 - 오늘의 TOP 20
+
             item {
                 Spacer(Modifier.height(4.dp))
                 LazyRow(
@@ -174,9 +172,9 @@ fun HomeScreen(
                         .padding(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(top20List.size) { index ->
+                    itemsIndexed(top20List) { index, poster ->
                         BoxOverlayImage(
-                            imageRes = top20List[index],
+                            imageRes = poster,
                             overlayText = (index + 1).toString()
                         )
                     }
@@ -187,11 +185,7 @@ fun HomeScreen(
                 Spacer(Modifier.height(24.dp))
                 HomeSectionWithMovieList(stringResource(R.string.home_title_section_5), postList4)
             }
-
-
         }
-
-        // 하단 뷰
         HomeBottomFixView(R.string.signup_offer)
     }
 }
