@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.sopt.and.GlobalApplication
 import org.sopt.and.presentation.state.SignUpState
+import org.sopt.and.utils.validation.isValidEmail
+import org.sopt.and.utils.validation.isValidPassword
 import java.util.regex.Pattern
 
 class SignUpViewModel : ViewModel() {
@@ -26,32 +28,17 @@ class SignUpViewModel : ViewModel() {
     // 회원가입 처리 함수
     fun signUp() {
         viewModelScope.launch {
-            if(isValidEmail(_signUpState.value.email) && isValidPwd(_signUpState.value.password)) {
-                dataStore.saveEmail(_signUpState.value.email)
-                dataStore.savePwd(_signUpState.value.password)
+            val email = _signUpState.value.email
+            val password = _signUpState.value.password
+
+            if(email.isValidEmail() && password.isValidPassword()) {
+                dataStore.saveEmail(email)
+                dataStore.savePwd(password)
                 _isSignUpSuccess.value = true
             } else {
-                _isSignUpSuccess.value = false
+                _isSignUpSuccess.value
             }
         }
-    }
-
-    private fun isValidEmail(email: String): Boolean {
-        val pattern: Pattern = Patterns.EMAIL_ADDRESS
-        return pattern.matcher(email).matches()
-    }
-
-    private fun isValidPwd(password: String): Boolean {
-        if(password.length !in MIN_PWD_SIZE..MAX_PWD_SIZE) return false
-
-        val validCheckNum = listOf(
-            password.any {it.isUpperCase()},
-            password.any {it.isLowerCase()},
-            password.any {it.isDigit()},
-            password.any {!it.isLetterOrDigit()}, // 정규식 Regex Object 생성자 문제로 제거
-        ).count { it }
-
-        return validCheckNum >= 3
     }
 
     // 비밀번호 표시 여부
@@ -74,11 +61,5 @@ class SignUpViewModel : ViewModel() {
             password = newPassword
         )
     }
-
-    companion object {
-        const val MIN_PWD_SIZE = 8
-        const val MAX_PWD_SIZE = 20
-    }
-
 
 }
