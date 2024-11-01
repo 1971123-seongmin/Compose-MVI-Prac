@@ -10,16 +10,19 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.KeyboardArrowRight
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -30,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,8 +42,6 @@ import kotlinx.collections.immutable.persistentListOf
 import org.sopt.and.R
 import org.sopt.and.enum.Movie
 import org.sopt.and.presentation.component.BoxOverlayImage
-import org.sopt.and.presentation.component.HomeSectionHeader
-import org.sopt.and.presentation.component.MovieListRow
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.MoreDarkGray
 import org.sopt.and.ui.theme.Teal200
@@ -122,7 +124,7 @@ fun HomeScreen(
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(500.dp),
+                        .fillMaxHeight(0.2f),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(bannerList.size) { index ->
@@ -143,37 +145,19 @@ fun HomeScreen(
                 }
             }
 
-            // 홈 섹션 1 - 믿고 보는 웨이브 에디터 추천작
             item {
                 Spacer(Modifier.height(24.dp))
-                HomeSectionHeader(stringResource(R.string.home_title_section_1))
-            }
-            // 믿고 보는 웨이브 에디터 추천작 (영화 리스트 - Row)
-            item {
-                Spacer(Modifier.height(4.dp))
-                MovieListRow(postList1)
+                HomeSectionWithMovieList(stringResource(R.string.home_title_section_1), postList1)
             }
 
-            // 홈 섹션 2 - 실시간 인기 콘텐츠
             item {
                 Spacer(Modifier.height(24.dp))
-                HomeSectionHeader(stringResource(R.string.home_title_section_2))
-            }
-            // 실시간 인기 콘텐츠 (영화 리스트 - Row)
-            item {
-                Spacer(Modifier.height(4.dp))
-                MovieListRow(postList2)
+                HomeSectionWithMovieList(stringResource(R.string.home_title_section_2), postList2)
             }
 
-            // 홈 섹션 3 - 오직 웨이브에서
             item {
                 Spacer(Modifier.height(24.dp))
-                HomeSectionHeader(stringResource(R.string.home_title_section_3))
-            }
-            // 실시간 인기 콘텐츠 (영화 리스트 - Row)
-            item {
-                Spacer(Modifier.height(4.dp))
-                MovieListRow(postList3)
+                HomeSectionWithMovieList(stringResource(R.string.home_title_section_3), postList3)
             }
 
             // 홈 섹션 4 - 오늘의 TOP 20
@@ -199,15 +183,9 @@ fun HomeScreen(
                 }
             }
 
-            // 홈 섹션 5 - 당한 대로 갚아 줄게
             item {
                 Spacer(Modifier.height(24.dp))
-                HomeSectionHeader(stringResource(R.string.home_title_section_5))
-            }
-            // 당한 대로 갚아 줄게 (영화 리스트 - Row)
-            item {
-                Spacer(Modifier.height(4.dp))
-                MovieListRow(postList4)
+                HomeSectionWithMovieList(stringResource(R.string.home_title_section_5), postList4)
             }
 
 
@@ -218,6 +196,7 @@ fun HomeScreen(
     }
 }
 
+// 카테고리 Row
 @Composable
 fun MovieCategories(categories: ImmutableList<Movie>) {
     LazyRow(
@@ -241,6 +220,78 @@ fun MovieCategories(categories: ImmutableList<Movie>) {
     }
 }
 
+@Composable
+fun HomeSectionWithMovieList(
+    title: String,
+    @DrawableRes movieList: ImmutableList<Int>
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+    ) {
+        HomeSectionHeader(title = title)
+        Spacer(modifier = Modifier.height(8.dp))
+        MovieListRow(movieList = movieList)
+    }
+}
+
+// 홈화면 영화 LazyRow
+@Composable
+fun MovieListRow(
+    @DrawableRes movieList: ImmutableList<Int>,
+    modifier: Modifier = Modifier
+) {
+    LazyRow (
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.1f)
+            .padding(horizontal = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(movieList) { movie ->
+            Image(
+                painter = painterResource(movie),
+                contentDescription = "배너",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .width(140.dp)
+                    .height(200.dp)
+                    .clip(RoundedCornerShape(12.dp))
+            )
+        }
+    }
+}
+
+// 홈 화면 제목 + > 버튼
+@Composable
+fun HomeSectionHeader(
+    title: String,
+    //onArrowClick: () -> Unit = {} // 화살표 아이콘 클릭 동작을 외부에서 지정 가능하게
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = title,
+            color = White,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Icon(
+            imageVector = Icons.AutoMirrored.Outlined.KeyboardArrowRight,
+            contentDescription = "next",
+            tint = White,
+            modifier = Modifier.size(32.dp)
+        )
+    }
+}
+
+// 툴바
 @Composable
 fun HomeToolbar() {
     Row(
@@ -281,6 +332,7 @@ fun HomeToolbar() {
     }
 }
 
+// 하단 고정 뷰
 @Composable
 fun HomeBottomFixView(
     @StringRes content: Int
