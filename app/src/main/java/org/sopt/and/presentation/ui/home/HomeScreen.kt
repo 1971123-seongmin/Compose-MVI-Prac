@@ -1,5 +1,6 @@
 package org.sopt.and.presentation.ui.home
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MailOutline
@@ -31,7 +33,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import org.sopt.and.R
+import org.sopt.and.enum.Movie
 import org.sopt.and.presentation.component.BoxOverlayImage
 import org.sopt.and.presentation.component.HomeSectionHeader
 import org.sopt.and.presentation.component.MovieListRow
@@ -45,37 +50,44 @@ fun HomeScreen(
 
 ) {
     // 영화 리스트 -> 나중에 뷰모델로 이동
-    val categories = listOf("뉴클래식", "드라마", "영화", "예능", "애니", "해외시리즈")
-    val bannerList = listOf(
+    val categories = persistentListOf(
+        Movie.뉴클래식,
+        Movie.드라마,
+        Movie.영화,
+        Movie.예능,
+        Movie.애니,
+        Movie.해외시리즈
+    )
+    val bannerList = persistentListOf(
         R.drawable.ic_banner_poster_tracer,
         R.drawable.ic_banner_poster_game_of_blood,
         R.drawable.ic_banner_poster_s_f_eight
     )
-    val postList1 = listOf(
+    val postList1 = persistentListOf(
         R.drawable.poster_madmax,
         R.drawable.poster_zootopia,
         R.drawable.poster_ready
     )
-    val postList2 = listOf(
+    val postList2 = persistentListOf(
         R.drawable.poster_parasite,
         R.drawable.poster_suicide_squad,
         R.drawable.poster_attack
     )
-    val postList3 = listOf(
+    val postList3 = persistentListOf(
         R.drawable.poster_chocolate,
         R.drawable.poster_inception,
         R.drawable.poster_sourcecode,
         R.drawable.poster_zootopia
     )
 
-    val postList4 = listOf(
+    val postList4 = persistentListOf(
         R.drawable.poster_spiderman3,
         R.drawable.poster_zootopia,
         R.drawable.poster_ready,
         R.drawable.ic_banner_poster_tracer
     )
 
-    val top20List = listOf(
+    val top20List = persistentListOf(
         R.drawable.poster_inception,
         R.drawable.poster_spiderman2,
         R.drawable.poster_spiderman3,
@@ -102,25 +114,7 @@ fun HomeScreen(
             // 두 번째 아이템 -> 카테고리 (뉴클래식, 드라마, 영화, 예능, 애니, 해외시리즈)
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 4.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    categories.forEach { category ->
-                        Text(
-                            text = category,
-                            color = MoreDarkGray,
-                            fontSize = 12.sp,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .clickable {
-                                    // 클릭시 동작, 추후 작성
-                                }
-                        )
-                    }
-                }
+                MovieCategories(categories)
             }
 
             // 배너 포스트 이미지 (Row)
@@ -221,6 +215,29 @@ fun HomeScreen(
 
         // 하단 뷰
         HomeBottomFixView(R.string.signup_offer)
+    }
+}
+
+@Composable
+fun MovieCategories(categories: ImmutableList<Movie>) {
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 4.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        items(categories) { category ->
+            Text(
+                text = category.name,
+                color = MoreDarkGray,
+                fontSize = 12.sp,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clickable {
+                        // 클릭 시 동작
+                    }
+            )
+        }
     }
 }
 
