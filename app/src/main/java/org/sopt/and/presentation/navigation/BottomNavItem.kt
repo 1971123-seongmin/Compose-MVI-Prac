@@ -11,19 +11,19 @@ sealed class BottomNavItem(
 ) {
     data object Home : BottomNavItem(
         title = R.string.bottom_home_title,
-        icon = R.drawable.ic_bnv_home_gray_32,
+        icon = R.drawable.ic_navi_home_24dp,
         screenRoute  = Routes.HomeScreen.route
     )
 
     data object Search : BottomNavItem(
         title = R.string.bottom_search_title,
-        icon = R.drawable.ic_bnv_search_gray_32,
+        icon = R.drawable.ic_navi_search_24dp,
         screenRoute  = Routes.SearchScreen.route
     )
 
     data object MyPage : BottomNavItem(
         title = R.string.bottom_my_title,
-        icon = R.drawable.ic_bnv_profile_gray_32,
+        icon = R.drawable.ic_navi_profile,
         screenRoute  = Routes.MyPageScreen.route
     )
 }
