@@ -112,7 +112,10 @@ fun SignInScreen(
             RoundedButton(
                 content = stringResource(R.string.signin),
                 onClick = {
-                    isLogin(signInEmail, signInPwd)
+                    isLogin(signInEmail, signInPwd) // 로그인 시도
+                    if (signInSuccess) {
+                        navigateMyPage() // 로그인 성공 시 마이페이지로 이동
+                    }
                 }
             )
 
@@ -144,11 +147,6 @@ fun SignInScreen(
             navigateMyPage() // 로그인 성공 시 마이페이지 화면으로 이동
         }
     }
-
-//    // ViewModel에서 저장된 로그인 정보를 불러오기
-//    LaunchedEffect(Unit) {
-//        viewModel.loadSignInInfo()
-//    }
 
 }
 
