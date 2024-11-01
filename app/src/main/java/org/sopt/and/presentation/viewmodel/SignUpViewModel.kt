@@ -1,6 +1,5 @@
 package org.sopt.and.presentation.viewmodel
 
-import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +10,6 @@ import org.sopt.and.GlobalApplication
 import org.sopt.and.presentation.state.SignUpState
 import org.sopt.and.utils.validation.isValidEmail
 import org.sopt.and.utils.validation.isValidPassword
-import java.util.regex.Pattern
 
 class SignUpViewModel : ViewModel() {
 
