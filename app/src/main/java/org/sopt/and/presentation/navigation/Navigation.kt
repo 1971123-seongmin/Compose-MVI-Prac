@@ -23,8 +23,8 @@ import org.sopt.and.presentation.viewmodel.SignUpViewModel
 
 @Composable
 fun Navigation(
-    modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    modifier: Modifier = Modifier
 ) {
    Scaffold (
        modifier = Modifier.fillMaxSize()

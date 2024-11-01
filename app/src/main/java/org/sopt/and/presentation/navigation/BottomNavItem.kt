@@ -5,7 +5,9 @@ import androidx.annotation.StringRes
 import org.sopt.and.R
 
 sealed class BottomNavItem(
-    @StringRes val title: Int, @DrawableRes val icon: Int, val screenRoute: String
+    @StringRes val title: Int,
+    @DrawableRes val icon: Int,
+    val screenRoute: String
 ) {
     data object Home : BottomNavItem(
         title = R.string.bottom_home_title,
