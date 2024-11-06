@@ -1,7 +1,9 @@
 package org.sopt.and.base
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class BaseResponse<T>(
     @SerialName("code")
     val code: String,
@@ -11,6 +13,7 @@ data class BaseResponse<T>(
     val result: T,
 )
 
+@Serializable
 data class NullableBaseResponse<T>(
     @SerialName("code")
     val code: String? = null,
