@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import org.sopt.and.GlobalApplication
-import org.sopt.and.presentation.state.SignInState
+import org.sopt.and.presentation.utils.contract.SignInContract
 
 class SignInViewModel : ViewModel() {
 
-    private val _signInState = MutableStateFlow(SignInState())
-    val signInState: StateFlow<SignInState>
+    private val _signInState = MutableStateFlow(SignInContract.SignInState())
+    val signInState: StateFlow<SignInContract.SignInState>
         get() = _signInState.asStateFlow()
 
     private val _isSignInSuccess = MutableStateFlow(false) // 로그인 성공 여부
