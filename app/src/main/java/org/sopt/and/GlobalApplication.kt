@@ -1,8 +1,10 @@
 package org.sopt.and
 
 import android.app.Application
+import dagger.hilt.android.HiltAndroidApp
 import org.sopt.and.utils.TokenManger
 
+@HiltAndroidApp
 class GlobalApplication: Application() {
     private lateinit var dataStore: TokenManger
 
