@@ -50,7 +50,7 @@ fun SignUpScreen(
     onPwdChange: (String) -> Unit,
     onHobbyChange: (String) -> Unit,
     isPwdVisibility: Boolean,
-    //isPwdVisible: () -> Unit,
+    isPwdVisible: () -> Unit,
     onSignUpBtnClick:() -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -116,7 +116,7 @@ fun SignUpScreen(
                 modifier = Modifier
                     .padding(horizontal = 12.dp),
                 isPwdVisible = isPwdVisibility,
-                //onPwdVisibilityChange = isPwdVisible
+                onPwdVisibilityChange = isPwdVisible
             )
             Spacer(Modifier.height(8.dp))
             WarningTextGuide(R.string.signup_pwd_warning)

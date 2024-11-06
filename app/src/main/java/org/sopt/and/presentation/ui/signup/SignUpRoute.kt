@@ -51,6 +51,7 @@ fun SignUpRoute(
         onPwdChange = { viewModel.setEvent(SignUpContract.Event.OnPasswordChanged(it)) },
         onHobbyChange = { viewModel.setEvent(SignUpContract.Event.OnHobbyChanged(it)) },
         isPwdVisibility = signUpState.isPassWordVisibility,
+        isPwdVisible ={ viewModel.setEvent(SignUpContract.Event.OnPasswordVisibilityToggle) },
         onSignUpBtnClick = { viewModel.setEvent(SignUpContract.Event.OnSignUpButtonClicked) },
         modifier = Modifier.padding(innerPadding)
         )
