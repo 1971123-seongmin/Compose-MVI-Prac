@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.and.presentation.navigation.BottomNavItem
 import org.sopt.and.presentation.navigation.Navigation
 import org.sopt.and.presentation.navigation.Routes
@@ -35,6 +36,7 @@ import org.sopt.and.ui.theme.DoubleDarkGray
 import org.sopt.and.ui.theme.MoreDarkGray
 import org.sopt.and.ui.theme.White
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
