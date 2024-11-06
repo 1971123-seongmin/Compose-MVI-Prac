@@ -1,6 +1,5 @@
 package org.sopt.and.presentation.ui.signup
 
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,20 +12,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -40,31 +38,27 @@ import org.sopt.and.presentation.component.SocialLoginRow
 import org.sopt.and.presentation.component.SocialLoginTextDriver
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.DoubleDarkGray
-import org.sopt.and.ui.theme.Explain
 import org.sopt.and.ui.theme.Gray100
-import org.sopt.and.ui.theme.Gray200
-import org.sopt.and.ui.theme.MoreDarkGray
-import org.sopt.and.ui.theme.PlayerGray
 import org.sopt.and.ui.theme.White
 
 @Composable
 fun SignUpScreen(
-    navigateUp: () -> Unit,
-    navigateSignIn: () -> Unit,
-    signUpEmail: String,
+    signUpName: String,
     signUpPwd: String,
-    onEmailChange: (String) -> Unit,
+    signUpHobby: String,
+    onNameChange: (String) -> Unit,
     onPwdChange: (String) -> Unit,
+    onHobbyChange: (String) -> Unit,
     isPwdVisibility: Boolean,
-    isPwdVisible: () -> Unit,
-    isSignUp: (String, String) -> Unit,
-    signUpSuccess: Boolean
+    //isPwdVisible: () -> Unit,
+    onSignUpBtnClick:() -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .background(Black)
-            .statusBarsPadding()
             .imePadding(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
@@ -72,14 +66,13 @@ fun SignUpScreen(
 
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             SignUpToolbar(
                 content = stringResource(R.string.signup),
                 trailingIcon = {
-                    IconButton(onClick = navigateUp) {
+                    IconButton({}) {
                         Icon(
                             imageVector = Icons.Outlined.Close,
                             contentDescription = null,
@@ -91,7 +84,6 @@ fun SignUpScreen(
                 }
             )
 
-            // Title Text
             Spacer(Modifier.height(28.dp))
             Text(
                 color = White,
@@ -103,11 +95,10 @@ fun SignUpScreen(
                     .padding(horizontal = 16.dp)
             )
 
-            // Email 입력 TextField
             Spacer(Modifier.height(24.dp))
             AuthTextField(
-                value = signUpEmail,
-                onValueChange = onEmailChange,
+                value = signUpName,
+                onValueChange = onNameChange,
                 isPwdVisible = true,
                 placeholder = R.string.signup_id_placeholder,
                 modifier = Modifier
@@ -125,10 +116,23 @@ fun SignUpScreen(
                 modifier = Modifier
                     .padding(horizontal = 12.dp),
                 isPwdVisible = isPwdVisibility,
-                onPwdVisibilityChange = isPwdVisible
+                //onPwdVisibilityChange = isPwdVisible
             )
             Spacer(Modifier.height(8.dp))
             WarningTextGuide(R.string.signup_pwd_warning)
+
+            Spacer(Modifier.height(8.dp))
+            AuthTextField(
+                value = signUpHobby,
+                onValueChange = onHobbyChange,
+                isPwdVisible = true,
+                placeholder = R.string.signup_hobby_placeholder,
+                modifier = Modifier
+                    .padding(horizontal = 12.dp)
+            )
+            Spacer(Modifier.height(8.dp))
+            WarningTextGuide(R.string.signup_hobby_warning)
+            Spacer(Modifier.height(8.dp))
 
             // 소셜 로그인 Title
             Spacer(modifier = Modifier.height(32.dp))
@@ -151,17 +155,9 @@ fun SignUpScreen(
         SignupButton(
             R.string.signup_btn_name,
             onClick = {
-                isSignUp(signUpEmail, signUpPwd)
+                onSignUpBtnClick()
             }
         )
-
-
-        if (signUpSuccess) {
-            LaunchedEffect(Unit) {
-                navigateSignIn() // 회원가입 성공 시 navigateSignIn 호출
-                Log.d("로그", "LaunchedEffect navigateSignIn")
-            }
-        }
     }
 }
 
@@ -211,3 +207,21 @@ fun SignupButton(
         )
     }
 }
+
+//@Preview(showBackground = true)
+//@Composable
+//fun PreviewSignUpScreen() {
+//    SignUpScreen(
+//        navigateUp = {},
+//        navigateSignIn = {},
+//        signUpEmail = stringResource(R.string.signup_id_placeholder),
+//        signUpPwd = stringResource(R.string.signup_pwd_placeholder),
+//        signUpHobby = stringResource(R.string.signup_hobby_placeholder),
+//        onEmailChange = {},
+//        onPwdChange = {},
+//        isPwdVisibility = false,
+//        isPwdVisible = {},
+//        isSignUp = { _, _ -> },
+//        signUpSuccess = false
+//    )
+//}

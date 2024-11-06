@@ -17,6 +17,7 @@ import org.sopt.and.presentation.ui.home.HomeScreen
 import org.sopt.and.presentation.ui.mypage.MyPageScreen
 import org.sopt.and.presentation.ui.search.SearchScreen
 import org.sopt.and.presentation.ui.signin.SignInScreen
+import org.sopt.and.presentation.ui.signup.SignUpRoute
 import org.sopt.and.presentation.ui.signup.SignUpScreen
 import org.sopt.and.presentation.viewmodel.SignInViewModel
 import org.sopt.and.presentation.viewmodel.SignUpViewModel
@@ -54,18 +55,8 @@ fun Navigation(
            }
 
            composable(Routes.SignUpScreen.route) {
-               val signUpViewModel: SignUpViewModel = viewModel()
-               SignUpScreen(
-                   navigateUp = { navController.popBackStack() },
-                   navigateSignIn = { navController.navigate(Routes.SignInScreen.route) },
-                   signUpEmail = signUpViewModel.signUpState.collectAsState().value.email,
-                   signUpPwd = signUpViewModel.signUpState.collectAsState().value.password,
-                   onEmailChange = { signUpViewModel.setSignUpEmail(it) },
-                   onPwdChange  = { signUpViewModel.setSignUpPwd(it) },
-                   isPwdVisibility = signUpViewModel.signUpState.collectAsState().value.isPassWordVisibility,
-                   isPwdVisible = { signUpViewModel.togglePasswordVisibility() },
-                   isSignUp = { signUpEmail, signUpPwd -> signUpViewModel.signUp() },
-                   signUpSuccess = signUpViewModel.isSignUpSuccess.collectAsState().value
+               SignUpRoute(
+                   navigateSignIn = { navController.navigate(Routes.SignInScreen.route) }
                )
            }
 
