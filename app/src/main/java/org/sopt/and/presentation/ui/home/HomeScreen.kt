@@ -54,12 +54,12 @@ fun HomeScreen(
 ) {
     // 영화 리스트 -> 나중에 뷰모델로 이동
     val categories = persistentListOf(
-        Movie.뉴클래식,
-        Movie.드라마,
-        Movie.영화,
-        Movie.예능,
-        Movie.애니,
-        Movie.해외시리즈
+        Movie.NEW_CLASSIC,
+        Movie.DRAMA,
+        Movie.MOVIE,
+        Movie.ENTERTAINMENT,
+        Movie.ANIMATION,
+        Movie.FOREIGN_SERIES
     )
     val bannerList = persistentListOf(
         R.drawable.ic_banner_poster_tracer,
