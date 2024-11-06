@@ -1,6 +1,6 @@
 package org.sopt.and.data.service
 
-import org.sopt.and.base.BaseResponse
+import org.sopt.and.base.NullableBaseResponse
 import org.sopt.and.data.model.request.UserRegisterRequestDto
 import org.sopt.and.data.model.response.UserRegisterResponse
 import retrofit2.http.Body
@@ -13,7 +13,7 @@ interface UserApi {
     @POST("/user")
     suspend fun registerUser(
         @Body body: UserRegisterRequestDto
-    ) : BaseResponse<UserRegisterResponse>
+    ) : NullableBaseResponse<UserRegisterResponse>
 
     @POST("/login")
     suspend fun login(
