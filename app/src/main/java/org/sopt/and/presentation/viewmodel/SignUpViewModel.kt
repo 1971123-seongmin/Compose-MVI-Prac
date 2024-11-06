@@ -1,63 +1,71 @@
 package org.sopt.and.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
+import android.util.Log
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.sopt.and.GlobalApplication
-import org.sopt.and.presentation.state.SignUpState
-import org.sopt.and.utils.validation.isValidEmail
-import org.sopt.and.utils.validation.isValidPassword
+import org.sopt.and.base.BaseViewModel
+import org.sopt.and.domain.model.user.RegisterUserEntity
+import org.sopt.and.domain.usecase.RegisterUserUseCase
+import org.sopt.and.presentation.utils.UiEffect
+import org.sopt.and.presentation.utils.UiEvent
+import org.sopt.and.presentation.utils.contract.SignUpContract
+import org.sopt.and.utils.validation.isValidLength
+import javax.inject.Inject
 
-class SignUpViewModel : ViewModel() {
+@HiltViewModel
+class SignUpViewModel @Inject constructor(
+    private val userUseCase: RegisterUserUseCase
+) : BaseViewModel<SignUpContract.Event, SignUpContract.SignUpState, SignUpContract.Effect>() {
 
-    private val _signUpState = MutableStateFlow(SignUpState())
-    val signUpState: StateFlow<SignUpState>
-        get() =  _signUpState.asStateFlow()
+    override fun createInitialState(): SignUpContract.SignUpState {
+        return SignUpContract.SignUpState()
+    }
 
-    private val _isSignUpSuccess = MutableStateFlow(false) // 회원가입 성공 여부
-    val isSignUpSuccess: StateFlow<Boolean>
-        get() = _isSignUpSuccess.asStateFlow()
+    override fun handleEvent(event: UiEvent) {
+        when (event) {
+            is SignUpContract.Event.OnUsernameChanged -> {
+                setState(currentState.copy(username = event.username))
+            }
 
-    val dataStore = GlobalApplication.getInstance().getDataStore()
+            is SignUpContract.Event.OnPasswordChanged -> {
+                setState(currentState.copy(password = event.password))
+            }
 
-    // 회원가입 처리 함수
-    fun signUp() {
-        viewModelScope.launch {
-            val email = _signUpState.value.email
-            val password = _signUpState.value.password
+            is SignUpContract.Event.OnHobbyChanged -> {
+                setState(currentState.copy(hobby = event.hobby))
+            }
 
-            if(email.isValidEmail() && password.isValidPassword()) {
-                dataStore.saveEmail(email)
-                dataStore.savePwd(password)
-                _isSignUpSuccess.value = true
-            } else {
-                _isSignUpSuccess.value
+            is SignUpContract.Event.OnPasswordVisibilityToggle -> {
+                setState(currentState.copy(isPassWordVisibility = !currentState.isPassWordVisibility))
+            }
+
+            is SignUpContract.Event.OnSignUpButtonClicked -> {
+                if (currentState.username.isValidLength() && currentState.password.isValidLength() &&
+                    currentState.hobby.isValidLength()
+                ) {
+                    viewModelScope.launch {
+                        val result = userUseCase(
+                            RegisterUserEntity(
+                                currentState.username,
+                                currentState.password,
+                                currentState.hobby
+                            )
+                        )
+                        result.onSuccess {
+                            setState(currentState.copy(status = SignUpContract.SignUpStatus.SUCCESS))
+                            setEffect(SignUpContract.Effect.ShowToast("회원가입 성공"))
+                        }.onFailure { exception ->
+                            setState(currentState.copy(status = SignUpContract.SignUpStatus.FAILURE))
+                            setEffect(SignUpContract.Effect.ShowToast("회원가입 실패: ${exception.message}"))
+                            Log.d("실패", "${exception.message}")
+                        }
+                    }
+                }
             }
         }
     }
 
-    // 비밀번호 표시 여부
-    fun togglePasswordVisibility() {
-        _signUpState.value = _signUpState.value.copy(
-            isPassWordVisibility = !_signUpState.value.isPassWordVisibility
-        )
-    }
-
-    // 이메일 입력 처리
-    fun setSignUpEmail(newEmail: String) {
-        _signUpState.value = _signUpState.value.copy(
-            email = newEmail
-        )
-    }
-
-    // 비밀번호 입력 처리
-    fun setSignUpPwd(newPassword: String) {
-        _signUpState.value = _signUpState.value.copy(
-            password = newPassword
-        )
-    }
+    override fun handleEffect(effect: UiEffect) { }
 
 }
