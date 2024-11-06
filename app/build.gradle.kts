@@ -80,6 +80,9 @@
         ksp(libs.hilt.compiler)
         ksp(libs.hilt.android.compiler)
 
+        // Coil
+        implementation(libs.coil.compose)
+
         // navigation
         implementation(libs.androidx.navigation.compose)
         implementation(libs.kotlinx.serialization.json)
