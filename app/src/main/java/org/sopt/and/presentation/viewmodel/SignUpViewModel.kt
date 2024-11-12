@@ -41,24 +41,40 @@ class SignUpViewModel @Inject constructor(
             }
 
             is SignUpContract.Event.OnSignUpButtonClicked -> {
-                if (currentState.username.isValidLength() && currentState.password.isValidLength() &&
-                    currentState.hobby.isValidLength()
-                ) {
-                    viewModelScope.launch {
-                        val result = userUseCase(
-                            RegisterUserEntity(
-                                currentState.username,
-                                currentState.password,
-                                currentState.hobby
+                val isUsernameValid = currentState.username.isValidLength()
+                val isPasswordValid = currentState.password.isValidLength()
+                val isHobbyValid = currentState.hobby.isValidLength()
+
+                when {
+                    !isUsernameValid -> {
+                        setState(currentState.copy(status = SignUpContract.SignUpStatus.FAILURE))
+                        setEffect(SignUpContract.Effect.ShowToast("아이디는 8자 이상이어야 합니다."))
+                    }
+                    !isPasswordValid -> {
+                        setState(currentState.copy(status = SignUpContract.SignUpStatus.FAILURE))
+                        setEffect(SignUpContract.Effect.ShowToast("비밀번호는 8자 이상이어야 합니다."))
+                    }
+                    !isHobbyValid -> {
+                        setState(currentState.copy(status = SignUpContract.SignUpStatus.FAILURE))
+                        setEffect(SignUpContract.Effect.ShowToast("취미는 8자 이상이어야 합니다."))
+                    }
+                    else -> {
+                        viewModelScope.launch {
+                            val result = userUseCase(
+                                RegisterUserEntity(
+                                    currentState.username,
+                                    currentState.password,
+                                    currentState.hobby
+                                )
                             )
-                        )
-                        result.onSuccess {
-                            setState(currentState.copy(status = SignUpContract.SignUpStatus.SUCCESS))
-                            setEffect(SignUpContract.Effect.ShowToast("회원가입 성공"))
-                        }.onFailure { exception ->
-                            setState(currentState.copy(status = SignUpContract.SignUpStatus.FAILURE))
-                            setEffect(SignUpContract.Effect.ShowToast("회원가입 실패: ${exception.message}"))
-                            Log.d("실패", "${exception.message}")
+                            result.onSuccess {
+                                setState(currentState.copy(status = SignUpContract.SignUpStatus.SUCCESS))
+                                setEffect(SignUpContract.Effect.ShowToast("회원가입 성공"))
+                            }.onFailure { exception ->
+                                setState(currentState.copy(status = SignUpContract.SignUpStatus.FAILURE))
+                                setEffect(SignUpContract.Effect.ShowToast("회원가입 실패: ${exception.message}"))
+                                Log.d("실패", "${exception.message}")
+                            }
                         }
                     }
                 }
