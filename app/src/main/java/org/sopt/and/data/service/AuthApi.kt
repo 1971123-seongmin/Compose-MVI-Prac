@@ -1,7 +1,9 @@
 package org.sopt.and.data.service
 
 import org.sopt.and.base.NullableBaseResponse
+import org.sopt.and.data.model.request.UserLoginRequestDto
 import org.sopt.and.data.model.request.UserRegisterRequestDto
+import org.sopt.and.data.model.response.UserLoginResponse
 import org.sopt.and.data.model.response.UserRegisterResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -16,9 +18,9 @@ interface AuthApi {
     ) : NullableBaseResponse<UserRegisterResponse>
 
     @POST("/login")
-    suspend fun login(
-
-    )
+    suspend fun loginUser(
+        @Body body: UserLoginRequestDto
+    ) : NullableBaseResponse<UserLoginResponse>
 
     @GET("/user/my-hobby")
     suspend fun getMyHobby(
