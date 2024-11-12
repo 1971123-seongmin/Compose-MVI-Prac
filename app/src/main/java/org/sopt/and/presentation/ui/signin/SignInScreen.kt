@@ -43,111 +43,91 @@ import org.sopt.and.ui.theme.White
 
 @Composable
 fun SignInScreen(
-    navigateUp: () -> Unit,
     navigateSignUp: () -> Unit,
-    navigateMyPage: () -> Unit,
-//    signUpEmail: String,
-//    signUpPwd: String,
-    signInEmail: String,
+    signInName: String,
     signInPwd: String,
-    onEmailChange: (String) -> Unit,
+    onNameChange: (String) -> Unit,
     onPwdChange: (String) -> Unit,
     isPwdVisibility: Boolean,
     isPwdVisible: () -> Unit,
-    isLogin: (String, String) -> Unit,
-    signInSuccess: Boolean,
-    snackbarHostState: SnackbarHostState
+    onSignInBtnClick:() -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Scaffold(
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Black)
-                .statusBarsPadding()
-                .navigationBarsPadding()
-                .imePadding(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
 
-            // 툴바
-            SignInToolbar(
-                leadingIcon = {
-                    IconButton(onClick = navigateUp) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
-                            contentDescription = null,
-                            tint = White,
-                            modifier = Modifier
-                                .size(40.dp)
-                        )
-                    }
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(Black)
+            .statusBarsPadding()
+            .navigationBarsPadding()
+            .imePadding(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        SignInToolbar(
+            leadingIcon = {
+                IconButton(onClick = {}) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft,
+                        contentDescription = null,
+                        tint = White,
+                        modifier = Modifier
+                            .size(40.dp)
+                    )
                 }
-            )
+            }
+        )
 
-            // 이메일 입력
-            Spacer(modifier = Modifier.height(40.dp))
-            AuthTextField(
-                value = signInEmail,
-                onValueChange = onEmailChange,
-                isPwdVisible = true,
-                placeholder = R.string.id_placeholder,
-                modifier = Modifier.padding(horizontal = 10.dp)
-            )
+        // 이메일 입력
+        Spacer(modifier = Modifier.height(40.dp))
+        AuthTextField(
+            value = signInName,
+            onValueChange = onNameChange,
+            isPwdVisible = true,
+            placeholder = R.string.id_placeholder,
+            modifier = Modifier.padding(horizontal = 10.dp)
+        )
 
-            // 비밀번호 입력
-            Spacer(Modifier.height(8.dp))
-            AuthTextField(
-                value = signInPwd,
-                onValueChange = onPwdChange,
-                isPwdVisible = isPwdVisibility,
-                onPwdVisibilityChange = isPwdVisible,
-                placeholder = R.string.pwd_placeholder,
-                modifier = Modifier.padding(horizontal = 10.dp)
-            )
+        // 비밀번호 입력
+        Spacer(Modifier.height(8.dp))
+        AuthTextField(
+            value = signInPwd,
+            onValueChange = onPwdChange,
+            isPwdVisible = isPwdVisibility,
+            onPwdVisibilityChange = isPwdVisible,
+            placeholder = R.string.pwd_placeholder,
+            modifier = Modifier.padding(horizontal = 10.dp)
+        )
 
-            // 로그인 버튼
-            Spacer(Modifier.height(16.dp))
-            RoundedButton(
-                content = stringResource(R.string.signin),
-                onClick = {
-                    isLogin(signInEmail, signInPwd) // 로그인 시도
-                    if (signInSuccess) {
-                        navigateMyPage() // 로그인 성공 시 마이페이지로 이동
-                    }
-                }
-            )
+        // 로그인 버튼
+        Spacer(Modifier.height(16.dp))
+        RoundedButton(
+            content = stringResource(R.string.signin),
+            onClick = {
+                onSignInBtnClick()
+            }
+        )
 
-            // 아이디 찾기, 비밀번호 찾기, 회원가입 메뉴
-            Spacer(Modifier.height(20.dp))
-            AuthMenuRow( onSignUpClick = { navigateSignUp() })
+        // 아이디 찾기, 비밀번호 찾기, 회원가입 메뉴
+        Spacer(Modifier.height(20.dp))
+        AuthMenuRow( onSignUpClick = { navigateSignUp() })
 
-            // 소셜 로그인 title text
-            Spacer(modifier = Modifier.height(20.dp))
-            SocialLoginTextDriver(R.string.sign_social)
+        // 소셜 로그인 title text
+        Spacer(modifier = Modifier.height(20.dp))
+        SocialLoginTextDriver(R.string.sign_social)
 
-            // 소션 로그인 버튼
-            Spacer(modifier = Modifier.height(24.dp))
-            SocialLoginRow()
+        // 소션 로그인 버튼
+        Spacer(modifier = Modifier.height(24.dp))
+        SocialLoginRow()
 
-            Spacer(modifier = Modifier.height(32.dp))
-            Text(
-                color = Gray100,
-                text = stringResource(R.string.warning),
-                fontSize = 12.sp,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-        }
+        Spacer(modifier = Modifier.height(32.dp))
+        Text(
+            color = Gray100,
+            text = stringResource(R.string.warning),
+            fontSize = 12.sp,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        )
     }
-
-    // 로그인 성공 시 화면 전환
-    if (signInSuccess) {
-        LaunchedEffect(Unit) {
-            navigateMyPage() // 로그인 성공 시 마이페이지 화면으로 이동
-        }
-    }
-
 }
 
 @Composable

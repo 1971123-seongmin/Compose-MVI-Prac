@@ -16,6 +16,7 @@ import androidx.navigation.navArgument
 import org.sopt.and.presentation.ui.home.HomeScreen
 import org.sopt.and.presentation.ui.mypage.MyPageScreen
 import org.sopt.and.presentation.ui.search.SearchScreen
+import org.sopt.and.presentation.ui.signin.SignInRoute
 import org.sopt.and.presentation.ui.signin.SignInScreen
 import org.sopt.and.presentation.ui.signup.SignUpRoute
 import org.sopt.and.presentation.ui.signup.SignUpScreen
@@ -29,29 +30,17 @@ fun Navigation(
 ) {
    Scaffold (
        modifier = Modifier.fillMaxSize()
-   ) { innerPadding ->
+   ) {
 
        NavHost(
            navController = navController,
            startDestination = Routes.SignInScreen.route
        ) {
            composable(Routes.SignInScreen.route) {
-               val signInViewModel: SignInViewModel = viewModel()
-               val signInEmail = signInViewModel.signInState.collectAsState().value.email
-               SignInScreen(
-                   navigateUp = { navController.popBackStack() },
-                   navigateSignUp = { navController.navigate(Routes.SignUpScreen.route) },
-                   navigateMyPage = {navController.navigate(Routes.MyPageScreen.createRoute(signInEmail))},
-                   signInEmail = signInEmail,
-                   signInPwd = signInViewModel.signInState.collectAsState().value.password,
-                   onEmailChange = { signInViewModel.setSignInEmail(it) },
-                   onPwdChange  = { signInViewModel.setSignInPwd(it) },
-                   isPwdVisibility = signInViewModel.signInState.collectAsState().value.isPassWordVisibility,
-                   isPwdVisible = { signInViewModel.togglePasswordVisibility() },
-                   isLogin = { signInEmail, signInPwd -> signInViewModel.login() },
-                   signInSuccess = signInViewModel.isSignInSuccess.collectAsState().value,
-                   snackbarHostState = remember { SnackbarHostState() }
-               )
+                SignInRoute(
+                    navigateSignUp = { navController.navigate(Routes.SignUpScreen.route) },
+                    navigateMyPage = { navController.navigate(Routes.MyPageScreen.route) },
+                )
            }
 
            composable(Routes.SignUpScreen.route) {
