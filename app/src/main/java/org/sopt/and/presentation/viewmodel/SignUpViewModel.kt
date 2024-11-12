@@ -1,9 +1,9 @@
 package org.sopt.and.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.sopt.and.R
 import org.sopt.and.base.BaseViewModel
 import org.sopt.and.domain.model.user.RegisterUserEntity
 import org.sopt.and.domain.usecase.RegisterUserUseCase
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val userUseCase: RegisterUserUseCase
+    private val authUserCase: RegisterUserUseCase
 ) : BaseViewModel<SignUpContract.Event, SignUpContract.SignUpState, SignUpContract.Effect>() {
 
     override fun createInitialState(): SignUpContract.SignUpState {
@@ -48,19 +48,19 @@ class SignUpViewModel @Inject constructor(
                 when {
                     !isUsernameValid -> {
                         setState(currentState.copy(status = SignUpContract.SignUpStatus.FAILURE))
-                        setEffect(SignUpContract.Effect.ShowToast("아이디는 8자 이상이어야 합니다."))
+                        setEffect(SignUpContract.Effect.ShowToast("이름이 8자 이상입니다!."))
                     }
                     !isPasswordValid -> {
                         setState(currentState.copy(status = SignUpContract.SignUpStatus.FAILURE))
-                        setEffect(SignUpContract.Effect.ShowToast("비밀번호는 8자 이상이어야 합니다."))
+                        setEffect(SignUpContract.Effect.ShowToast("비밀번호가 8자 이상입니다!"))
                     }
                     !isHobbyValid -> {
                         setState(currentState.copy(status = SignUpContract.SignUpStatus.FAILURE))
-                        setEffect(SignUpContract.Effect.ShowToast("취미는 8자 이상이어야 합니다."))
+                        setEffect(SignUpContract.Effect.ShowToast("취미가 8자 이상입니다!"))
                     }
                     else -> {
                         viewModelScope.launch {
-                            val result = userUseCase(
+                            val result = authUserCase(
                                 RegisterUserEntity(
                                     currentState.username,
                                     currentState.password,
@@ -73,7 +73,6 @@ class SignUpViewModel @Inject constructor(
                             }.onFailure { exception ->
                                 setState(currentState.copy(status = SignUpContract.SignUpStatus.FAILURE))
                                 setEffect(SignUpContract.Effect.ShowToast("회원가입 실패: ${exception.message}"))
-                                Log.d("실패", "${exception.message}")
                             }
                         }
                     }
