@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.sopt.and.data.remote.source.UserDataSource
-import org.sopt.and.data.remote.source.UserDataSourceImpl
-import org.sopt.and.data.service.UserApi
+import org.sopt.and.data.remote.source.AuthDataSource
+import org.sopt.and.data.remote.source.AuthDataSourceImpl
+import org.sopt.and.data.service.AuthApi
 import javax.inject.Singleton
 
 @Module
@@ -15,6 +15,6 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun provideUserDataSource(userApi: UserApi): UserDataSource =
-        UserDataSourceImpl(userApi)
+    fun provideAuthDataSource(authApi: AuthApi): AuthDataSource =
+        AuthDataSourceImpl(authApi)
 }

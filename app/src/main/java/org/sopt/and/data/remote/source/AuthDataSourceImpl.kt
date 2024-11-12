@@ -3,13 +3,13 @@ package org.sopt.and.data.remote.source
 import org.sopt.and.base.NullableBaseResponse
 import org.sopt.and.data.model.request.UserRegisterRequestDto
 import org.sopt.and.data.model.response.UserRegisterResponse
-import org.sopt.and.data.service.UserApi
+import org.sopt.and.data.service.AuthApi
 import javax.inject.Inject
 
-class UserDataSourceImpl @Inject constructor(
-    private val userApi: UserApi
-) : UserDataSource {
+class AuthDataSourceImpl @Inject constructor(
+    private val authApi: AuthApi
+) : AuthDataSource {
     override suspend fun registerUser(
         userRegisterRequestDto: UserRegisterRequestDto): NullableBaseResponse<UserRegisterResponse> =
-        userApi.registerUser(userRegisterRequestDto)
+        authApi.registerUser(userRegisterRequestDto)
 }

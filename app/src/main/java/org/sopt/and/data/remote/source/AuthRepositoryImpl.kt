@@ -3,17 +3,17 @@ package org.sopt.and.data.remote.source
 import org.sopt.and.domain.mapper.UserMapper
 import org.sopt.and.domain.model.user.RegisterUserEntity
 import org.sopt.and.domain.model.user.UserIdEntity
-import org.sopt.and.domain.repository.UserRepository
+import org.sopt.and.domain.repository.AuthRepository
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(
-    private val userDataSource: UserDataSource
-) : UserRepository {
+class AuthRepositoryImpl @Inject constructor(
+    private val authDataSource: AuthDataSource
+) : AuthRepository {
 
     override suspend fun registerUser(
         userEntity: RegisterUserEntity): Result<UserIdEntity> = runCatching {
             val requestDto = UserMapper.mapperToUserRegisterRequestDto(userEntity)
-            val response = userDataSource.registerUser(requestDto)
+            val response = authDataSource.registerUser(requestDto)
             UserMapper.mapperToUserIdEntity(response.result)
         }
 

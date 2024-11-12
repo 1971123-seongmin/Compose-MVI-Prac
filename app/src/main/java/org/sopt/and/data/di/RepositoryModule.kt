@@ -4,9 +4,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.sopt.and.data.remote.source.UserDataSource
-import org.sopt.and.data.remote.source.UserRepositoryImpl
-import org.sopt.and.domain.repository.UserRepository
+import org.sopt.and.data.remote.source.AuthDataSource
+import org.sopt.and.data.remote.source.AuthRepositoryImpl
+import org.sopt.and.domain.repository.AuthRepository
 import javax.inject.Singleton
 
 @Module
@@ -15,7 +15,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(userDataSource: UserDataSource): UserRepository =
-        UserRepositoryImpl(userDataSource)
+    fun provideAuthRepository(authDataSource: AuthDataSource): AuthRepository =
+        AuthRepositoryImpl(authDataSource)
 
 }
