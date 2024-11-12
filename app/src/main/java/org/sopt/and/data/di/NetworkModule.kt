@@ -12,7 +12,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.sopt.and.BuildConfig
 import org.sopt.and.data.interceptor.AccessTokenInterceptor
-import org.sopt.and.utils.TokenManger
+import org.sopt.and.utils.TokenManager
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
@@ -51,7 +51,7 @@ object NetworkModule {
     @Provides
     @Singleton
     @Token
-    fun provideTokenInterceptor(tokenManager: TokenManger): AccessTokenInterceptor {
+    fun provideTokenInterceptor(tokenManager: TokenManager): AccessTokenInterceptor {
         return AccessTokenInterceptor(tokenManager)
     }
 

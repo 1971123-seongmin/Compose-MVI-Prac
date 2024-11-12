@@ -2,11 +2,11 @@ package org.sopt.and
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
-import org.sopt.and.utils.TokenManger
+import org.sopt.and.utils.TokenManager
 
 @HiltAndroidApp
 class GlobalApplication: Application() {
-    private lateinit var dataStore: TokenManger
+    private lateinit var dataStore: TokenManager
 
     companion object {
         lateinit var globalApplication: GlobalApplication
@@ -17,9 +17,9 @@ class GlobalApplication: Application() {
         super.onCreate()
 
         globalApplication = this
-        dataStore = TokenManger(this)
+        dataStore = TokenManager(this)
     }
 
-    fun getDataStore(): TokenManger = dataStore
+    fun getDataStore(): TokenManager = dataStore
 
 }
