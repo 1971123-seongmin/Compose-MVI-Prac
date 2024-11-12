@@ -76,4 +76,13 @@
     <string name="content_desc_tv_live">실시간 TV 연결</string>
     <string name="content_desc_banner_image">배너 이미지</string>
 
+    <!-- toast -->
+    <string name="signup_success">회원가입 성공"</string>
+    <string name="signup_failure">회원가입 실패"</string>
+    <string name="signIn_success">회원가입 성공"</string>
+    <string name="signIn_failure">회원가입 실패"</string>
+    <string name="valid_username">이름은 8자 이상이어야 합니다."</string>
+    <string name="valid_password">비밀번호는 8자 이상이어야 합니다.</string>
+    <string name="valid_hobby">취미는 8자 이상이어야 합니다.. 합니다.</string>
+
 </resources>
