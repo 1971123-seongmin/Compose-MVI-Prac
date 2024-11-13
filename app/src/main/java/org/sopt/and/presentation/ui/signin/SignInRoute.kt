@@ -17,7 +17,7 @@ import org.sopt.and.utils.showToastMsg
 @Composable
 fun SignInRoute (
     navigateSignUp: () -> Unit,
-    navigateMyPage: () -> Unit,
+    navigateHome: () -> Unit,
     viewModel: SignInViewModel = hiltViewModel()
 ) {
     val signInState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -36,7 +36,7 @@ fun SignInRoute (
 
     LaunchedEffect(signInState.loginStatus) {
         if (signInState.loginStatus == SignInContract.SignInStatus.SUCCESS) {
-            navigateMyPage()
+            navigateHome()
         }
     }
 

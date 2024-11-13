@@ -38,12 +38,11 @@ fun Navigation(
            startDestination = Routes.SignInScreen.route,
            modifier = Modifier
                .fillMaxSize()
-
        ) {
            composable(Routes.SignInScreen.route) {
                 SignInRoute(
                     navigateSignUp = { navController.navigate(Routes.SignUpScreen.route) },
-                    navigateMyPage = { navController.navigate(Routes.MyPageScreen.route) },
+                    navigateHome = { navController.navigate(Routes.HomeScreen.route) },
                 )
            }
 
