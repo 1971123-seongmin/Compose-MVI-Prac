@@ -38,7 +38,7 @@ fun Navigation(
            startDestination = Routes.SignInScreen.route,
            modifier = Modifier
                .fillMaxSize()
-               .padding(paddingValues)
+
        ) {
            composable(Routes.SignInScreen.route) {
                 SignInRoute(
@@ -53,10 +53,7 @@ fun Navigation(
                )
            }
 
-           composable(
-               Routes.MyPageScreen.route,
-
-           ) {
+           composable(Routes.MyPageScreen.route) {
                MyPageRoute()
            }
 
