@@ -6,5 +6,5 @@ import org.sopt.and.domain.repository.UserRepository
 class GetMyHobbyUseCase(
     private val userRepository: UserRepository
 ) {
-    suspend fun invoke(): Result<MyHobbyEntity> = userRepository.getMyHobby()
+    suspend operator fun invoke(): Result<MyHobbyEntity> = userRepository.getMyHobby()
 }
