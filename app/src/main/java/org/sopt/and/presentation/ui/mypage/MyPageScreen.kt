@@ -41,7 +41,7 @@ import org.sopt.and.ui.theme.White
 
 @Composable
 fun MyPageScreen(
-    email: String
+    myHobby: String
 ) {
     Column(
         modifier = Modifier
@@ -56,7 +56,7 @@ fun MyPageScreen(
                 .background(color = Gray300)
         ) {
             // 컴포넌트 - 프로필 row
-            MyProfileRow(email)
+            MyProfileRow(myHobby)
 
             // 인증하기 >
             MyPageActionText(

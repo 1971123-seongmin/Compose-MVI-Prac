@@ -1,6 +1,7 @@
 package org.sopt.and.presentation.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import org.sopt.and.presentation.ui.home.HomeScreen
+import org.sopt.and.presentation.ui.mypage.MyPageRoute
 import org.sopt.and.presentation.ui.mypage.MyPageScreen
 import org.sopt.and.presentation.ui.search.SearchScreen
 import org.sopt.and.presentation.ui.signin.SignInRoute
@@ -30,11 +32,13 @@ fun Navigation(
 ) {
    Scaffold (
        modifier = Modifier.fillMaxSize()
-   ) {
-
+   ) {  paddingValues ->
        NavHost(
            navController = navController,
-           startDestination = Routes.SignInScreen.route
+           startDestination = Routes.SignInScreen.route,
+           modifier = Modifier
+               .fillMaxSize()
+               .padding(paddingValues)
        ) {
            composable(Routes.SignInScreen.route) {
                 SignInRoute(
@@ -51,10 +55,9 @@ fun Navigation(
 
            composable(
                Routes.MyPageScreen.route,
-               arguments = listOf(navArgument("email") { type = NavType.StringType })
-           ) { backStackEntry ->
-               val email = backStackEntry.arguments?.getString("email") ?: ""
-               MyPageScreen(email = email)
+
+           ) {
+               MyPageRoute()
            }
 
            composable(Routes.SearchScreen.route) {
