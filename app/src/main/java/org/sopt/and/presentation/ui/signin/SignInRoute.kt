@@ -20,7 +20,6 @@ fun SignInRoute (
     navigateMyPage: () -> Unit,
     viewModel: SignInViewModel = hiltViewModel()
 ) {
-
     val signInState by viewModel.uiState.collectAsStateWithLifecycle()
     val signInEffect = viewModel.effect
     val context = LocalContext.current
