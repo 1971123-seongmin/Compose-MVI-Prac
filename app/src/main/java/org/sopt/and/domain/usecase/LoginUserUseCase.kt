@@ -1,7 +1,7 @@
 package org.sopt.and.domain.usecase
 
-import org.sopt.and.domain.model.user.LoginUserEntity
-import org.sopt.and.domain.model.user.UserTokenEntity
+import org.sopt.and.domain.model.auth.LoginUserEntity
+import org.sopt.and.domain.model.auth.UserTokenEntity
 import org.sopt.and.domain.repository.AuthRepository
 
 class LoginUserUseCase(

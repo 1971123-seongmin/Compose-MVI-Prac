@@ -1,7 +1,7 @@
 package org.sopt.and.domain.usecase
 
-import org.sopt.and.domain.model.user.RegisterUserEntity
-import org.sopt.and.domain.model.user.UserIdEntity
+import org.sopt.and.domain.model.auth.RegisterUserEntity
+import org.sopt.and.domain.model.auth.UserIdEntity
 import org.sopt.and.domain.repository.AuthRepository
 
 class RegisterUserUseCase(

@@ -1,4 +1,4 @@
-package org.sopt.and.domain.model.user
+package org.sopt.and.domain.model.auth
 
 data class LoginUserEntity(
     val username: String,

@@ -3,9 +3,8 @@ package org.sopt.and.presentation.viewmodel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.sopt.and.R
 import org.sopt.and.base.BaseViewModel
-import org.sopt.and.domain.model.user.RegisterUserEntity
+import org.sopt.and.domain.model.auth.RegisterUserEntity
 import org.sopt.and.domain.usecase.RegisterUserUseCase
 import org.sopt.and.presentation.utils.UiEffect
 import org.sopt.and.presentation.utils.UiEvent

@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.sopt.and.GlobalApplication
 import org.sopt.and.base.BaseViewModel
-import org.sopt.and.domain.model.user.LoginUserEntity
+import org.sopt.and.domain.model.auth.LoginUserEntity
 import org.sopt.and.domain.usecase.LoginUserUseCase
 import org.sopt.and.presentation.utils.UiEffect
 import org.sopt.and.presentation.utils.UiEvent
