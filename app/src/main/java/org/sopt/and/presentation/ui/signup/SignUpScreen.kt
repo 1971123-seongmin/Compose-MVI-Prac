@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
@@ -208,20 +209,19 @@ fun SignupButton(
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewSignUpScreen() {
-//    SignUpScreen(
-//        navigateUp = {},
-//        navigateSignIn = {},
-//        signUpEmail = stringResource(R.string.signup_id_placeholder),
-//        signUpPwd = stringResource(R.string.signup_pwd_placeholder),
-//        signUpHobby = stringResource(R.string.signup_hobby_placeholder),
-//        onEmailChange = {},
-//        onPwdChange = {},
-//        isPwdVisibility = false,
-//        isPwdVisible = {},
-//        isSignUp = { _, _ -> },
-//        signUpSuccess = false
-//    )
-//}
+@Preview(showBackground = true)
+@Composable
+fun PreviewSignUpScreen() {
+    SignUpScreen(
+        signUpName = stringResource(R.string.signup_id_placeholder),
+        signUpPwd = stringResource(R.string.signup_pwd_placeholder),
+        signUpHobby = stringResource(R.string.signup_hobby_placeholder),
+        onNameChange = {},
+        onPwdChange = {},
+        onHobbyChange = {},
+        isPwdVisibility = false,
+        isPwdVisible = {},
+        onSignUpBtnClick = { },
+        modifier = Modifier
+    )
+}

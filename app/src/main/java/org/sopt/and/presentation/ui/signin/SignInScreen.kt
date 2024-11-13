@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
@@ -36,6 +37,7 @@ import org.sopt.and.presentation.component.RoundedButton
 import org.sopt.and.presentation.component.SignInToolbar
 import org.sopt.and.presentation.component.SocialLoginRow
 import org.sopt.and.presentation.component.SocialLoginTextDriver
+import org.sopt.and.presentation.ui.signup.SignUpScreen
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.Gray100
 import org.sopt.and.ui.theme.Gray200
@@ -165,4 +167,20 @@ fun AuthMenuRow(
             modifier = Modifier.clickable { onSignUpClick() }
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewSignInScreen() {
+    SignInScreen(
+        navigateSignUp = {},
+        signInName = stringResource(R.string.signup_id_placeholder),
+        signInPwd = stringResource(R.string.signup_pwd_placeholder),
+        onNameChange = {},
+        onPwdChange = {},
+        isPwdVisibility = false,
+        isPwdVisible = {},
+        onSignInBtnClick = { },
+        modifier = Modifier
+    )
 }

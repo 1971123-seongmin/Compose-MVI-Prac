@@ -47,7 +47,7 @@ fun RoundedButton(
 @Composable
 fun PreviewRoundedButton() {
     RoundedButton(
-        content = stringResource(R.string.signin), // 버튼의 예시 텍스트
-        onClick = {}         // 빈 onClick 함수
+        content = stringResource(R.string.signin),
+        onClick = {}
     )
 }

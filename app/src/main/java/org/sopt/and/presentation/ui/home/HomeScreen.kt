@@ -36,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.ImmutableList
@@ -43,6 +44,7 @@ import kotlinx.collections.immutable.persistentListOf
 import org.sopt.and.R
 import org.sopt.and.enum.Movie
 import org.sopt.and.presentation.component.BoxOverlayImage
+import org.sopt.and.presentation.ui.signup.SignUpScreen
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.MoreDarkGray
 import org.sopt.and.ui.theme.Teal200
@@ -354,4 +356,10 @@ fun HomeBottomFixView(
             modifier = Modifier
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewHomeScreen() {
+    HomeScreen()
 }
