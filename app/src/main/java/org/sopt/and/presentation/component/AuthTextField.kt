@@ -1,5 +1,6 @@
 package org.sopt.and.presentation.component
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -10,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,16 +21,15 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.ui.theme.DoubleDarkGray
-import org.sopt.and.ui.theme.Gray
-import org.sopt.and.ui.theme.LittleGray
+import org.sopt.and.ui.theme.Gray100
+import org.sopt.and.ui.theme.Gray200
 import org.sopt.and.ui.theme.White
 
 @Composable
-fun SignTextField(
+fun AuthTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    placeholder: String,
+    @StringRes placeholder: Int,
     modifier: Modifier = Modifier,
     isPwdVisible: Boolean = false,
     onPwdVisibilityChange: (() -> Unit)? = null
@@ -40,18 +39,21 @@ fun SignTextField(
         onValueChange = onValueChange,
         modifier = modifier
             .fillMaxWidth()
-            .height(56.dp)
+            .height(52.dp)
             .background(
-                color = DoubleDarkGray,
-                shape = RoundedCornerShape(10.dp)
+                color = Gray200,
+                shape = RoundedCornerShape(4.dp)
             ),
-        textStyle = TextStyle(color = White, fontSize = 16.sp),
+        textStyle = TextStyle(
+            color = White,
+            fontSize = 16.sp
+        ),
         singleLine = true,
         decorationBox = { innerTextField ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp, horizontal = 16.dp),
+                    .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
@@ -59,8 +61,11 @@ fun SignTextField(
                 ) {
                     if(value.isEmpty()) {
                         Text(
-                            text = placeholder,
-                            style = TextStyle(color = LittleGray, fontSize = 16.sp),
+                            text = stringResource(placeholder),
+                            style = TextStyle(
+                                color = Gray100,
+                                fontSize = 14.sp
+                            ),
                         )
                     }
                     innerTextField()
@@ -70,7 +75,10 @@ fun SignTextField(
                 if (onPwdVisibilityChange != null) {
                     Text(
                         text = if (isPwdVisible) stringResource(R.string.show) else stringResource(R.string.hide),
-                        color = White,
+                        style = TextStyle(
+                            color = White,
+                            fontSize = 14.sp
+                        ),
                         modifier = Modifier
                             .clickable { onPwdVisibilityChange() }  // 클릭 가능하게 설정
                             .padding(start = 8.dp)  // 여백 추가

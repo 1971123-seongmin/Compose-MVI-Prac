@@ -9,8 +9,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import org.sopt.and.presentation.ui.home.HomeScreen
 import org.sopt.and.presentation.ui.mypage.MyPageScreen
 import org.sopt.and.presentation.ui.search.SearchScreen
@@ -21,8 +23,8 @@ import org.sopt.and.presentation.viewmodel.SignUpViewModel
 
 @Composable
 fun Navigation(
-    modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    modifier: Modifier = Modifier
 ) {
    Scaffold (
        modifier = Modifier.fillMaxSize()
@@ -38,7 +40,7 @@ fun Navigation(
                SignInScreen(
                    navigateUp = { navController.popBackStack() },
                    navigateSignUp = { navController.navigate(Routes.SignUpScreen.route) },
-                   navigateMyPage = {navController.navigate(Routes.MyPageScreen.route)},
+                   navigateMyPage = {navController.navigate(Routes.MyPageScreen.createRoute(signInEmail))},
                    signInEmail = signInEmail,
                    signInPwd = signInViewModel.signInState.collectAsState().value.password,
                    onEmailChange = { signInViewModel.setSignInEmail(it) },
@@ -67,11 +69,13 @@ fun Navigation(
                )
            }
 
-           composable(Routes.MyPageScreen.route) { //backStackEntry ->
-               //val email = backStackEntry.arguments?.getString("email") ?: ""
-               MyPageScreen()
+           composable(
+               Routes.MyPageScreen.route,
+               arguments = listOf(navArgument("email") { type = NavType.StringType })
+           ) { backStackEntry ->
+               val email = backStackEntry.arguments?.getString("email") ?: ""
+               MyPageScreen(email = email)
            }
-
 
            composable(Routes.SearchScreen.route) {
                SearchScreen()

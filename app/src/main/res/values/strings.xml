@@ -4,16 +4,19 @@
 
     <!--회원가입-->
     <string name="signup_title">이메일과 비밀번호만으로\nWavve를 즐길 수 있어요!</string>
-    <string name="signup_id_warning">! 로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해주세요.</string>
-    <string name="signup_pwd_warning">! 비밀번호는 8-20자 이내로 영문 대소문자, 숫자, 특수문자 중 3가지 이상 혼용하여 입력해 주세요.</string>
+    <string name="signup_id_warning">로그인, 비밀번호 찾기, 알림에 사용되니 정확한 이메일을 입력해주세요.</string>
+    <string name="signup_pwd_warning">비밀번호는 8-20자 이내로 영문 대소문자, 숫자, 특수문자 중 3가지 이상 혼용하여 입력해 주세요.</string>
     <string name="signup_id_placeholder">wavve@example.com</string>
     <string name="signup_pwd_placeholder">Wavve 비밀번호 설정</string>
+    <string name="signup_btn_name">Wavve 회원가입</string>
 
     <!--로그인-->
     <string name="id_placeholder">이메일 주소 또는 아이디</string>
     <string name="pwd_placeholder">비밀번호</string>
     <string name="find_id">아이디 찾기</string>
+    <string name="find_pwd">비밀번호 찾기</string>
     <string name="reset_pwd">비밀번호 재설정</string>
+    <string name="signin_divider">|</string>
 
     <!--마이페이지-->
     <string name="first_payment_event">첫 결제 시 첫 달 100원!</string>
@@ -31,13 +34,15 @@
     <string name="hide">hide</string>
     <string name="show">show</string>
     <string name="wavve">Wavve</string>
-    <string name="warning">SNS계정으로 간편하게 가입하여 서비스를 이용하실 수 있습니다.\n기존 POOQ 계정 또는 Wavve 계정과는 연동되지 않으니 이용에 참고하세요.</string>
+    <string name="warning">SNS계정으로 간편하게 가입하여 서비스를 이용하실 수 있습니다. 기존 POOQ 계정 또는 Wavve 계정과는 연동되지 않으니 이용에 참고하세요.</string>
 
     <!-- MyPage -->
     <string name="signup_offer">첫 결제 시 첫 달 100원!</string>
-    <string name="purchase_action">구매하기 ></string>
+    <string name="certification_title">본인인증하면 첫 달 100원! 추가 2개월  간 50% 할인!</string>
+    <string name="certification_hide">인증하기 ></string>
     <string name="no_subscription">현재 보유하신 이용권이 없습니다.</string>
     <string name="purchase_hide">구매하기 ></string>
+    <string name="purchase_action">구매하기 ></string>
     <string name="show_history">전체 시청내역</string>
     <string name="no_watch_history">시청내역이 없어요.</string>
     <string name="favorite_program">관심 프로그램</string>
@@ -54,5 +59,19 @@
     <string name="home_title_section_3">오직 웨이브에서</string>
     <string name="home_title_section_4">오늘의 TOP 20</string>
     <string name="home_title_section_5">당한 대로 갚아 줄게</string>
+
+    <!-- contentDescription -->
+    <string name="content_desc_kakao">카카오 소셜 로그인</string>
+    <string name="content_desc_t_world">티월드 소셜 로그인</string>
+    <string name="content_desc_naver">네이버 소셜 로그인</string>
+    <string name="content_desc_facebook">페이스북 소셜 로그인</string>
+    <string name="content_desc_apple">애플 소셜 로그인</string>
+    <string name="content_desc_my_profile_img">내 프로필 이미지</string>
+    <string name="content_desc_alarm_list">알림 목록</string>
+    <string name="content_desc_settings">설정</string>
+    <string name="content_desc_no_content">내역이 없습니다.</string>
+    <string name="content_desc_cast">인터넷 연결</string>
+    <string name="content_desc_tv_live">실시간 TV 연결</string>
+    <string name="content_desc_banner_image">배너 이미지</string>
 
 </resources>

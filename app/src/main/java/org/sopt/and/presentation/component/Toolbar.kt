@@ -1,6 +1,7 @@
 package org.sopt.and.presentation.component
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,7 +20,7 @@ import org.sopt.and.R
 import org.sopt.and.ui.theme.White
 
 @Composable
-fun Toolbar(
+fun SignUpToolbar(
     modifier: Modifier = Modifier,
     content: String,
     leadingIcon: @Composable () -> Unit = {},
@@ -29,11 +30,12 @@ fun Toolbar(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 12.dp)
+            .defaultMinSize(minHeight = 36.dp)
             .height(36.dp)
     ) {
         Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.CenterStart
+            modifier = Modifier
+                .align(Alignment.CenterStart)
         ) {
             leadingIcon()
         }
@@ -43,7 +45,7 @@ fun Toolbar(
             color = White,
             modifier = Modifier.align(Alignment.Center),
             textAlign = TextAlign.Center,
-            fontSize = 24.sp
+            fontSize = 18.sp
         )
 
         Box(
@@ -57,7 +59,7 @@ fun Toolbar(
 }
 
 @Composable
-fun LogoToolbar(
+fun SignInToolbar(
     leadingIcon: @Composable () -> Unit = {},
     trailingIcon: @Composable () -> Unit = {},
 ) {
