@@ -1,4 +1,4 @@
-package org.sopt.and.domain.usecase
+package org.sopt.and.domain.usecase.auth
 
 import org.sopt.and.domain.model.auth.LoginUserEntity
 import org.sopt.and.domain.model.auth.UserTokenEntity

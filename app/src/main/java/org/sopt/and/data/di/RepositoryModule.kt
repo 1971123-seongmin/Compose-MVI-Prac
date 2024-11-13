@@ -6,8 +6,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import org.sopt.and.data.remote.source.AuthDataSource
-import org.sopt.and.data.remote.source.AuthRepositoryImpl
+import org.sopt.and.data.remote.source.auth.AuthDataSource
+import org.sopt.and.data.remote.source.auth.AuthRepositoryImpl
 import org.sopt.and.domain.repository.AuthRepository
 import org.sopt.and.utils.TokenManager
 import javax.inject.Singleton

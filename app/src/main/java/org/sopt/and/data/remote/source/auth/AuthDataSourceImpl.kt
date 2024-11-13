@@ -1,4 +1,4 @@
-package org.sopt.and.data.remote.source
+package org.sopt.and.data.remote.source.auth
 
 import org.sopt.and.base.NullableBaseResponse
 import org.sopt.and.data.model.request.UserLoginRequestDto

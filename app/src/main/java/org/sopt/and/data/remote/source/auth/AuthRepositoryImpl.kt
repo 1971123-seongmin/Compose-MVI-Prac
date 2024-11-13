@@ -1,4 +1,4 @@
-package org.sopt.and.data.remote.source
+package org.sopt.and.data.remote.source.auth
 
 import org.sopt.and.domain.mapper.AuthMapper
 import org.sopt.and.domain.model.auth.LoginUserEntity

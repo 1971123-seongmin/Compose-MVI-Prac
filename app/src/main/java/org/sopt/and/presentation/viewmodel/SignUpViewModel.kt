@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.sopt.and.base.BaseViewModel
 import org.sopt.and.domain.model.auth.RegisterUserEntity
-import org.sopt.and.domain.usecase.RegisterUserUseCase
+import org.sopt.and.domain.usecase.auth.RegisterUserUseCase
 import org.sopt.and.presentation.utils.UiEffect
 import org.sopt.and.presentation.utils.UiEvent
 import org.sopt.and.presentation.utils.contract.SignUpContract

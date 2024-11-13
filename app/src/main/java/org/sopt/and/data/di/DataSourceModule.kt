@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.sopt.and.data.remote.source.AuthDataSource
-import org.sopt.and.data.remote.source.AuthDataSourceImpl
+import org.sopt.and.data.remote.source.auth.AuthDataSource
+import org.sopt.and.data.remote.source.auth.AuthDataSourceImpl
 import org.sopt.and.data.service.AuthApi
 import javax.inject.Singleton
 
