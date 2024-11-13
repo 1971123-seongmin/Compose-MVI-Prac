@@ -9,7 +9,7 @@ import org.sopt.and.domain.model.user.RegisterUserEntity
 import org.sopt.and.domain.model.user.UserIdEntity
 import org.sopt.and.domain.model.user.UserTokenEntity
 
-object UserMapper {
+object AuthMapper {
     fun mapperToUserRegisterRequestDto(entity: RegisterUserEntity) = UserRegisterRequestDto(
         username = entity.username,
         password = entity.password,
