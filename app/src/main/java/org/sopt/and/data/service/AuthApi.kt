@@ -22,20 +22,4 @@ interface AuthApi {
         @Body body: UserLoginRequestDto
     ) : NullableBaseResponse<UserLoginResponse>
 
-    @GET("/user/my-hobby")
-    suspend fun getMyHobby(
-
-    )
-
-    @GET("/user/{no}/my-hobby")
-    suspend fun getOthersHobby(
-
-    )
-
-    @PUT("/user")
-    suspend fun editUserInfo(
-
-    )
-
-
 }
