@@ -81,6 +81,9 @@
         ksp(libs.hilt.android.compiler)
         implementation(libs.hilt.navigation)
 
+        // Timber
+        implementation (libs.timber)
+
         // Coil
         implementation(libs.coil.compose)
 
