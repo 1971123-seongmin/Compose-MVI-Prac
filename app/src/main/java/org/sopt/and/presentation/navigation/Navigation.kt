@@ -1,6 +1,7 @@
 package org.sopt.and.presentation.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -14,9 +15,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import org.sopt.and.presentation.ui.home.HomeScreen
+import org.sopt.and.presentation.ui.mypage.MyPageRoute
 import org.sopt.and.presentation.ui.mypage.MyPageScreen
 import org.sopt.and.presentation.ui.search.SearchScreen
+import org.sopt.and.presentation.ui.signin.SignInRoute
 import org.sopt.and.presentation.ui.signin.SignInScreen
+import org.sopt.and.presentation.ui.signup.SignUpRoute
 import org.sopt.and.presentation.ui.signup.SignUpScreen
 import org.sopt.and.presentation.viewmodel.SignInViewModel
 import org.sopt.and.presentation.viewmodel.SignUpViewModel
@@ -28,53 +32,28 @@ fun Navigation(
 ) {
    Scaffold (
        modifier = Modifier.fillMaxSize()
-   ) { innerPadding ->
-
+   ) {  paddingValues ->
        NavHost(
            navController = navController,
-           startDestination = Routes.SignInScreen.route
+           startDestination = Routes.SignInScreen.route,
+           modifier = Modifier
+               .fillMaxSize()
        ) {
            composable(Routes.SignInScreen.route) {
-               val signInViewModel: SignInViewModel = viewModel()
-               val signInEmail = signInViewModel.signInState.collectAsState().value.email
-               SignInScreen(
-                   navigateUp = { navController.popBackStack() },
-                   navigateSignUp = { navController.navigate(Routes.SignUpScreen.route) },
-                   navigateMyPage = {navController.navigate(Routes.MyPageScreen.createRoute(signInEmail))},
-                   signInEmail = signInEmail,
-                   signInPwd = signInViewModel.signInState.collectAsState().value.password,
-                   onEmailChange = { signInViewModel.setSignInEmail(it) },
-                   onPwdChange  = { signInViewModel.setSignInPwd(it) },
-                   isPwdVisibility = signInViewModel.signInState.collectAsState().value.isPassWordVisibility,
-                   isPwdVisible = { signInViewModel.togglePasswordVisibility() },
-                   isLogin = { signInEmail, signInPwd -> signInViewModel.login() },
-                   signInSuccess = signInViewModel.isSignInSuccess.collectAsState().value,
-                   snackbarHostState = remember { SnackbarHostState() }
-               )
+                SignInRoute(
+                    navigateSignUp = { navController.navigate(Routes.SignUpScreen.route) },
+                    navigateHome = { navController.navigate(Routes.HomeScreen.route) },
+                )
            }
 
            composable(Routes.SignUpScreen.route) {
-               val signUpViewModel: SignUpViewModel = viewModel()
-               SignUpScreen(
-                   navigateUp = { navController.popBackStack() },
-                   navigateSignIn = { navController.navigate(Routes.SignInScreen.route) },
-                   signUpEmail = signUpViewModel.signUpState.collectAsState().value.email,
-                   signUpPwd = signUpViewModel.signUpState.collectAsState().value.password,
-                   onEmailChange = { signUpViewModel.setSignUpEmail(it) },
-                   onPwdChange  = { signUpViewModel.setSignUpPwd(it) },
-                   isPwdVisibility = signUpViewModel.signUpState.collectAsState().value.isPassWordVisibility,
-                   isPwdVisible = { signUpViewModel.togglePasswordVisibility() },
-                   isSignUp = { signUpEmail, signUpPwd -> signUpViewModel.signUp() },
-                   signUpSuccess = signUpViewModel.isSignUpSuccess.collectAsState().value
+               SignUpRoute(
+                   navigateSignIn = { navController.navigate(Routes.SignInScreen.route) }
                )
            }
 
-           composable(
-               Routes.MyPageScreen.route,
-               arguments = listOf(navArgument("email") { type = NavType.StringType })
-           ) { backStackEntry ->
-               val email = backStackEntry.arguments?.getString("email") ?: ""
-               MyPageScreen(email = email)
+           composable(Routes.MyPageScreen.route) {
+               MyPageRoute()
            }
 
            composable(Routes.SearchScreen.route) {

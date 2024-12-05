@@ -30,9 +30,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
+import org.sopt.and.presentation.ui.signup.SignUpScreen
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.Gray100
 import org.sopt.and.ui.theme.Gray300
@@ -41,7 +43,7 @@ import org.sopt.and.ui.theme.White
 
 @Composable
 fun MyPageScreen(
-    email: String
+    myHobby: String
 ) {
     Column(
         modifier = Modifier
@@ -56,7 +58,7 @@ fun MyPageScreen(
                 .background(color = Gray300)
         ) {
             // 컴포넌트 - 프로필 row
-            MyProfileRow(email)
+            MyProfileRow(myHobby)
 
             // 인증하기 >
             MyPageActionText(
@@ -210,4 +212,12 @@ fun HistoryRow(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewMyPageScreen() {
+    MyPageScreen(
+        myHobby = stringResource(R.string.signup_id_placeholder),
+    )
 }

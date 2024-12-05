@@ -17,9 +17,7 @@ sealed interface Routes {
 
     @Serializable
     data object MyPageScreen : Routes {
-        override val route = "my_page/{email}"
-
-        fun createRoute(email: String): String = "my_page/$email"
+        override val route = "my_page"
     }
 
     @Serializable

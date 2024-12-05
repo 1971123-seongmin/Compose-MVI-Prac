@@ -36,6 +36,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.ImmutableList
@@ -43,6 +44,7 @@ import kotlinx.collections.immutable.persistentListOf
 import org.sopt.and.R
 import org.sopt.and.enum.Movie
 import org.sopt.and.presentation.component.BoxOverlayImage
+import org.sopt.and.presentation.ui.signup.SignUpScreen
 import org.sopt.and.ui.theme.Black
 import org.sopt.and.ui.theme.MoreDarkGray
 import org.sopt.and.ui.theme.Teal200
@@ -54,12 +56,12 @@ fun HomeScreen(
 ) {
     // 영화 리스트 -> 나중에 뷰모델로 이동
     val categories = persistentListOf(
-        Movie.뉴클래식,
-        Movie.드라마,
-        Movie.영화,
-        Movie.예능,
-        Movie.애니,
-        Movie.해외시리즈
+        Movie.NEW_CLASSIC,
+        Movie.DRAMA,
+        Movie.MOVIE,
+        Movie.ENTERTAINMENT,
+        Movie.ANIMATION,
+        Movie.FOREIGN_SERIES
     )
     val bannerList = persistentListOf(
         R.drawable.ic_banner_poster_tracer,
@@ -354,4 +356,10 @@ fun HomeBottomFixView(
             modifier = Modifier
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewHomeScreen() {
+    HomeScreen()
 }

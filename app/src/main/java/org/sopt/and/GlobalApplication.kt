@@ -1,10 +1,12 @@
 package org.sopt.and
 
 import android.app.Application
-import org.sopt.and.utils.InfoDataStore
+import dagger.hilt.android.HiltAndroidApp
+import org.sopt.and.utils.TokenManager
 
+@HiltAndroidApp
 class GlobalApplication: Application() {
-    private lateinit var dataStore: InfoDataStore
+    private lateinit var dataStore: TokenManager
 
     companion object {
         lateinit var globalApplication: GlobalApplication
@@ -15,9 +17,9 @@ class GlobalApplication: Application() {
         super.onCreate()
 
         globalApplication = this
-        dataStore = InfoDataStore(this)
+        dataStore = TokenManager(this)
     }
 
-    fun getDataStore(): InfoDataStore = dataStore
+    fun getDataStore(): TokenManager = dataStore
 
 }

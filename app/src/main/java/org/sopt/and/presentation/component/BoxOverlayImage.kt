@@ -28,7 +28,7 @@ fun BoxOverlayImage(
 ) {
     Box(
         modifier = modifier
-            .width(180.dp)  // 비율로 수정
+            .width(180.dp)
             .height(220.dp)
             .clip(RoundedCornerShape(12.dp))
     ) {

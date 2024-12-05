@@ -1,81 +1,76 @@
 package org.sopt.and.presentation.viewmodel
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.sopt.and.GlobalApplication
-import org.sopt.and.presentation.state.SignInState
+import org.sopt.and.base.BaseViewModel
+import org.sopt.and.domain.model.auth.LoginUserEntity
+import org.sopt.and.domain.usecase.auth.LoginUserUseCase
+import org.sopt.and.presentation.utils.UiEffect
+import org.sopt.and.presentation.utils.UiEvent
+import org.sopt.and.presentation.utils.contract.SignInContract
+import org.sopt.and.utils.validation.isValidLength
+import javax.inject.Inject
 
-class SignInViewModel : ViewModel() {
+@HiltViewModel
+class SignInViewModel @Inject constructor(
+    private val authUserCase: LoginUserUseCase
+) : BaseViewModel<SignInContract.Event, SignInContract.SignInState, SignInContract.Effect>() {
 
-    private val _signInState = MutableStateFlow(SignInState())
-    val signInState: StateFlow<SignInState>
-        get() = _signInState.asStateFlow()
+    override fun createInitialState(): SignInContract.SignInState {
+        return SignInContract.SignInState()
+    }
 
-    private val _isSignInSuccess = MutableStateFlow(false) // 로그인 성공 여부
-    val isSignInSuccess: StateFlow<Boolean>
-        get() = _isSignInSuccess.asStateFlow()
+    override fun handleEvent(event: UiEvent) {
+        when (event) {
+            is SignInContract.Event.OnUsernameChanged -> {
+                setState(currentState.copy(username = event.username))
+            }
+            is SignInContract.Event.OnPasswordChanged -> {
+                setState(currentState.copy(password = event.password))
+            }
+            is SignInContract.Event.OnPasswordVisibilityToggle -> {
+                setState(currentState.copy(isPassWordVisibility = !currentState.isPassWordVisibility))
+            }
+            is SignInContract.Event.OnSignInButtonClicked -> {
+                val isUserNameValid = currentState.username.isValidLength()
+                val isPasswordValid = currentState.password.isValidLength()
 
-    private val _loginStatusMessage = MutableStateFlow("")
-    val loginStatusMessage: StateFlow<String> = _loginStatusMessage
+                when {
+                    !isUserNameValid -> {
+                        setState(currentState.copy(loginStatus = SignInContract.SignInStatus.FAILURE))
+                        setEffect(SignInContract.Effect.ShowToast("이름이 8자 이상입니다!"))
+                    }
+                    !isPasswordValid -> {
+                        setState(currentState.copy(loginStatus = SignInContract.SignInStatus.FAILURE))
+                        setEffect(SignInContract.Effect.ShowToast("비밀번호가 8자 이상입니다!"))
+                    }
+                    else -> {
+                        viewModelScope.launch {
+                            val result = authUserCase(
+                                LoginUserEntity(
+                                    currentState.username,
+                                    currentState.password
+                                )
+                            )
+                            result.onSuccess {
+                                setState(currentState.copy(loginStatus = SignInContract.SignInStatus.SUCCESS))
+                                setEffect(SignInContract.Effect.ShowToast("로그인 성공"))
 
-    private val dataStore = GlobalApplication.getInstance().getDataStore()
-
-    // 로그인 처리 함수
-    fun login() {
-        viewModelScope.launch {
-            val savedEmail = dataStore.getEmail().first()
-            val savedPassword = dataStore.getPwd().first()
-
-            val isLoginSuccess = (savedEmail == _signInState.value.email) &&
-                    (savedPassword == _signInState.value.password)
-
-            if(isLoginSuccess) {
-                _signInState.value = _signInState.value.copy(loginStatus = isLoginSuccess)
-                _isSignInSuccess.value = isLoginSuccess
-            } else {
-                _isSignInSuccess.value = !isLoginSuccess
+                            }.onFailure { exception ->
+                                setState(currentState.copy(loginStatus = SignInContract.SignInStatus.FAILURE))
+                                setEffect(SignInContract.Effect.ShowToast("로그인 실패: ${exception.message}"))
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
+    private val dataStore = GlobalApplication.getInstance().getDataStore()
 
-    // 비밀번호 표시 여부
-    fun togglePasswordVisibility() {
-        _signInState.value = _signInState.value.copy(
-            isPassWordVisibility = !_signInState.value.isPassWordVisibility
-        )
-    }
-
-    // 이메일 입력 처리
-    fun setSignInEmail(newEmail: String) {
-        _signInState.value = _signInState.value.copy(
-            email = newEmail
-        )
-    }
-
-    // 비밀번호 입력 처리
-    fun setSignInPwd(newPassword: String) {
-        _signInState.value = _signInState.value.copy(
-            password = newPassword
-        )
-    }
-
-    // 이메일, 비밀번호 로드
-    fun loadSignInInfo() {
-        viewModelScope.launch {
-            val email = dataStore.getEmail().firstOrNull() ?: ""
-            val password = dataStore.getPwd().firstOrNull() ?: ""
-            _signInState.value = _signInState.value.copy(
-                email = email,
-                password = password
-            )
-        }
-    }
+    override fun handleEffect(effect: UiEffect) { }
 
 }

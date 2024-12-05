@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.sopt.and.R
 import org.sopt.and.ui.theme.Gray100
 import org.sopt.and.ui.theme.Gray200
 
@@ -46,4 +48,10 @@ fun SocialLoginTextDriver(@StringRes content: Int) {
             color = Gray200
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewSocialLoginTextDriver() {
+    SocialLoginTextDriver(content = R.string.sign_social) // 예시 문자열 리소스를 전달
 }
