@@ -65,3 +65,16 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "ko
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroidGradlePlugin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+[bundles]
+navigation = [
+    "androidx-navigation-fragment-ktx",
+    "androidx-navigation-ui-ktx",
+    "androidx-navigation-compose"
+]
+retrofit = [
+    "okhttp",
+    "okhttp-logging-interceptor",
+    "retrofit",
+    "retrofit-kotlin-serialization-converter",
+]
