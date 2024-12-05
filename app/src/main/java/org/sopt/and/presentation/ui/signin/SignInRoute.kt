@@ -12,7 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.sopt.and.presentation.utils.contract.SignInContract
 import org.sopt.and.presentation.viewmodel.SignInViewModel
-import org.sopt.and.utils.showToastMsg
+import org.sopt.and.utils.showToastMessage
 
 @Composable
 fun SignInRoute (
@@ -28,7 +28,7 @@ fun SignInRoute (
         signInEffect.collect {
             when(it) {
                 is SignInContract.Effect.ShowToast -> {
-                    context.showToastMsg(it.message)
+                    context.showToastMessage(it.message)
                 }
             }
         }
