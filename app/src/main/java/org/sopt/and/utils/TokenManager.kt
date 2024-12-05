@@ -17,12 +17,6 @@ import javax.inject.Inject
 class TokenManager @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
-
-    companion object {
-        private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(name = "info")
-        private val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
-    }
-
     fun saveToken(token: String) = runBlocking {
         context.tokenDataStore.edit { prefs ->
             prefs[ACCESS_TOKEN_KEY] = token
@@ -34,5 +28,10 @@ class TokenManager @Inject constructor(
         return  context.tokenDataStore.data.map { prefs ->
             prefs[ACCESS_TOKEN_KEY]
         }
+    }
+
+    companion object {
+        private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(name = "info")
+        private val ACCESS_TOKEN_KEY = stringPreferencesKey("access_token")
     }
 }
