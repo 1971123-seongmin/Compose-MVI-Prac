@@ -1,4 +1,4 @@
-package org.sopt.and.domain.mapper
+package org.sopt.and.data.mapper
 
 import org.sopt.and.data.model.request.UserLoginRequestDto
 import org.sopt.and.data.model.request.UserRegisterRequestDto
