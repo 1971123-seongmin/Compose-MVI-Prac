@@ -3,7 +3,6 @@ package org.sopt.and.presentation.viewmodel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.sopt.and.WavveApp
 import org.sopt.and.base.BaseViewModel
 import org.sopt.and.domain.model.auth.LoginUserEntity
 import org.sopt.and.domain.usecase.auth.LoginUserUseCase
@@ -68,8 +67,6 @@ class SignInViewModel @Inject constructor(
             }
         }
     }
-
-    private val dataStore = WavveApp.getInstance().getDataStore()
 
     override fun handleEffect(effect: UiEffect) { }
 
