@@ -26,10 +26,6 @@ object NetworkModule {
     @Retention(AnnotationRetention.BINARY)
     annotation class MainServer
 
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class Token
-
     @Provides
     @Singleton
     @OptIn(ExperimentalSerializationApi::class)
@@ -50,7 +46,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @Token
     fun provideTokenInterceptor(tokenManager: TokenManager): AccessTokenInterceptor {
         return AccessTokenInterceptor(tokenManager)
     }
