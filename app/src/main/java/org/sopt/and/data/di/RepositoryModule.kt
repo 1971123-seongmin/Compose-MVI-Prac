@@ -21,12 +21,6 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideTokenManager(@ApplicationContext context: Context): TokenManager {
-        return TokenManager(context)
-    }
-
-    @Provides
-    @Singleton
     fun provideAuthRepository(
         authDataSource: AuthDataSource,
         tokenManager: TokenManager
