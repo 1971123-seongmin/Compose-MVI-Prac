@@ -7,24 +7,24 @@ import org.sopt.and.utils.TokenManager
 import timber.log.Timber
 
 @HiltAndroidApp
-class GlobalApplication: Application() {
-    private lateinit var dataStore: TokenManager
+class WavveApp: Application() {
+    private lateinit var tokenManager: TokenManager
 
     companion object {
-        lateinit var globalApplication: GlobalApplication
-        fun getInstance() = globalApplication
+        lateinit var wavveApp: WavveApp
+        fun getInstance() = wavveApp
     }
 
     override fun onCreate() {
         super.onCreate()
 
-        globalApplication = this
-        dataStore = TokenManager(this)
+        wavveApp = this
+        tokenManager = TokenManager(this)
         initTimber()
         setDayMode()
     }
 
-    fun getDataStore(): TokenManager = dataStore
+    fun getDataStore(): TokenManager = tokenManager
 
     private fun initTimber() {
         if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
