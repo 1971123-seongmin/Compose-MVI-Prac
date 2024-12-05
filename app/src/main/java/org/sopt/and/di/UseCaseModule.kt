@@ -1,4 +1,4 @@
-package org.sopt.and.data.di
+package org.sopt.and.di
 
 import dagger.Module
 import dagger.Provides
