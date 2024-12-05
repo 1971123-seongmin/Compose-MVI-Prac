@@ -9,9 +9,7 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
     override suspend fun getMyHobby(): Result<MyHobbyEntity> =
         runCatching {
-            val response = userDataSource.getMyHobby()
-            response.result.mapperToMyHobbyEntity()
+            userDataSource.getMyHobby().result.mapperToMyHobbyEntity()
         }
-
 
 }
