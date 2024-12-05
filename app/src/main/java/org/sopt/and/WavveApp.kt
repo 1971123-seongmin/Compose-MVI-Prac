@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import dagger.hilt.android.HiltAndroidApp
 import org.sopt.and.utils.TokenManager
 import timber.log.Timber
-import javax.inject.Inject
 
 @HiltAndroidApp
 class WavveApp : Application() {
 
-    @Inject
     private lateinit var tokenManager: TokenManager
 
     companion object {
