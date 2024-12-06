@@ -1,6 +1,6 @@
 package org.sopt.and.data.service
 
-import org.sopt.and.base.NullableBaseResponse
+import org.sopt.and.utils.base.NullableBaseResponse
 import org.sopt.and.data.model.response.MyHobbyResponse
 import retrofit2.http.GET
 import retrofit2.http.PUT

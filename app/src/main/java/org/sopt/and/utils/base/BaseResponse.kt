@@ -1,4 +1,4 @@
-package org.sopt.and.base
+package org.sopt.and.utils.base
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

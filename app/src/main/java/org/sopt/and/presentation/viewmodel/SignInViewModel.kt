@@ -3,7 +3,7 @@ package org.sopt.and.presentation.viewmodel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.sopt.and.base.BaseViewModel
+import org.sopt.and.utils.base.BaseViewModel
 import org.sopt.and.domain.model.auth.LoginUserEntity
 import org.sopt.and.domain.usecase.auth.LoginUserUseCase
 import org.sopt.and.presentation.utils.UiEffect
