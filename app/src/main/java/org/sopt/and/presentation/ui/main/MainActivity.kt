@@ -1,4 +1,4 @@
-package org.sopt.and.presentation.ui
+package org.sopt.and.presentation.ui.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -32,7 +32,6 @@ import org.sopt.and.presentation.navigation.Navigation
 import org.sopt.and.presentation.navigation.Routes
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
 import org.sopt.and.core.designsystem.theme.Black
-import org.sopt.and.core.designsystem.theme.DoubleDarkGray
 import org.sopt.and.core.designsystem.theme.MoreDarkGray
 import org.sopt.and.core.designsystem.theme.White
 
