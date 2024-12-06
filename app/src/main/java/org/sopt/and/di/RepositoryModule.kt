@@ -1,14 +1,10 @@
 package org.sopt.and.di
 
-import android.content.Context
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import org.sopt.and.data.remote.source.auth.AuthDataSource
 import org.sopt.and.data.remote.source.auth.AuthRepositoryImpl
-import org.sopt.and.data.remote.source.user.UserDataSource
 import org.sopt.and.data.remote.source.user.UserRepositoryImpl
 import org.sopt.and.domain.repository.AuthRepository
 import org.sopt.and.domain.repository.UserRepository
@@ -17,22 +13,17 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
-
-    @Provides
+abstract class RepositoryModule {
+    @Binds
     @Singleton
-    fun provideAuthRepository(
-        authDataSource: AuthDataSource,
+    abstract fun bindsAuthRepository(
+        authRepositoryImpl: AuthRepositoryImpl,
         tokenManager: TokenManager
-    ): AuthRepository =
-        AuthRepositoryImpl(authDataSource, tokenManager)
+    ): AuthRepository
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideUserRepository(
-        userDataSource: UserDataSource
-    ): UserRepository =
-        UserRepositoryImpl(userDataSource)
-
-
+    abstract fun bindsUserRepository(
+        userRepositoryImpl: UserRepositoryImpl
+    ): UserRepository
 }
