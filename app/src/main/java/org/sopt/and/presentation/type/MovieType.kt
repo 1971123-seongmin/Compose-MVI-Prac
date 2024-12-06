@@ -1,6 +1,6 @@
-package org.sopt.and.enum
+package org.sopt.and.presentation.type
 
-enum class Movie(val description: String) {
+enum class MovieType(val description: String) {
     NEW_CLASSIC("뉴클래식"),
     DRAMA("드라마"),
     MOVIE("영화"),

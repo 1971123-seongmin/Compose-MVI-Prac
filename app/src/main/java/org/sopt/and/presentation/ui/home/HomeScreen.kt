@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.sopt.and.R
-import org.sopt.and.enum.Movie
+import org.sopt.and.presentation.type.Movie
 import org.sopt.and.core.designsystem.component.BoxOverlayImage
 import org.sopt.and.core.designsystem.theme.Black
 import org.sopt.and.core.designsystem.theme.MoreDarkGray
