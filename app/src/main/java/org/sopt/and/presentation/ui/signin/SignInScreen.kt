@@ -18,12 +18,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,16 +28,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.presentation.component.AuthTextField
-import org.sopt.and.presentation.component.RoundedButton
-import org.sopt.and.presentation.component.SignInToolbar
-import org.sopt.and.presentation.component.SocialLoginRow
-import org.sopt.and.presentation.component.SocialLoginTextDriver
-import org.sopt.and.presentation.ui.signup.SignUpScreen
-import org.sopt.and.ui.theme.Black
-import org.sopt.and.ui.theme.Gray100
-import org.sopt.and.ui.theme.Gray200
-import org.sopt.and.ui.theme.White
+import org.sopt.and.core.designsystem.component.AuthTextField
+import org.sopt.and.core.designsystem.component.RoundedButton
+import org.sopt.and.core.designsystem.component.SignInToolbar
+import org.sopt.and.core.designsystem.component.SocialLoginRow
+import org.sopt.and.core.designsystem.component.SocialLoginTextDriver
+import org.sopt.and.core.designsystem.theme.Black
+import org.sopt.and.core.designsystem.theme.Gray100
+import org.sopt.and.core.designsystem.theme.White
 
 @Composable
 fun SignInScreen(

@@ -1,4 +1,4 @@
-package org.sopt.and.presentation.component
+package org.sopt.and.core.designsystem.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,8 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.ui.theme.WavveBlue
-import org.sopt.and.ui.theme.White
+import org.sopt.and.core.designsystem.theme.WavveBlue
+import org.sopt.and.core.designsystem.theme.White
 
 @Composable
 fun RoundedButton(

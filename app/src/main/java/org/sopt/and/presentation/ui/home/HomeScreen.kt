@@ -43,12 +43,11 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.sopt.and.R
 import org.sopt.and.enum.Movie
-import org.sopt.and.presentation.component.BoxOverlayImage
-import org.sopt.and.presentation.ui.signup.SignUpScreen
-import org.sopt.and.ui.theme.Black
-import org.sopt.and.ui.theme.MoreDarkGray
-import org.sopt.and.ui.theme.Teal200
-import org.sopt.and.ui.theme.White
+import org.sopt.and.core.designsystem.component.BoxOverlayImage
+import org.sopt.and.core.designsystem.theme.Black
+import org.sopt.and.core.designsystem.theme.MoreDarkGray
+import org.sopt.and.core.designsystem.theme.Teal200
+import org.sopt.and.core.designsystem.theme.White
 
 @Composable
 fun HomeScreen(

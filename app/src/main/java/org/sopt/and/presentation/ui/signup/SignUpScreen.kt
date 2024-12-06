@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -33,14 +32,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.presentation.component.AuthTextField
-import org.sopt.and.presentation.component.SignUpToolbar
-import org.sopt.and.presentation.component.SocialLoginRow
-import org.sopt.and.presentation.component.SocialLoginTextDriver
-import org.sopt.and.ui.theme.Black
-import org.sopt.and.ui.theme.DoubleDarkGray
-import org.sopt.and.ui.theme.Gray100
-import org.sopt.and.ui.theme.White
+import org.sopt.and.core.designsystem.component.AuthTextField
+import org.sopt.and.core.designsystem.component.SignUpToolbar
+import org.sopt.and.core.designsystem.component.SocialLoginRow
+import org.sopt.and.core.designsystem.component.SocialLoginTextDriver
+import org.sopt.and.core.designsystem.theme.Black
+import org.sopt.and.core.designsystem.theme.DoubleDarkGray
+import org.sopt.and.core.designsystem.theme.Gray100
+import org.sopt.and.core.designsystem.theme.White
 
 @Composable
 fun SignUpScreen(

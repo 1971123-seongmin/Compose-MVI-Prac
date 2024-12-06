@@ -30,11 +30,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.and.presentation.navigation.BottomNavItem
 import org.sopt.and.presentation.navigation.Navigation
 import org.sopt.and.presentation.navigation.Routes
-import org.sopt.and.ui.theme.ANDANDROIDTheme
-import org.sopt.and.ui.theme.Black
-import org.sopt.and.ui.theme.DoubleDarkGray
-import org.sopt.and.ui.theme.MoreDarkGray
-import org.sopt.and.ui.theme.White
+import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
+import org.sopt.and.core.designsystem.theme.Black
+import org.sopt.and.core.designsystem.theme.DoubleDarkGray
+import org.sopt.and.core.designsystem.theme.MoreDarkGray
+import org.sopt.and.core.designsystem.theme.White
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

@@ -1,4 +1,4 @@
-package org.sopt.and.presentation.component
+package org.sopt.and.core.designsystem.component
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Row
@@ -14,8 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
-import org.sopt.and.ui.theme.Gray100
-import org.sopt.and.ui.theme.Gray200
+import org.sopt.and.core.designsystem.theme.Gray100
+import org.sopt.and.core.designsystem.theme.Gray200
 
 // 소셜 로그인 제목 driver
 @Composable
