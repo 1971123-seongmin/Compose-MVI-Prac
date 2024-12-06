@@ -8,7 +8,6 @@ import org.sopt.and.data.remote.source.auth.AuthRepositoryImpl
 import org.sopt.and.data.remote.source.user.UserRepositoryImpl
 import org.sopt.and.domain.repository.AuthRepository
 import org.sopt.and.domain.repository.UserRepository
-import org.sopt.and.utils.TokenManager
 import javax.inject.Singleton
 
 @Module
@@ -17,8 +16,7 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindsAuthRepository(
-        authRepositoryImpl: AuthRepositoryImpl,
-        tokenManager: TokenManager
+        authRepositoryImpl: AuthRepositoryImpl
     ): AuthRepository
 
     @Binds
