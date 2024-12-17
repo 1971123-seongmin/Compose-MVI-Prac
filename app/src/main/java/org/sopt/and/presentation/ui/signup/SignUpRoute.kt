@@ -53,6 +53,7 @@ fun SignUpRoute(
         isPwdVisibility = signUpState.isPassWordVisibility,
         isPwdVisible ={ viewModel.setEvent(SignUpContract.Event.OnPasswordVisibilityToggle) },
         onSignUpBtnClick = { viewModel.setEvent(SignUpContract.Event.OnSignUpButtonClicked) },
+        navigateSignIn = navigateSignIn,
         modifier = Modifier.padding(innerPadding)
         )
     }

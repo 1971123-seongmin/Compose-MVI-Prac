@@ -52,6 +52,7 @@ fun SignUpScreen(
     isPwdVisibility: Boolean,
     isPwdVisible: () -> Unit,
     onSignUpBtnClick:() -> Unit,
+    navigateSignIn: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -72,7 +73,9 @@ fun SignUpScreen(
             SignUpToolbar(
                 content = stringResource(R.string.signup),
                 trailingIcon = {
-                    IconButton({}) {
+                    IconButton(
+                        onClick = navigateSignIn
+                    ) {
                         Icon(
                             imageVector = Icons.Outlined.Close,
                             contentDescription = null,
@@ -220,7 +223,8 @@ fun PreviewSignUpScreen() {
         onHobbyChange = {},
         isPwdVisibility = false,
         isPwdVisible = {},
-        onSignUpBtnClick = { },
+        onSignUpBtnClick = {},
+        navigateSignIn = {},
         modifier = Modifier
     )
 }
