@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.navigation.compose.NavHost
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import org.sopt.and.core.designsystem.theme.Black
 import org.sopt.and.core.designsystem.theme.MoreDarkGray
 import org.sopt.and.core.designsystem.theme.White
@@ -37,7 +39,7 @@ fun MainScreen(
         bottomBar = {
             navigator.currentTab?.let {
                 MainBottomBar(
-                    tabs = MainBottomNavigationType.entries.toList(),
+                    tabs = MainBottomNavigationType.entries.toImmutableList(),
                     currentTab = it,
                     onTabSelected = { bottomNavi ->
                         navigator.navigateMainBottomNavigation((bottomNavi.route))
@@ -78,7 +80,7 @@ fun MainScreen(
 
 @Composable
 private fun MainBottomBar(
-    tabs: List<MainBottomNavigationType>,
+    tabs: ImmutableList<MainBottomNavigationType>,
     currentTab: MainBottomNavigationType,
     onTabSelected: (MainBottomNavigationType) -> Unit,
 ) {
