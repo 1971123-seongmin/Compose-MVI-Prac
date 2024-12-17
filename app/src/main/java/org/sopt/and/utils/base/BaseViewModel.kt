@@ -2,62 +2,59 @@ package org.sopt.and.utils.base
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import org.sopt.and.presentation.utils.UiEffect
 import org.sopt.and.presentation.utils.UiEvent
+import org.sopt.and.presentation.utils.UiSideEffect
 import org.sopt.and.presentation.utils.UiState
 
-abstract class BaseViewModel<uiEvent : UiEvent, uiState : UiState, uiEffect : UiEffect> : ViewModel() {
+abstract class BaseViewModel<State: UiState, SideEffect: UiSideEffect, Event: UiEvent> : ViewModel() {
 
-    private val initialState : uiState by lazy { createInitialState() }
-    abstract fun createInitialState() : uiState
+    private val initialState : State by lazy { createInitialState() }
+    abstract fun createInitialState() : State
 
-    val currentState: uiState
+    private val _uiState : MutableStateFlow<State> = MutableStateFlow(initialState)
+    val uiState : StateFlow<State>
+        get() = _uiState.asStateFlow()
+    val currentState: State
         get() = uiState.value
 
-    private val _uiState : MutableStateFlow<uiState> = MutableStateFlow(initialState)
-    val uiState = _uiState.asStateFlow()
+    private val _uiEvent : MutableSharedFlow<Event> = MutableSharedFlow() // 이벤트 처리할 필요 없으면 무시됨 (구독자 없으면)
+    val event: SharedFlow<Event>
+        get() = _uiEvent.asSharedFlow()
 
-    private val _uiEvent : MutableSharedFlow<UiEvent> = MutableSharedFlow() // 이벤트 처리할 필요 없으면 무시됨 (구독자 없으면)
-    val event = _uiEvent.asSharedFlow()
+    private val _sideEffect : MutableSharedFlow<SideEffect> = MutableSharedFlow() // 각각의 이벤트가 오직 하나의 구독자에게만 전달됨 (HotStream 임)
+    val sideEffect: Flow<SideEffect>
+        get() = _sideEffect.asSharedFlow()
 
-    private val _uiEffect : Channel<UiEffect> = Channel() // 각각의 이벤트가 오직 하나의 구독자에게만 전달됨 (HotStream 임)
-    val effect = _uiEffect.receiveAsFlow()
-
-    init {
-        subscribeEvents()
+    // Set new Ui State
+    protected fun setState(reduce: State.() -> State) {
+        _uiState.value = currentState.reduce()
     }
 
      // Set new Event
-    fun setEvent(newEvent : UiEvent) {
+    open fun setEvent(newEvent: Event) {
         viewModelScope.launch { _uiEvent.emit(newEvent) }
     }
 
-    // Set new Ui State
-    protected fun setState(newState: uiState) {
-        _uiState.value = newState
+    // Set new SideEffect
+    protected fun setSideEffect(newSideEffect: SideEffect) {
+        viewModelScope.launch { _sideEffect.emit(newSideEffect) }
     }
 
-    // Set new Effect
-    protected fun setEffect(newEffect: UiEffect) {
-        viewModelScope.launch { _uiEffect.send(newEffect) }
-    }
-
-     // Start listening to Event
-    private fun subscribeEvents() {
+    // Start listening to Event
+    private fun dispatchEvent(event: Event) {
         viewModelScope.launch {
-            event.collect {
-                handleEvent(it)
-            }
+            handleEvent(event)
         }
     }
 
-    abstract fun handleEvent(event : UiEvent)
-    abstract fun handleEffect(effect: UiEffect)
+    protected abstract fun handleEvent(event : Event)
+
 }
