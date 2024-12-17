@@ -1,6 +1,6 @@
 package org.sopt.and.data.remote.source.auth
 
-import org.sopt.and.domain.mapper.AuthMapper
+import org.sopt.and.data.mapper.AuthMapper
 import org.sopt.and.domain.model.auth.LoginUserEntity
 import org.sopt.and.domain.model.auth.RegisterUserEntity
 import org.sopt.and.domain.model.auth.UserIdEntity

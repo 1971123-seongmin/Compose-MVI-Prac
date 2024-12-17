@@ -3,14 +3,13 @@ package org.sopt.and.presentation.viewmodel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.sopt.and.GlobalApplication
-import org.sopt.and.base.BaseViewModel
 import org.sopt.and.domain.model.auth.LoginUserEntity
 import org.sopt.and.domain.usecase.auth.LoginUserUseCase
 import org.sopt.and.presentation.utils.UiEffect
 import org.sopt.and.presentation.utils.UiEvent
 import org.sopt.and.presentation.utils.contract.SignInContract
-import org.sopt.and.utils.validation.isValidLength
+import org.sopt.and.utils.base.BaseViewModel
+import org.sopt.and.utils.isValidLength
 import javax.inject.Inject
 
 @HiltViewModel
@@ -68,8 +67,6 @@ class SignInViewModel @Inject constructor(
             }
         }
     }
-
-    private val dataStore = GlobalApplication.getInstance().getDataStore()
 
     override fun handleEffect(effect: UiEffect) { }
 

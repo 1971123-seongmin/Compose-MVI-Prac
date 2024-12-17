@@ -42,13 +42,12 @@ import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.sopt.and.R
-import org.sopt.and.enum.Movie
-import org.sopt.and.presentation.component.BoxOverlayImage
-import org.sopt.and.presentation.ui.signup.SignUpScreen
-import org.sopt.and.ui.theme.Black
-import org.sopt.and.ui.theme.MoreDarkGray
-import org.sopt.and.ui.theme.Teal200
-import org.sopt.and.ui.theme.White
+import org.sopt.and.core.designsystem.component.BoxOverlayImage
+import org.sopt.and.core.designsystem.theme.Black
+import org.sopt.and.core.designsystem.theme.MoreDarkGray
+import org.sopt.and.core.designsystem.theme.Teal200
+import org.sopt.and.core.designsystem.theme.White
+import org.sopt.and.presentation.type.MovieType
 
 @Composable
 fun HomeScreen(
@@ -56,12 +55,12 @@ fun HomeScreen(
 ) {
     // 영화 리스트 -> 나중에 뷰모델로 이동
     val categories = persistentListOf(
-        Movie.NEW_CLASSIC,
-        Movie.DRAMA,
-        Movie.MOVIE,
-        Movie.ENTERTAINMENT,
-        Movie.ANIMATION,
-        Movie.FOREIGN_SERIES
+        MovieType.NEW_CLASSIC,
+        MovieType.DRAMA,
+        MovieType.MOVIE,
+        MovieType.ENTERTAINMENT,
+        MovieType.ANIMATION,
+        MovieType.FOREIGN_SERIES
     )
     val bannerList = persistentListOf(
         R.drawable.ic_banner_poster_tracer,
@@ -117,7 +116,7 @@ fun HomeScreen(
 
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                MovieCategories(categories)
+                MovieTypeCategories(categories)
             }
 
             // 배너 포스트 이미지 (Row)
@@ -148,17 +147,17 @@ fun HomeScreen(
 
             item {
                 Spacer(Modifier.height(24.dp))
-                HomeSectionWithMovieList(stringResource(R.string.home_title_section_1), postList1)
+                HomeSectionWithMovieTypeList(stringResource(R.string.home_title_section_1), postList1)
             }
 
             item {
                 Spacer(Modifier.height(24.dp))
-                HomeSectionWithMovieList(stringResource(R.string.home_title_section_2), postList2)
+                HomeSectionWithMovieTypeList(stringResource(R.string.home_title_section_2), postList2)
             }
 
             item {
                 Spacer(Modifier.height(24.dp))
-                HomeSectionWithMovieList(stringResource(R.string.home_title_section_3), postList3)
+                HomeSectionWithMovieTypeList(stringResource(R.string.home_title_section_3), postList3)
             }
 
             item {
@@ -185,7 +184,7 @@ fun HomeScreen(
 
             item {
                 Spacer(Modifier.height(24.dp))
-                HomeSectionWithMovieList(stringResource(R.string.home_title_section_5), postList4)
+                HomeSectionWithMovieTypeList(stringResource(R.string.home_title_section_5), postList4)
             }
         }
         HomeBottomFixView(R.string.signup_offer)
@@ -194,7 +193,7 @@ fun HomeScreen(
 
 // 카테고리 Row
 @Composable
-fun MovieCategories(categories: ImmutableList<Movie>) {
+fun MovieTypeCategories(categories: ImmutableList<MovieType>) {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
@@ -217,9 +216,9 @@ fun MovieCategories(categories: ImmutableList<Movie>) {
 }
 
 @Composable
-fun HomeSectionWithMovieList(
+fun HomeSectionWithMovieTypeList(
     title: String,
-    @DrawableRes movieList: ImmutableList<Int>
+    @DrawableRes MovieTypeList: ImmutableList<Int>
 ) {
     Column(
         modifier = Modifier
@@ -228,14 +227,14 @@ fun HomeSectionWithMovieList(
     ) {
         HomeSectionHeader(title = title)
         Spacer(modifier = Modifier.height(8.dp))
-        MovieListRow(movieList = movieList)
+        MovieTypeListRow(MovieTypeList = MovieTypeList)
     }
 }
 
 // 홈화면 영화 LazyRow
 @Composable
-fun MovieListRow(
-    @DrawableRes movieList: ImmutableList<Int>,
+fun MovieTypeListRow(
+    @DrawableRes MovieTypeList: ImmutableList<Int>,
     modifier: Modifier = Modifier
 ) {
     LazyRow (
@@ -245,9 +244,9 @@ fun MovieListRow(
             .padding(horizontal = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(movieList) { movie ->
+        items(MovieTypeList) { MovieType ->
             Image(
-                painter = painterResource(movie),
+                painter = painterResource(MovieType),
                 contentDescription = "배너",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier

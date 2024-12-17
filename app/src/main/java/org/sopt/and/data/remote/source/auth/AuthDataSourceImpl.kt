@@ -1,6 +1,6 @@
 package org.sopt.and.data.remote.source.auth
 
-import org.sopt.and.base.NullableBaseResponse
+import org.sopt.and.utils.base.NullableBaseResponse
 import org.sopt.and.data.model.request.UserLoginRequestDto
 import org.sopt.and.data.model.request.UserRegisterRequestDto
 import org.sopt.and.data.model.response.UserLoginResponse

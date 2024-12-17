@@ -35,11 +35,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.sopt.and.R
 import org.sopt.and.presentation.ui.signup.SignUpScreen
-import org.sopt.and.ui.theme.Black
-import org.sopt.and.ui.theme.Gray100
-import org.sopt.and.ui.theme.Gray300
-import org.sopt.and.ui.theme.GrayBlack
-import org.sopt.and.ui.theme.White
+import org.sopt.and.core.designsystem.theme.Black
+import org.sopt.and.core.designsystem.theme.Gray100
+import org.sopt.and.core.designsystem.theme.Gray300
+import org.sopt.and.core.designsystem.theme.GrayBlack
+import org.sopt.and.core.designsystem.theme.White
 
 @Composable
 fun MyPageScreen(

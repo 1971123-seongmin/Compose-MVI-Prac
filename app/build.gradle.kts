@@ -81,23 +81,22 @@
         ksp(libs.hilt.android.compiler)
         implementation(libs.hilt.navigation)
 
+        // Timber
+        implementation (libs.timber)
+
         // Coil
         implementation(libs.coil.compose)
 
         // navigation
-        implementation(libs.androidx.navigation.compose)
+        implementation(libs.bundles.navigation)
+
+        // Kotlin Serialization
         implementation(libs.kotlinx.serialization.json)
-        implementation(libs.androidx.navigation.ui.ktx)
-        implementation(libs.androidx.navigation.fragment.ktx)
 
         // Coroutines
         implementation(libs.kotlinx.coroutines)
 
         // Network
         implementation(platform(libs.okhttp.bom))
-        implementation(libs.okhttp)
-        implementation(libs.okhttp.logging.interceptor)
-        implementation(libs.retrofit)
-        implementation(libs.retrofit.kotlin.serialization.converter)
-        implementation(libs.kotlinx.serialization.json)
+        implementation(libs.bundles.retrofit)
     }
