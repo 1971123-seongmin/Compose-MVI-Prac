@@ -8,7 +8,7 @@ import org.sopt.and.core.navigation.MainBottomNavigation
 
 fun NavController.navigateMyPage(navOptions: NavOptions? = null) {
     navigate(
-        route = MainBottomNavigation.MY::class.simpleName.orEmpty(),
+        route = MainBottomNavigation.MY,
         navOptions = navOptions
     )
 }
