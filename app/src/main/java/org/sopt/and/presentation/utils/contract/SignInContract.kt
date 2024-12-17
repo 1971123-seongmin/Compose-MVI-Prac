@@ -1,6 +1,6 @@
 package org.sopt.and.presentation.utils.contract
 
-import org.sopt.and.presentation.utils.UiEffect
+import org.sopt.and.presentation.utils.UiSideEffect
 import org.sopt.and.presentation.utils.UiEvent
 import org.sopt.and.presentation.utils.UiState
 
@@ -24,8 +24,8 @@ class SignInContract {
         val loginStatus: SignInStatus = SignInStatus.IDLE
     ) : UiState
 
-    sealed class Effect : UiEffect {
-        data class ShowToast(val message: String) : Effect()
+    sealed class SideEffect : UiSideEffect {
+        data class ShowToast(val message: String) : SideEffect()
     }
 
 }
