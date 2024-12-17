@@ -2,25 +2,25 @@ package org.sopt.and.presentation.ui.main
 
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.navigation.compose.NavHost
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import org.sopt.and.core.designsystem.theme.Black
-import org.sopt.and.core.designsystem.theme.MoreDarkGray
+import org.sopt.and.core.designsystem.theme.Gray100
 import org.sopt.and.core.designsystem.theme.White
 import org.sopt.and.core.util.NoRippleInteraction
 import org.sopt.and.presentation.ui.home.homeNavGraph
@@ -86,32 +86,34 @@ private fun MainBottomBar(
 ) {
     NavigationBar(containerColor = Black) {
         tabs.forEach { itemType ->
+            val isSelected = currentTab == itemType
+
             NavigationBarItem(
                 interactionSource = NoRippleInteraction,
-                selected = currentTab == itemType,
+                selected = isSelected,
                 onClick = {
                     onTabSelected(itemType)
                 },
                 icon = {
-                    Image(
-                        imageVector = ImageVector.vectorResource(currentTab.icon),
-                        contentDescription = null,
+                    Icon(
+                        painter = painterResource(id = itemType.icon),
+                        contentDescription = stringResource(id = itemType.title),
+                        tint = if (isSelected) White else Gray100
                     )
                 },
                 label = {
                     Text(
-                        stringResource(id = itemType.title),
+                        text = stringResource(id = itemType.title),
+                        color = if (isSelected) White else Gray100
                     )
                 },
                 colors =
-                NavigationBarItemColors(
+                NavigationBarItemDefaults.colors(
+                    indicatorColor = Color.Transparent,
                     selectedIconColor = White,
                     selectedTextColor = White,
-                    selectedIndicatorColor = White,
-                    unselectedIconColor = MoreDarkGray,
-                    unselectedTextColor = MoreDarkGray,
-                    disabledTextColor = MoreDarkGray,
-                    disabledIconColor = MoreDarkGray,
+                    unselectedIconColor = Gray100,
+                    unselectedTextColor = Gray100
                 ),
             )
         }
