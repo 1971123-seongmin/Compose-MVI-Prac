@@ -1,12 +1,11 @@
 package org.sopt.and.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.sopt.and.domain.model.auth.LoginUserEntity
 import org.sopt.and.domain.usecase.auth.LoginUserUseCase
-import org.sopt.and.presentation.utils.UiEffect
-import org.sopt.and.presentation.utils.UiEvent
 import org.sopt.and.presentation.utils.contract.SignInContract
 import org.sopt.and.utils.base.BaseViewModel
 import org.sopt.and.utils.isValidLength
@@ -15,22 +14,23 @@ import javax.inject.Inject
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val authUserCase: LoginUserUseCase
-) : BaseViewModel<SignInContract.Event, SignInContract.SignInState, SignInContract.Effect>() {
+) : BaseViewModel<SignInContract.SignInState, SignInContract.SideEffect, SignInContract.Event>() {
 
     override fun createInitialState(): SignInContract.SignInState {
         return SignInContract.SignInState()
     }
 
-    override fun handleEvent(event: UiEvent) {
+    override fun handleEvent(event: SignInContract.Event) {
         when (event) {
             is SignInContract.Event.OnUsernameChanged -> {
-                setState(currentState.copy(username = event.username))
+                Log.d("ssssf", "Username Updated: ${event.username}")
+                setState { copy(username = event.username) }
             }
             is SignInContract.Event.OnPasswordChanged -> {
-                setState(currentState.copy(password = event.password))
+                setState { copy(password = event.password) }
             }
             is SignInContract.Event.OnPasswordVisibilityToggle -> {
-                setState(currentState.copy(isPassWordVisibility = !currentState.isPassWordVisibility))
+                setState { copy(isPassWordVisibility = !currentState.isPassWordVisibility) }
             }
             is SignInContract.Event.OnSignInButtonClicked -> {
                 val isUserNameValid = currentState.username.isValidLength()
@@ -38,12 +38,12 @@ class SignInViewModel @Inject constructor(
 
                 when {
                     !isUserNameValid -> {
-                        setState(currentState.copy(loginStatus = SignInContract.SignInStatus.FAILURE))
-                        setEffect(SignInContract.Effect.ShowToast("이름이 8자 이상입니다!"))
+                        setState { copy(loginStatus = SignInContract.SignInStatus.FAILURE) }
+                        setSideEffect(SignInContract.SideEffect.ShowToast("이름이 8자 이상입니다!"))
                     }
                     !isPasswordValid -> {
-                        setState(currentState.copy(loginStatus = SignInContract.SignInStatus.FAILURE))
-                        setEffect(SignInContract.Effect.ShowToast("비밀번호가 8자 이상입니다!"))
+                        setState { copy(loginStatus = SignInContract.SignInStatus.FAILURE) }
+                        setSideEffect(SignInContract.SideEffect.ShowToast("비밀번호가 8자 이상입니다!"))
                     }
                     else -> {
                         viewModelScope.launch {
@@ -54,12 +54,12 @@ class SignInViewModel @Inject constructor(
                                 )
                             )
                             result.onSuccess {
-                                setState(currentState.copy(loginStatus = SignInContract.SignInStatus.SUCCESS))
-                                setEffect(SignInContract.Effect.ShowToast("로그인 성공"))
+                                setState { copy(loginStatus = SignInContract.SignInStatus.SUCCESS) }
+                                setSideEffect(SignInContract.SideEffect.ShowToast("로그인 성공"))
 
                             }.onFailure { exception ->
-                                setState(currentState.copy(loginStatus = SignInContract.SignInStatus.FAILURE))
-                                setEffect(SignInContract.Effect.ShowToast("로그인 실패: ${exception.message}"))
+                                setState { copy(loginStatus = SignInContract.SignInStatus.FAILURE) }
+                                setSideEffect(SignInContract.SideEffect.ShowToast("로그인 실패: ${exception.message}"))
                             }
                         }
                     }
@@ -67,7 +67,5 @@ class SignInViewModel @Inject constructor(
             }
         }
     }
-
-    override fun handleEffect(effect: UiEffect) { }
 
 }
