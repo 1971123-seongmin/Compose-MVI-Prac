@@ -68,13 +68,17 @@ fun MainScreen(
                     navigateToHome = { navigator.navigateSignInToHome() }
                 )
                 signUpGraph(
-                    navHostController = navigator.navHostController
+                    navHostController = navigator.navHostController,
                 )
                 homeNavGraph(
                     navHostController = navigator.navHostController,
                 )
-                searchNavGraph()
-                myPageNavGraph()
+                searchNavGraph(
+                    navHostController = navigator.navHostController,
+                )
+                myPageNavGraph(
+                    navHostController = navigator.navHostController,
+                )
             }
         }
     }
