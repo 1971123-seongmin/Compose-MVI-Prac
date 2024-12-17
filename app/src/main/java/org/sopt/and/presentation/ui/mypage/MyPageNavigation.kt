@@ -8,14 +8,14 @@ import org.sopt.and.core.navigation.MainBottomNavigation
 
 fun NavController.navigateMyPage(navOptions: NavOptions? = null) {
     navigate(
-        route = MainBottomNavigation.MyPAGE::class.simpleName.orEmpty(),
+        route = MainBottomNavigation.MY::class.simpleName.orEmpty(),
         navOptions = navOptions
     )
 }
 
 fun NavGraphBuilder.myPageNavGraph(
 ) {
-    composable<MainBottomNavigation.MyPAGE> {
+    composable<MainBottomNavigation.MY> {
         MyPageRoute()
     }
 }

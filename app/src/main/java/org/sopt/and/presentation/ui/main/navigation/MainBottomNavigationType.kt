@@ -25,7 +25,7 @@ enum class MainBottomNavigationType(
     MyPAGE(
         title = R.string.bottom_my_title,
         icon = R.drawable.ic_navi_profile,
-        route = MainBottomNavigation.MyPAGE,
+        route = MainBottomNavigation.MY,
     ), ;
 
     companion object {

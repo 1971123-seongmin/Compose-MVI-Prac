@@ -44,7 +44,7 @@ class MainNavigator(
         }.let { navOptions ->
             when (bottomNavi) {
                 MainBottomNavigation.HOME -> navHostController.navigateHome(navOptions)
-                MainBottomNavigation.MyPAGE -> navHostController.navigateSearch(navOptions)
+                MainBottomNavigation.MY -> navHostController.navigateSearch(navOptions)
                 MainBottomNavigation.SEARCH -> navHostController.navigateMyPage(navOptions)
             }
         }
