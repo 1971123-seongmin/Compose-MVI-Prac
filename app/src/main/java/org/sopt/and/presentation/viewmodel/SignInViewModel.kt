@@ -1,6 +1,5 @@
 package org.sopt.and.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -23,7 +22,6 @@ class SignInViewModel @Inject constructor(
     override fun handleEvent(event: SignInContract.Event) {
         when (event) {
             is SignInContract.Event.OnUsernameChanged -> {
-                Log.d("ssssf", "Username Updated: ${event.username}")
                 setState { copy(username = event.username) }
             }
             is SignInContract.Event.OnPasswordChanged -> {
