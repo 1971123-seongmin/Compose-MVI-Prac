@@ -21,14 +21,14 @@ fun SignInRoute (
     viewModel: SignInViewModel = hiltViewModel()
 ) {
     val signInState by viewModel.uiState.collectAsStateWithLifecycle()
-    val signInEffect = viewModel.effect
+    val signInSideEffect = viewModel.sideEffect
     val context = LocalContext.current
 
-    LaunchedEffect(signInEffect) {
-        signInEffect.collect {
-            when(it) {
-                is SignInContract.Effect.ShowToast -> {
-                    context.showToastMessage(it.message)
+    LaunchedEffect(signInSideEffect) {
+        signInSideEffect.collect { sideEffect ->
+            when(sideEffect) {
+                is SignInContract.SideEffect.ShowToast -> {
+                    context.showToastMessage(sideEffect.message)
                 }
             }
         }

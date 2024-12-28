@@ -20,14 +20,14 @@ fun SignUpRoute(
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val signUpState by viewModel.uiState.collectAsStateWithLifecycle()
-    val signupEffect = viewModel.effect
+    val signupSideEffect = viewModel.sideEffect
     val context = LocalContext.current
 
-    LaunchedEffect(signupEffect) {
-        signupEffect.collect {
-            when(it) {
-                is SignUpContract.Effect.ShowToast -> {
-                    context.showToastMessage(it.message)
+    LaunchedEffect(signupSideEffect) {
+        signupSideEffect.collect { sideEffect ->
+            when(sideEffect) {
+                is SignUpContract.SideEffect.ShowToast -> {
+                    context.showToastMessage(sideEffect.message)
                 }
             }
         }
@@ -53,6 +53,7 @@ fun SignUpRoute(
         isPwdVisibility = signUpState.isPassWordVisibility,
         isPwdVisible ={ viewModel.setEvent(SignUpContract.Event.OnPasswordVisibilityToggle) },
         onSignUpBtnClick = { viewModel.setEvent(SignUpContract.Event.OnSignUpButtonClicked) },
+        navigateSignIn = navigateSignIn,
         modifier = Modifier.padding(innerPadding)
         )
     }

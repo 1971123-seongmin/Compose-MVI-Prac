@@ -12,5 +12,5 @@ sealed interface MainBottomNavigation : Route {
     data object SEARCH : MainBottomNavigation
 
     @Serializable
-    data object MyPAGE : MainBottomNavigation
+    data object MY : MainBottomNavigation
 }
