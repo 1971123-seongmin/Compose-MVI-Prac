@@ -29,6 +29,11 @@ object UseCaseModule {
 
     @Provides
     @Singleton
+    fun provideGetMyHobbyUseCase(userRepository: UserRepository): GetMyHobbyUseCase =
+        GetMyHobbyUseCase(userRepository)
+
+    @Provides
+    @Singleton
     fun provideGetLocalHomeImageUseCase(localHomeImageRepository: LocalHomeImageRepository):
             GetLocalHomeImageUseCase = GetLocalHomeImageUseCase(localHomeImageRepository)
 
