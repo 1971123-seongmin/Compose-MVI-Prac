@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AND-ANDROID"
+rootProject.name = "SOPT-Compose-MVI-Practice"
 include(":app")
  
