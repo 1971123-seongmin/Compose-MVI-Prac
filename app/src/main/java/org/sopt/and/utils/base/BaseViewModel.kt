@@ -25,11 +25,13 @@ abstract class BaseViewModel<State: UiState, SideEffect: UiSideEffect, Event: Ui
     val currentState: State
         get() = uiState.value
 
-    private val _uiEvent : MutableSharedFlow<Event> = MutableSharedFlow() // 이벤트 처리할 필요 없으면 무시됨 (구독자 없으면)
+    // 이벤트 처리할 필요 없으면 무시됨 (구독자 없으면)
+    private val _uiEvent : MutableSharedFlow<Event> = MutableSharedFlow()
     val event: SharedFlow<Event>
         get() = _uiEvent.asSharedFlow()
 
-    private val _sideEffect : MutableSharedFlow<SideEffect> = MutableSharedFlow() // 각각의 이벤트가 오직 하나의 구독자에게만 전달됨 (HotStream 임)
+    // 각각의 이벤트가 오직 하나의 구독자에게만 전달됨 (HotStream 임)
+    private val _sideEffect : MutableSharedFlow<SideEffect> = MutableSharedFlow()
     val sideEffect: Flow<SideEffect>
         get() = _sideEffect.asSharedFlow()
 
