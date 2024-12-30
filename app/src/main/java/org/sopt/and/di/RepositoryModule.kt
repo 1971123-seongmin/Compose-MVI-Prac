@@ -4,10 +4,12 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.sopt.and.data.remote.local.LocalHomeImageRepositoryImpl
 import org.sopt.and.data.remote.source.auth.AuthRepositoryImpl
 import org.sopt.and.data.remote.source.user.UserRepositoryImpl
 import org.sopt.and.domain.repository.AuthRepository
 import org.sopt.and.domain.repository.UserRepository
+import org.sopt.and.domain.repository.local.LocalHomeImageRepository
 import javax.inject.Singleton
 
 @Module
@@ -24,4 +26,12 @@ abstract class RepositoryModule {
     abstract fun bindsUserRepository(
         userRepositoryImpl: UserRepositoryImpl
     ): UserRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsLocalHomeImageRepository(
+        localHomeImageRepositoryImpl: LocalHomeImageRepositoryImpl
+    ): LocalHomeImageRepository
+
+
 }
