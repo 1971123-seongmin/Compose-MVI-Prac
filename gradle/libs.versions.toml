@@ -17,6 +17,7 @@ coroutines="1.8.1"
 datastorePreferences = "1.1.1"
 immutable="0.3.6"
 okhttp = "4.11.0"
+orbitCore = "9.0.0"
 retrofit = "2.9.0"
 retrofitKotlinSerializationConverter = "1.0.0"
 hilt_navigation = "1.0.0"
@@ -53,6 +54,9 @@ kotlinx-coroutines = { module ="org.jetbrains.kotlinx:kotlinx-coroutines-android
 okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okhttp" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor" }
+orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbitCore" }
+orbit-core = { module = "org.orbit-mvi:orbit-core", version.ref = "orbitCore" }
+orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbitCore" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-kotlin-serialization-converter = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinSerializationConverter" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
@@ -78,4 +82,9 @@ retrofit = [
     "okhttp-logging-interceptor",
     "retrofit",
     "retrofit-kotlin-serialization-converter",
+]
+orbit = [
+    "orbit-compose",
+    "orbit-core",
+    "orbit-viewmodel"
 ]

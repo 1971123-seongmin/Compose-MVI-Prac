@@ -68,6 +68,9 @@
         debugImplementation(libs.androidx.ui.tooling)
         debugImplementation(libs.androidx.ui.test.manifest)
 
+        // orbit
+        implementation(libs.bundles.orbit)
+
         // collections-immutable
         implementation (libs.kotlinx.collections.immutable)
 
