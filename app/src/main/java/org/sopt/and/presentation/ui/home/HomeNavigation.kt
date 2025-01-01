@@ -17,6 +17,6 @@ fun NavGraphBuilder.homeNavGraph(
     navHostController: NavController,
 ) {
     composable<MainBottomNavigation.HOME> {
-        HomeScreen()
+        HomeRoute()
     }
 }

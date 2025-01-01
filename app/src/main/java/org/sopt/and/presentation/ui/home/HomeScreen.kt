@@ -47,58 +47,14 @@ import org.sopt.and.core.designsystem.theme.Black
 import org.sopt.and.core.designsystem.theme.MoreDarkGray
 import org.sopt.and.core.designsystem.theme.Teal200
 import org.sopt.and.core.designsystem.theme.White
+import org.sopt.and.presentation.data.HomeData
 import org.sopt.and.presentation.type.MovieType
 
 @Composable
 fun HomeScreen(
-
+    homeData: HomeData,
+    onBannerItemClick: () -> Unit,
 ) {
-    // 영화 리스트 -> 나중에 뷰모델로 이동
-    val categories = persistentListOf(
-        MovieType.NEW_CLASSIC,
-        MovieType.DRAMA,
-        MovieType.MOVIE,
-        MovieType.ENTERTAINMENT,
-        MovieType.ANIMATION,
-        MovieType.FOREIGN_SERIES
-    )
-    val bannerList = persistentListOf(
-        R.drawable.ic_banner_poster_tracer,
-        R.drawable.ic_banner_poster_game_of_blood,
-        R.drawable.ic_banner_poster_s_f_eight
-    )
-    val postList1 = persistentListOf(
-        R.drawable.poster_madmax,
-        R.drawable.poster_zootopia,
-        R.drawable.poster_ready
-    )
-    val postList2 = persistentListOf(
-        R.drawable.poster_parasite,
-        R.drawable.poster_suicide_squad,
-        R.drawable.poster_attack
-    )
-    val postList3 = persistentListOf(
-        R.drawable.poster_chocolate,
-        R.drawable.poster_inception,
-        R.drawable.poster_sourcecode,
-        R.drawable.poster_zootopia
-    )
-
-    val postList4 = persistentListOf(
-        R.drawable.poster_spiderman3,
-        R.drawable.poster_zootopia,
-        R.drawable.poster_ready,
-        R.drawable.ic_banner_poster_tracer
-    )
-
-    val top20List = persistentListOf(
-        R.drawable.poster_inception,
-        R.drawable.poster_spiderman2,
-        R.drawable.poster_spiderman3,
-        R.drawable.poster_attack,
-        R.drawable.poster_stepup4
-    )
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -116,7 +72,7 @@ fun HomeScreen(
 
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                MovieTypeCategories(categories)
+                MovieTypeCategories(homeData.categories)
             }
 
             // 배너 포스트 이미지 (Row)
@@ -127,7 +83,7 @@ fun HomeScreen(
                         .fillMaxHeight(0.2f),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(bannerList) { banner ->
+                    items(homeData.bannerList) { banner ->
                         Image(
                             painter = painterResource(banner),
                             contentDescription = stringResource(R.string.content_desc_banner_image),
@@ -140,6 +96,7 @@ fun HomeScreen(
                                     color = MoreDarkGray,
                                     shape = RoundedCornerShape(12.dp)
                                 )
+                                .clickable { onBannerItemClick() }
                         )
                     }
                 }
@@ -147,17 +104,17 @@ fun HomeScreen(
 
             item {
                 Spacer(Modifier.height(24.dp))
-                HomeSectionWithMovieTypeList(stringResource(R.string.home_title_section_1), postList1)
+                HomeSectionWithMovieTypeList(stringResource(R.string.home_title_section_1), homeData.posterList1)
             }
 
             item {
                 Spacer(Modifier.height(24.dp))
-                HomeSectionWithMovieTypeList(stringResource(R.string.home_title_section_2), postList2)
+                HomeSectionWithMovieTypeList(stringResource(R.string.home_title_section_2), homeData.posterList2)
             }
 
             item {
                 Spacer(Modifier.height(24.dp))
-                HomeSectionWithMovieTypeList(stringResource(R.string.home_title_section_3), postList3)
+                HomeSectionWithMovieTypeList(stringResource(R.string.home_title_section_3), homeData.posterList3)
             }
 
             item {
@@ -173,7 +130,7 @@ fun HomeScreen(
                         .padding(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    itemsIndexed(top20List) { index, poster ->
+                    itemsIndexed(homeData.top20List) { index, poster ->
                         BoxOverlayImage(
                             imageRes = poster,
                             overlayText = (index + 1).toString()
@@ -184,7 +141,7 @@ fun HomeScreen(
 
             item {
                 Spacer(Modifier.height(24.dp))
-                HomeSectionWithMovieTypeList(stringResource(R.string.home_title_section_5), postList4)
+                HomeSectionWithMovieTypeList(stringResource(R.string.home_title_section_5), homeData.posterList4)
             }
         }
         HomeBottomFixView(R.string.signup_offer)
@@ -360,5 +317,8 @@ fun HomeBottomFixView(
 @Preview(showBackground = true)
 @Composable
 fun PreviewHomeScreen() {
-    HomeScreen()
+    HomeScreen(
+        homeData = HomeData(),
+        onBannerItemClick = {}
+    )
 }

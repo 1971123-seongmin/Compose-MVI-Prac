@@ -85,4 +85,5 @@
     <string name="valid_password">비밀번호는 8자 이상이어야 합니다.</string>
     <string name="valid_hobby">취미는 8자 이상이어야 합니다.. 합니다.</string>
 
+    <string name="home_success">홈 화면 연결 성공"</string>
 </resources>

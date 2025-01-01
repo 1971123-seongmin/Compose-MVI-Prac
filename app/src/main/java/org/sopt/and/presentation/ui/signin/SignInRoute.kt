@@ -35,7 +35,7 @@ fun SignInRoute (
     }
 
     LaunchedEffect(signInState.loginStatus) {
-        if (signInState.loginStatus == SignInContract.SignInStatus.SUCCESS) {
+        if (signInState.loginStatus != SignInContract.SignInStatus.SUCCESS) {
             navigateHome()
         }
     }
