@@ -1,5 +1,6 @@
 package org.sopt.and.presentation.ui.home
 
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -10,6 +11,8 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 import org.sopt.and.R
 import org.sopt.and.utils.LoadState
 import org.sopt.and.utils.showToastMessage
@@ -19,33 +22,22 @@ import timber.log.Timber
 fun HomeRoute(
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
-    val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by homeViewModel.collectAsState()
     val lifecycleOwner = LocalLifecycleOwner.current
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
+
+    // SideEffect 처리
+    homeViewModel.collectSideEffect { sideEffect ->
+        when(sideEffect) {
+            is HomeSideEffect.ShowToastMsg -> Toast.makeText(context, sideEffect.message, Toast.LENGTH_SHORT).show()
+        }
+    }
 
     // 이 Composable이 처음 생성될 때 로드되는 함수
     // 홈 데이터 로드
     LaunchedEffect(Unit) {
         homeViewModel.fetchHomeData()
-    }
-
-    // 사이드 이펙트
-    LaunchedEffect(homeViewModel.sideEffect, lifecycleOwner) {
-        homeViewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
-            .collect { homeSideEffect ->
-                when (homeSideEffect) {
-                    is HomeContract.HomeSideEffect.ShowToastMsg -> {
-                        coroutineScope.launch {
-                            context.showToastMessage(homeSideEffect.message)
-                        }
-                    }
-                }
-            }
-    }
-
-    LaunchedEffect(uiState.loadState, lifecycleOwner) {
-        //if(uiState.loadState == LoadState.Success) { }
     }
 
     when(uiState.loadState) {
@@ -59,10 +51,8 @@ fun HomeRoute(
             HomeScreen(
                 homeData = uiState.homeData,
                 onBannerItemClick = {
-                    homeViewModel.setEvent(
-                        HomeContract.HomeEvent.OnBannerItemClick(
-                            successMsg = context.getString(R.string.home_success)
-                        )
+                    homeViewModel.onBannerItemClick(
+                        successMsg = context.getString(R.string.home_success)
                     )
                 }
             )
