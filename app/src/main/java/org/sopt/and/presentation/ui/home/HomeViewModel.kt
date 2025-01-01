@@ -1,60 +1,48 @@
 package org.sopt.and.presentation.ui.home
 
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.Container
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.viewmodel.container
 import org.sopt.and.domain.usecase.local.GetLocalHomeImageUseCase
 import org.sopt.and.utils.LoadState
-import org.sopt.and.utils.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getLocalHomeImageUseCase: GetLocalHomeImageUseCase
-) : BaseViewModel<HomeContract.HomeUiState,
-        HomeContract.HomeSideEffect, HomeContract.HomeEvent>() {
+) : ContainerHost<HomeUiState, HomeSideEffect>, ViewModel() {
 
-    override fun createInitialState(): HomeContract.HomeUiState
-            = HomeContract.HomeUiState()
+    override val container: Container<HomeUiState, HomeSideEffect>
+        get() = container(initialState = HomeUiState())
 
-    override fun handleEvent(event: HomeContract.HomeEvent) {
-        when(event) {
-            is HomeContract.HomeEvent.FetchHomeData ->
-                setState {
-                    copy(loadState = event.loadState, homeData = event.newHomeData)
-                }
-            is HomeContract.HomeEvent.OnBannerItemClick ->
-                setSideEffect(
-                    HomeContract.HomeSideEffect.ShowToastMsg(message = event.successMsg)
-                )
-        }
-    }
-
-    fun fetchHomeData() {
-        viewModelScope.launch {
-            setEvent(
-                HomeContract.HomeEvent.FetchHomeData(
-                    loadState = LoadState.Loading,
-                    newHomeData = currentState.homeData
-                )
+    fun fetchHomeData() = intent {
+        reduce {
+            state.copy(
+                loadState = LoadState.Loading
             )
-            getLocalHomeImageUseCase()
-                .onSuccess { homeData ->
-                    setEvent(
-                        HomeContract.HomeEvent.FetchHomeData(
-                            loadState = LoadState.Success,
-                            newHomeData = homeData
-                        )
-                    )
-                }
-                .onFailure {
-                    setEvent(
-                        HomeContract.HomeEvent.FetchHomeData(
-                            loadState = LoadState.Error,
-                            newHomeData = currentState.homeData
-                        )
-                    )
-                }
         }
+        getLocalHomeImageUseCase()
+            .onSuccess { homeData ->
+                reduce {
+                    state.copy(
+                        loadState = LoadState.Success,
+                        homeData = homeData
+                    )
+                }
+            }
+            .onFailure {
+                reduce {
+                    state.copy(
+                        loadState = LoadState.Error,
+                    )
+                }
+            }
     }
+
+    fun onBannerItemClick(successMsg: String) = intent {
+        postSideEffect(HomeSideEffect.ShowToastMsg(message = successMsg))
+    }
+
 }
