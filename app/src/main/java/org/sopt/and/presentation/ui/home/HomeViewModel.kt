@@ -14,8 +14,9 @@ class HomeViewModel @Inject constructor(
     private val getLocalHomeImageUseCase: GetLocalHomeImageUseCase
 ) : ContainerHost<HomeUiState, HomeSideEffect>, ViewModel() {
 
-    override val container: Container<HomeUiState, HomeSideEffect>
-        get() = container(initialState = HomeUiState())
+    override val container: Container<HomeUiState, HomeSideEffect> by lazy {
+        container(initialState = HomeUiState())
+    }
 
     fun fetchHomeData() = intent {
         reduce {
