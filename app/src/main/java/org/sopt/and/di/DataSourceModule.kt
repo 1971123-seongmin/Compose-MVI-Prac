@@ -8,6 +8,8 @@ import org.sopt.and.data.remote.local.LocalHomeImageDataSource
 import org.sopt.and.data.remote.local.LocalHomeImageDataSourceImpl
 import org.sopt.and.data.remote.source.auth.AuthDataSource
 import org.sopt.and.data.remote.source.auth.AuthDataSourceImpl
+import org.sopt.and.data.remote.source.google.GoogleSignInDataSource
+import org.sopt.and.data.remote.source.google.GoogleSignInDataSourceImpl
 import org.sopt.and.data.remote.source.user.UserDataSource
 import org.sopt.and.data.remote.source.user.UserDataSourceImpl
 import javax.inject.Singleton
@@ -15,7 +17,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataSourceModule {
-
     @Binds
     @Singleton
     abstract fun bindAuthDataSource(authDataSourceImpl: AuthDataSourceImpl):
@@ -29,5 +30,12 @@ abstract class DataSourceModule {
     @Binds
     @Singleton
     abstract fun bindLocalHomeImageDataSource(localHomeDataSourceImpl: LocalHomeImageDataSourceImpl): LocalHomeImageDataSource
+
+    // GoogleSignInDataSource 추가
+    @Binds
+    @Singleton
+    abstract fun bindGoogleSignInDataSource(
+        googleSignInDataSourceImpl: GoogleSignInDataSourceImpl
+    ): GoogleSignInDataSource
 
 }

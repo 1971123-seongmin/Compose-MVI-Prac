@@ -6,9 +6,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.sopt.and.data.remote.local.LocalHomeImageRepositoryImpl
 import org.sopt.and.data.remote.source.auth.AuthRepositoryImpl
+import org.sopt.and.data.remote.source.google.GoogleSignInRepositoryImpl
 import org.sopt.and.data.remote.source.user.UserRepositoryImpl
 import org.sopt.and.domain.repository.AuthRepository
 import org.sopt.and.domain.repository.UserRepository
+import org.sopt.and.domain.repository.google.GoogleSignInRepository
 import org.sopt.and.domain.repository.local.LocalHomeImageRepository
 import javax.inject.Singleton
 
@@ -33,5 +35,11 @@ abstract class RepositoryModule {
         localHomeImageRepositoryImpl: LocalHomeImageRepositoryImpl
     ): LocalHomeImageRepository
 
+    // GoogleSignInRepository 추가
+    @Binds
+    @Singleton
+    abstract fun bindsGoogleSignInRepository(
+        googleSignInRepositoryImpl: GoogleSignInRepositoryImpl
+    ): GoogleSignInRepository
 
 }
