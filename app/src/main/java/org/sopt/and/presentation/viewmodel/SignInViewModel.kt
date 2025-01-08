@@ -6,6 +6,7 @@ import kotlinx.coroutines.launch
 import org.sopt.and.domain.model.auth.LoginUserEntity
 import org.sopt.and.domain.usecase.auth.LoginUserUseCase
 import org.sopt.and.presentation.utils.contract.SignInContract
+import org.sopt.and.utils.LoadState
 import org.sopt.and.utils.base.BaseViewModel
 import org.sopt.and.utils.isValidLength
 import javax.inject.Inject
@@ -36,11 +37,11 @@ class SignInViewModel @Inject constructor(
 
                 when {
                     !isUserNameValid -> {
-                        setState { copy(loginStatus = SignInContract.SignInStatus.FAILURE) }
+                        setState { copy(loginStatus = LoadState.Error) }
                         setSideEffect(SignInContract.SideEffect.ShowToast("이름이 8자 이상입니다!"))
                     }
                     !isPasswordValid -> {
-                        setState { copy(loginStatus = SignInContract.SignInStatus.FAILURE) }
+                        setState { copy(loginStatus = LoadState.Error) }
                         setSideEffect(SignInContract.SideEffect.ShowToast("비밀번호가 8자 이상입니다!"))
                     }
                     else -> {
@@ -52,11 +53,11 @@ class SignInViewModel @Inject constructor(
                                 )
                             )
                             result.onSuccess {
-                                setState { copy(loginStatus = SignInContract.SignInStatus.SUCCESS) }
+                                setState { copy(loginStatus = LoadState.Success) }
                                 setSideEffect(SignInContract.SideEffect.ShowToast("로그인 성공"))
 
                             }.onFailure { exception ->
-                                setState { copy(loginStatus = SignInContract.SignInStatus.FAILURE) }
+                                setState { copy(loginStatus = LoadState.Error) }
                                 setSideEffect(SignInContract.SideEffect.ShowToast("로그인 실패: ${exception.message}"))
                             }
                         }
