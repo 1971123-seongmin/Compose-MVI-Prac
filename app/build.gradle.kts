@@ -68,6 +68,11 @@
         debugImplementation(libs.androidx.ui.tooling)
         debugImplementation(libs.androidx.ui.test.manifest)
 
+        // 구글 소셜 로그인
+        implementation ("androidx.credentials:credentials:1.2.2")
+        implementation ("androidx.credentials:credentials-play-services-auth:1.2.2")
+        implementation ("androidx.credentials:credentials-play-services-auth:1.2.2")
+
         // orbit
         implementation(libs.bundles.orbit)
 
