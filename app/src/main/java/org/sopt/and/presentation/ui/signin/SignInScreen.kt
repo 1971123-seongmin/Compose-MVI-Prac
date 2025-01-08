@@ -47,6 +47,7 @@ fun SignInScreen(
     isPwdVisibility: Boolean,
     isPwdVisible: () -> Unit,
     onSignInBtnClick:() -> Unit,
+    onGoogleLoginClick:() -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -100,7 +101,7 @@ fun SignInScreen(
         RoundedButton(
             content = stringResource(R.string.signin),
             onClick = {
-                onSignInBtnClick()
+                onGoogleLoginClick()
             }
         )
 
@@ -175,6 +176,7 @@ fun PreviewSignInScreen() {
         isPwdVisibility = false,
         isPwdVisible = {},
         onSignInBtnClick = { },
+        onGoogleLoginClick = { },
         modifier = Modifier
     )
 }
