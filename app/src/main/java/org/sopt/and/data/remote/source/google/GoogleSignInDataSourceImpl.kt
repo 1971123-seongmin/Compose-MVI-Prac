@@ -1,22 +1,25 @@
 package org.sopt.and.data.remote.source.google
 
 import android.content.Context
+import android.util.Log
 import androidx.credentials.Credential
 import androidx.credentials.CredentialManager
+import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
-import androidx.credentials.exceptions.GetCredentialException
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
-import dagger.hilt.android.qualifiers.ApplicationContext
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
+import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
+import dagger.hilt.android.qualifiers.ActivityContext
 import javax.inject.Inject
 
 class GoogleSignInDataSourceImpl @Inject constructor(
     private val credentialManager: CredentialManager,
     private val googleIdOption: GetGoogleIdOption,
-    @ApplicationContext private val context: Context
+    @ActivityContext private val context: Context
 ) : GoogleSignInDataSource {
 
     override suspend fun signIn(): Result<Credential> {
-        return try {
+        return runCatching {
             // Credential 요청 생성
             val request = GetCredentialRequest.Builder()
                 .addCredentialOption(googleIdOption) // 주입된 옵션 사용
@@ -28,13 +31,34 @@ class GoogleSignInDataSourceImpl @Inject constructor(
                 context = context
             )
 
-            // 응답에서 Credential 추출
-            val credential = response.credential as? Credential
-                ?: throw IllegalStateException("Credential not found in the response")
-
-            Result.success(credential)
-        } catch (e: GetCredentialException) {
-            Result.failure(e)
+            // 응답에서 Credential 추출 및 타입 확인
+            when (val credential = response.credential) {
+                is CustomCredential -> {
+                    if (credential.type == GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+                        try {
+                            val googleIdCredential = GoogleIdTokenCredential
+                                .createFrom(credential.data) // ID Token 데이터 추출
+                            Log.d("GoogleSignIn", "Google ID Token: ${googleIdCredential.idToken}")
+                            Result.success(credential)
+                        } catch (e: GoogleIdTokenParsingException) {
+                            Log.e("GoogleSignIn", "Invalid Google ID Token response", e)
+                            throw e // 예외를 다시 던져 실패 처리
+                        }
+                    } else {
+                        Log.w("GoogleSignIn", "Unsupported credential type: ${credential.type}")
+                        throw IllegalStateException("Unsupported credential type")
+                    }
+                }
+                else -> {
+                    Log.e("GoogleSignIn", "Unknown credential type: ${credential::class.simpleName}")
+                    throw IllegalStateException("Unknown credential type")
+                }
+            }
+        }.getOrElse { throwable ->
+            // 실패 처리
+            Log.e("GoogleSignIn", "Error during sign-in: ${throwable.localizedMessage}", throwable)
+            Result.failure(throwable)
         }
     }
+
 }
