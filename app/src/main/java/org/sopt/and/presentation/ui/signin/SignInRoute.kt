@@ -1,5 +1,10 @@
 package org.sopt.and.presentation.ui.signin
 
+import android.app.Activity
+import android.content.Intent
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -11,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.sopt.and.presentation.GoogleSignInActivity
 import org.sopt.and.presentation.utils.contract.SignInContract
 import org.sopt.and.presentation.viewmodel.GoogleSignInViewModel
 import org.sopt.and.presentation.viewmodel.SignInViewModel
@@ -58,6 +64,20 @@ fun SignInRoute (
         }
     }
 
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // 성공적으로 종료
+            val success = result.data?.getStringExtra("success")
+            Log.d("구글로그인11", "구글로그인 successful with token")
+        } else {
+            // 실패 또는 취소
+            val error = result.data?.getStringExtra("error")
+            Log.e("구글로그인11", "SignIn failed: $error")
+        }
+    }
+
     Scaffold (
         modifier = Modifier
             .fillMaxSize()
@@ -71,7 +91,10 @@ fun SignInRoute (
             isPwdVisibility = signInState.isPassWordVisibility,
             isPwdVisible ={ viewModel.setEvent(SignInContract.Event.OnPasswordVisibilityToggle) },
             onSignInBtnClick = { viewModel.setEvent(SignInContract.Event.OnSignInButtonClicked) },
-            onGoogleLoginClick = { googleSignInViewModel.googleLogin() }, // Google 로그인 클릭 처리
+            onGoogleLoginClick = {
+                val intent = Intent(context, GoogleSignInActivity::class.java)
+                launcher.launch(intent)
+            },
             modifier = Modifier.padding(innerPadding)
         )
     }
