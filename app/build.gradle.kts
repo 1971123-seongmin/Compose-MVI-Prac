@@ -84,6 +84,7 @@
         // DataStore
         implementation(libs.androidx.datastore.preferences)
         implementation(libs.androidx.datastore.preferences.core)
+        implementation ("androidx.security:security-crypto-ktx:1.1.0-alpha06")
 
         // Hilt
         implementation(libs.hilt.android)
