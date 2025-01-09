@@ -1,71 +1,58 @@
 package org.sopt.and.presentation.viewmodel
 
-import android.util.Log
+import androidx.credentials.Credential
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.runBlocking
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
-import org.sopt.and.domain.usecase.google.GoogleLoginUseCase
+import org.sopt.and.domain.repository.google.GoogleSignInRepository
 import org.sopt.and.presentation.utils.contract.SignInContract
-import org.sopt.and.utils.LoadState
 import javax.inject.Inject
 
 @HiltViewModel
 class GoogleSignInViewModel @Inject constructor(
-    private val googleLoginUseCase: GoogleLoginUseCase
-) : ContainerHost<SignInContract.SignInState, SignInContract.SideEffect>, ViewModel() {
 
+) : ContainerHost<SignInContract.SignInState, SignInContract.SideEffect>, ViewModel() {
     override val container: Container<SignInContract.SignInState, SignInContract.SideEffect> =
         container(initialState = SignInContract.SignInState())
 
-    fun googleLogin() = intent {
-        // 상태를 IDLE로 초기화
-        reduce {
-            state.copy(
-                loginStatus = LoadState.Loading
-            )
-        }
+    // orbit에서 이런식으로 함수를 구성하는게 맞을까요??
+    // 구글로그인 함수 요청 외에 상태를 바꾸는 부분, 사이드 이펙트를 정의하는 부분이 함께 있어서 잘못된 것 같습니다
+//    fun googleLogin(googleSignInRepository: GoogleSignInRepository) = intent {
+//        // 상태를 IDLE로 초기화
+//        reduce {
+//            state.copy(
+//                loginStatus = LoadState.Loading
+//            )
+//        }
+//
+//        // Google 로그인 서버에 요청을 보냄
+//        googleSignInRepository.signIn()
+//            .onSuccess { credential ->
+//                reduce {
+//                    state.copy(
+//                        loginStatus = LoadState.Success
+//                    )
+//                }
+//                // 성공 시 부수 효과로 토스트 메시지 표시
+//                postSideEffect(SignInContract.SideEffect.ShowToast("Login successful: ${credential}"))
+//            }
+//            .onFailure { exception ->
+//                reduce {
+//                    state.copy(
+//                        loginStatus = LoadState.Error
+//                    )
+//                }
+//                // 실패 시 부수 효과로 에러 메시지 표시
+//                postSideEffect(SignInContract.SideEffect.ShowToast("Login failed: ${exception.message}"))
+//            }
+//    }
 
-        // Google 로그인 유스케이스 호출
-        googleLoginUseCase()
-            .onSuccess { credential ->
-                Log.d("GoogleSignIn", "Login successful: Credential ID = ${credential}")
-                reduce {
-                    state.copy(
-                        loginStatus = LoadState.Success
-                    )
-                }
-                // 성공 시 부수 효과로 토스트 메시지 표시
-                postSideEffect(SignInContract.SideEffect.ShowToast("Login successful: ${credential}"))
-            }
-            .onFailure { exception ->
-                Log.e("GoogleSignIn", "Login failed", exception)
-                reduce {
-                    state.copy(
-                        loginStatus = LoadState.Error
-                    )
-                }
-                // 실패 시 부수 효과로 에러 메시지 표시
-                postSideEffect(SignInContract.SideEffect.ShowToast("Login failed: ${exception.message}"))
-            }
-    }
-
-    fun onUsernameChanged(username: String) = intent {
-        reduce {
-            state.copy(username = username)
+    // 구글 로그인 임시 액티비티 실행되도록 하는 목적의 함수
+    fun googleLogin(googleSignInRepository: GoogleSignInRepository): Result<Credential> =
+        runBlocking {
+            googleSignInRepository.signIn()
         }
-    }
-
-    fun onPasswordChanged(password: String) = intent {
-        reduce {
-            state.copy(password = password)
-        }
-    }
-
-    fun onPasswordVisibilityToggle() = intent {
-        reduce {
-            state.copy(isPassWordVisibility = !state.isPassWordVisibility)
-        }
-    }
 }
