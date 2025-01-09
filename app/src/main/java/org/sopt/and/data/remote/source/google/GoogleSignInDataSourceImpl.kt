@@ -10,6 +10,7 @@ import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException
 import dagger.hilt.android.qualifiers.ActivityContext
+import timber.log.Timber
 import javax.inject.Inject
 
 class GoogleSignInDataSourceImpl @Inject constructor(
@@ -17,6 +18,8 @@ class GoogleSignInDataSourceImpl @Inject constructor(
     private val googleIdOption: GetGoogleIdOption,
     @ActivityContext private val context: Context
 ) : GoogleSignInDataSource {
+
+    val tag = "구글로그인11"
 
     override suspend fun signIn(): Result<Credential> {
         return runCatching {
@@ -38,25 +41,25 @@ class GoogleSignInDataSourceImpl @Inject constructor(
                         try {
                             val googleIdCredential = GoogleIdTokenCredential
                                 .createFrom(credential.data) // ID Token 데이터 추출
-                            Log.d("GoogleSignIn", "Google ID Token: ${googleIdCredential.idToken}")
+                            Timber.tag(tag).d("Google ID Token: ${googleIdCredential.idToken}")
                             Result.success(credential)
                         } catch (e: GoogleIdTokenParsingException) {
-                            Log.e("GoogleSignIn", "Invalid Google ID Token response", e)
+                            Timber.tag(tag).e(e, "Invalid Google ID Token response")
                             throw e // 예외를 다시 던져 실패 처리
                         }
                     } else {
-                        Log.w("GoogleSignIn", "Unsupported credential type: ${credential.type}")
+                        Timber.tag(tag).w("Unsupported credential type: ${credential.type}")
                         throw IllegalStateException("Unsupported credential type")
                     }
                 }
                 else -> {
-                    Log.e("GoogleSignIn", "Unknown credential type: ${credential::class.simpleName}")
+                    Timber.tag(tag).e("Unknown credential type: ${credential::class.simpleName}")
                     throw IllegalStateException("Unknown credential type")
                 }
             }
         }.getOrElse { throwable ->
             // 실패 처리
-            Log.e("GoogleSignIn", "Error during sign-in: ${throwable.localizedMessage}", throwable)
+            Timber.tag(tag).e(throwable, "Error during sign-in: ${throwable.localizedMessage}")
             Result.failure(throwable)
         }
     }
