@@ -5,13 +5,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
-import org.sopt.and.domain.usecase.local.GetLocalHomeImageUseCase
+import org.sopt.and.domain.repository.LocalHomeImageRepository
 import org.sopt.and.utils.LoadState
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getLocalHomeImageUseCase: GetLocalHomeImageUseCase
+    private val localHomeImageRepository: LocalHomeImageRepository
 ) : ContainerHost<HomeUiState, HomeSideEffect>, ViewModel() {
 
     override val container: Container<HomeUiState, HomeSideEffect> by lazy {
@@ -24,7 +24,7 @@ class HomeViewModel @Inject constructor(
                 loadState = LoadState.Loading
             )
         }
-        getLocalHomeImageUseCase()
+        localHomeImageRepository.getHomeData()
             .onSuccess { homeData ->
                 reduce {
                     state.copy(

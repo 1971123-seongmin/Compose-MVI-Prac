@@ -8,6 +8,8 @@ import javax.inject.Inject
 class LocalHomeImageRepositoryImpl @Inject constructor(
     private val localHomeImageDataSource: LocalHomeImageDataSource
 ) : LocalHomeImageRepository {
-    override suspend fun getHomeData(): Result<HomeData>
-            = localHomeImageDataSource.getHomeData()
+    override suspend fun getHomeData(): Result<HomeData> {
+        return localHomeImageDataSource.getHomeData()
+    }
+
 }
