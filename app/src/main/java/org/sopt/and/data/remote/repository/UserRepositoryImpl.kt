@@ -8,9 +8,10 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val userDataSource: UserDataSource
 ) : UserRepository {
-    override suspend fun getMyHobby(): Result<MyHobbyEntity> =
-        runCatching {
+    override suspend fun getMyHobby(): Result<MyHobbyEntity> {
+        return runCatching {
             userDataSource.getMyHobby().result.mapperToMyHobbyEntity()
         }
+    }
 
 }
