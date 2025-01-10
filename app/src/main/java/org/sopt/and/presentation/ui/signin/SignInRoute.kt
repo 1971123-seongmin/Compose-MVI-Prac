@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.sopt.and.presentation.GoogleSignInActivity
+import org.sopt.and.domain.repository.google.GoogleSignInRepository
 import org.sopt.and.presentation.utils.contract.SignInContract
 import org.sopt.and.presentation.viewmodel.GoogleSignInViewModel
 import org.sopt.and.presentation.viewmodel.SignInViewModel
@@ -27,6 +27,7 @@ import org.sopt.and.utils.showToastMessage
 fun SignInRoute (
     navigateSignUp: () -> Unit,
     navigateHome: () -> Unit,
+    googleSignInRepository: GoogleSignInRepository,
     viewModel: SignInViewModel = hiltViewModel(),
     googleSignInViewModel: GoogleSignInViewModel = hiltViewModel() // GoogleSignInViewModel 추가
 ) {
@@ -64,20 +65,6 @@ fun SignInRoute (
         }
     }
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            // 성공적으로 종료
-            val success = result.data?.getStringExtra("success")
-            Log.d("구글로그인11", "구글로그인 successful with token")
-        } else {
-            // 실패 또는 취소
-            val error = result.data?.getStringExtra("error")
-            Log.e("구글로그인11", "SignIn failed: $error")
-        }
-    }
-
     Scaffold (
         modifier = Modifier
             .fillMaxSize()
@@ -92,8 +79,7 @@ fun SignInRoute (
             isPwdVisible ={ viewModel.setEvent(SignInContract.Event.OnPasswordVisibilityToggle) },
             onSignInBtnClick = { viewModel.setEvent(SignInContract.Event.OnSignInButtonClicked) },
             onGoogleLoginClick = {
-                val intent = Intent(context, GoogleSignInActivity::class.java)
-                launcher.launch(intent)
+                googleSignInViewModel.googleLogin(googleSignInRepository)
             },
             modifier = Modifier.padding(innerPadding)
         )
