@@ -1,4 +1,4 @@
-package org.sopt.and.di
+package org.sopt.and.di.api
 
 import dagger.Module
 import dagger.Provides
@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.sopt.and.data.api.AuthApi
 import org.sopt.and.data.api.UserApi
+import org.sopt.and.di.network.NetworkModule
 import retrofit2.Retrofit
 import javax.inject.Singleton
 

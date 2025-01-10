@@ -1,4 +1,4 @@
-package org.sopt.and.di
+package org.sopt.and.di.datastore
 
 import android.content.Context
 import dagger.Module

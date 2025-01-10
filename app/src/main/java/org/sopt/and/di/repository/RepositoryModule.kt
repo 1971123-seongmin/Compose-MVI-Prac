@@ -1,4 +1,4 @@
-package org.sopt.and.di
+package org.sopt.and.di.repository
 
 import dagger.Binds
 import dagger.Module

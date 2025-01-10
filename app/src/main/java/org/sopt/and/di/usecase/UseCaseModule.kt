@@ -1,4 +1,4 @@
-package org.sopt.and.di
+package org.sopt.and.di.usecase
 
 import dagger.Module
 import dagger.Provides
