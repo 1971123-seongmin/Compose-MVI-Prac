@@ -16,7 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
-
     @Provides
     @Singleton
     fun provideRegisterUseCase(authRepository: AuthRepository): RegisterUserUseCase =

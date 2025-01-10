@@ -33,5 +33,4 @@ abstract class RepositoryModule {
         localHomeImageRepositoryImpl: LocalHomeImageRepositoryImpl
     ): LocalHomeImageRepository
 
-
 }

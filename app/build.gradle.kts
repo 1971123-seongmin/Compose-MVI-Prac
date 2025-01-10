@@ -26,6 +26,8 @@
 
             testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
             buildConfigField("String", "BASE_SERVER_URL", properties["BASE_SERVER_URL"].toString())
+            buildConfigField("String", "GOOGLE_CLIENT_ID", properties["GOOGLE_CLIENT_ID"].toString())
+
         }
 
         buildTypes {
@@ -68,6 +70,11 @@
         debugImplementation(libs.androidx.ui.tooling)
         debugImplementation(libs.androidx.ui.test.manifest)
 
+        // 구글 소셜 로그인
+        implementation ("androidx.credentials:credentials:1.2.2")
+        implementation ("androidx.credentials:credentials-play-services-auth:1.2.2")
+        implementation ("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+
         // orbit
         implementation(libs.bundles.orbit)
 
@@ -77,6 +84,7 @@
         // DataStore
         implementation(libs.androidx.datastore.preferences)
         implementation(libs.androidx.datastore.preferences.core)
+        implementation ("androidx.security:security-crypto-ktx:1.1.0-alpha06")
 
         // Hilt
         implementation(libs.hilt.android)

@@ -3,6 +3,7 @@ package org.sopt.and.presentation.utils.contract
 import org.sopt.and.presentation.utils.UiSideEffect
 import org.sopt.and.presentation.utils.UiEvent
 import org.sopt.and.presentation.utils.UiState
+import org.sopt.and.utils.LoadState
 
 class SignInContract {
 
@@ -21,7 +22,7 @@ class SignInContract {
         val username: String = "",
         val password: String = "",
         var isPassWordVisibility: Boolean = false,
-        val loginStatus: SignInStatus = SignInStatus.IDLE
+        val loginStatus: LoadState = LoadState.Idle
     ) : UiState
 
     sealed class SideEffect : UiSideEffect {
