@@ -1,9 +1,9 @@
 package org.sopt.and.presentation.viewmodel
 
-import androidx.credentials.Credential
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
@@ -51,8 +51,9 @@ class GoogleSignInViewModel @Inject constructor(
 //    }
 
     // 구글 로그인 임시 액티비티 실행되도록 하는 목적의 함수
-    fun googleLogin(googleSignInRepository: GoogleSignInRepository): Result<Credential> =
-        runBlocking {
+    fun googleLogin(googleSignInRepository: GoogleSignInRepository) {
+        viewModelScope.launch {
             googleSignInRepository.signIn()
         }
+    }
 }
