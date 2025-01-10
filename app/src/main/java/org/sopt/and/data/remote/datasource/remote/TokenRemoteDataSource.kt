@@ -1,4 +1,4 @@
-package org.sopt.and.data.remote.datasource.google
+package org.sopt.and.data.remote.datasource.remote
 
 import android.content.Context
 import androidx.credentials.Credential

@@ -1,6 +1,7 @@
-package org.sopt.and.data.remote.source.auth
+package org.sopt.and.data.remote.repository
 
 import org.sopt.and.data.mapper.AuthMapper
+import org.sopt.and.data.remote.datasource.remote.AuthDataSource
 import org.sopt.and.domain.model.auth.LoginUserEntity
 import org.sopt.and.domain.model.auth.RegisterUserEntity
 import org.sopt.and.domain.model.auth.UserIdEntity

@@ -1,4 +1,4 @@
-package org.sopt.and.domain.repository.google
+package org.sopt.and.domain.repository
 
 import androidx.credentials.Credential
 

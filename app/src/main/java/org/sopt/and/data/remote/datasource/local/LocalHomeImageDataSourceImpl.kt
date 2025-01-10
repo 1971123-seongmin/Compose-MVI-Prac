@@ -1,4 +1,4 @@
-package org.sopt.and.data.remote.local
+package org.sopt.and.data.remote.datasource.local
 
 import kotlinx.collections.immutable.persistentListOf
 import org.sopt.and.R

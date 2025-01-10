@@ -1,7 +1,7 @@
-package org.sopt.and.data.remote.local
+package org.sopt.and.domain.repository
 
 import org.sopt.and.presentation.data.HomeData
 
-interface LocalHomeImageDataSource {
+interface LocalHomeImageRepository {
     suspend fun getHomeData(): Result<HomeData>
 }

@@ -1,6 +1,6 @@
 package org.sopt.and.domain.usecase.local
 
-import org.sopt.and.domain.repository.local.LocalHomeImageRepository
+import org.sopt.and.domain.repository.LocalHomeImageRepository
 import org.sopt.and.presentation.data.HomeData
 
 class GetLocalHomeImageUseCase(

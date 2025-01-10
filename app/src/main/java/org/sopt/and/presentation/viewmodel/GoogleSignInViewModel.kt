@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
-import org.sopt.and.domain.repository.google.GoogleSignInRepository
+import org.sopt.and.domain.repository.GoogleSignInRepository
 import org.sopt.and.presentation.utils.contract.SignInContract
 import javax.inject.Inject
 

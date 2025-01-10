@@ -1,11 +1,11 @@
-package org.sopt.and.data.remote.source.auth
+package org.sopt.and.data.remote.datasource.remote
 
 import org.sopt.and.utils.base.NullableBaseResponse
 import org.sopt.and.data.model.request.UserLoginRequestDto
 import org.sopt.and.data.model.request.UserRegisterRequestDto
 import org.sopt.and.data.model.response.UserLoginResponse
 import org.sopt.and.data.model.response.UserRegisterResponse
-import org.sopt.and.data.service.AuthApi
+import org.sopt.and.data.api.AuthApi
 import javax.inject.Inject
 
 class AuthDataSourceImpl @Inject constructor(

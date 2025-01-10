@@ -1,4 +1,4 @@
-package org.sopt.and.data.service
+package org.sopt.and.data.api
 
 import org.sopt.and.utils.base.NullableBaseResponse
 import org.sopt.and.data.model.response.MyHobbyResponse
