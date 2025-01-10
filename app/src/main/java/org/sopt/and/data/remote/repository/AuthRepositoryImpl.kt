@@ -17,14 +17,15 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun registerUser(
         userEntity: RegisterUserEntity
-    ): Result<UserIdEntity> = runCatching {
-        val requestDto = AuthMapper.mapperToUserRegisterRequestDto(userEntity)
-        val response = authDataSource.registerUser(requestDto)
-        AuthMapper.mapperToUserIdEntity(response.result)
+    ): Result<UserIdEntity> {
+        return runCatching {
+            val requestDto = AuthMapper.mapperToUserRegisterRequestDto(userEntity)
+            val response = authDataSource.registerUser(requestDto)
+            AuthMapper.mapperToUserIdEntity(response.result)
+        }
     }
-
-    override suspend fun loginUser(loginUserEntity: LoginUserEntity): Result<UserTokenEntity> =
-        runCatching {
+    override suspend fun loginUser(loginUserEntity: LoginUserEntity): Result<UserTokenEntity> {
+        return runCatching {
             val requestDto = AuthMapper.mapperToUserLoginRequestDto(loginUserEntity)
             val response = authDataSource.loginUser(requestDto)
             val tokenEntity = AuthMapper.mapperToTUserTokenEntity(response.result)
@@ -32,5 +33,6 @@ class AuthRepositoryImpl @Inject constructor(
             tokenManager.saveToken(tokenEntity.token)
             tokenEntity
         }
+    }
 
 }
