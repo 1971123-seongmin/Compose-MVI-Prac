@@ -24,7 +24,7 @@ import org.sopt.and.core.designsystem.theme.Black
 import org.sopt.and.core.designsystem.theme.Gray100
 import org.sopt.and.core.designsystem.theme.White
 import org.sopt.and.core.util.NoRippleInteraction
-import org.sopt.and.domain.repository.google.GoogleSignInRepository
+import org.sopt.and.domain.repository.TokenRepository
 import org.sopt.and.presentation.ui.home.homeNavGraph
 import org.sopt.and.presentation.ui.main.navigation.MainBottomNavigationType
 import org.sopt.and.presentation.ui.main.navigation.MainNavigator
@@ -36,7 +36,7 @@ import org.sopt.and.presentation.ui.signup.navigation.signUpGraph
 @Composable
 fun MainScreen(
     navigator: MainNavigator,
-    googleSignInRepository: GoogleSignInRepository
+    googleSignInRepository: TokenRepository
 ) {
     Scaffold(
         bottomBar = {

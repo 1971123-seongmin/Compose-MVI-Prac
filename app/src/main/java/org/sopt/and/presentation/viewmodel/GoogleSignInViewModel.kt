@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.viewmodel.container
-import org.sopt.and.domain.repository.google.GoogleSignInRepository
+import org.sopt.and.domain.repository.TokenRepository
 import org.sopt.and.presentation.utils.contract.SignInContract
 import javax.inject.Inject
 
@@ -51,7 +51,7 @@ class GoogleSignInViewModel @Inject constructor(
 //    }
 
     // 구글 로그인 임시 액티비티 실행되도록 하는 목적의 함수
-    fun googleLogin(googleSignInRepository: GoogleSignInRepository) {
+    fun googleLogin(googleSignInRepository: TokenRepository) {
         viewModelScope.launch {
             googleSignInRepository.signIn()
         }

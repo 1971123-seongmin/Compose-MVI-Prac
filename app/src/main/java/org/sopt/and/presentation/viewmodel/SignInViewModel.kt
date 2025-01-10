@@ -4,7 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.sopt.and.domain.model.auth.LoginUserEntity
-import org.sopt.and.domain.usecase.auth.LoginUserUseCase
+import org.sopt.and.domain.usecase.LoginUserUseCase
 import org.sopt.and.presentation.utils.contract.SignInContract
 import org.sopt.and.utils.LoadState
 import org.sopt.and.utils.base.BaseViewModel

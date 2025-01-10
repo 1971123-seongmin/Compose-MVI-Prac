@@ -1,10 +1,5 @@
 package org.sopt.and.presentation.ui.signin
 
-import android.app.Activity
-import android.content.Intent
-import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -16,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import org.sopt.and.domain.repository.google.GoogleSignInRepository
+import org.sopt.and.domain.repository.TokenRepository
 import org.sopt.and.presentation.utils.contract.SignInContract
 import org.sopt.and.presentation.viewmodel.GoogleSignInViewModel
 import org.sopt.and.presentation.viewmodel.SignInViewModel
@@ -27,7 +22,7 @@ import org.sopt.and.utils.showToastMessage
 fun SignInRoute (
     navigateSignUp: () -> Unit,
     navigateHome: () -> Unit,
-    googleSignInRepository: GoogleSignInRepository,
+    googleSignInRepository: TokenRepository,
     viewModel: SignInViewModel = hiltViewModel(),
     googleSignInViewModel: GoogleSignInViewModel = hiltViewModel() // GoogleSignInViewModel 추가
 ) {

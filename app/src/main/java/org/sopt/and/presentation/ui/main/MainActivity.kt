@@ -6,14 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.and.core.designsystem.theme.ANDANDROIDTheme
-import org.sopt.and.domain.repository.google.GoogleSignInRepository
+import org.sopt.and.domain.repository.TokenRepository
 import org.sopt.and.presentation.ui.main.navigation.rememberMainNavigator
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject
-    lateinit var googleSignInRepository: GoogleSignInRepository
+    lateinit var googleSignInRepository: TokenRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

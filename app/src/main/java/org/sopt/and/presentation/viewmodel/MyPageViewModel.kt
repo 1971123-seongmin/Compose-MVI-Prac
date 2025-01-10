@@ -6,12 +6,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.sopt.and.domain.usecase.user.GetMyHobbyUseCase
+import org.sopt.and.domain.repository.UserRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
-    private val geyMyHobbyUseCase: GetMyHobbyUseCase
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _userHobby = MutableStateFlow<String>("")
@@ -23,7 +23,7 @@ class MyPageViewModel @Inject constructor(
 
     private fun geyMyHobby() {
         viewModelScope.launch {
-            geyMyHobbyUseCase().onSuccess {
+            userRepository.getMyHobby().onSuccess {
                 _userHobby.value = it.hobby
             }
         }
