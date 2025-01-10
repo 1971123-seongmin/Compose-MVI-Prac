@@ -6,7 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.scopes.ActivityScoped
 import org.sopt.and.data.remote.repository.GoogleSignInRepositoryImpl
-import org.sopt.and.domain.repository.GoogleSignInRepository
+import org.sopt.and.domain.repository.TokenRepository
 
 @Module
 @InstallIn(ActivityComponent::class) // ActivityScoped로 관리, 구글로그인 전용 DI
@@ -16,6 +16,6 @@ abstract class GoogleSignInRepositoryModule {
     @ActivityScoped
     abstract fun bindsGoogleSignInRepository(
         googleSignInRepositoryImpl: GoogleSignInRepositoryImpl
-    ): GoogleSignInRepository
+    ): TokenRepository
 
 }

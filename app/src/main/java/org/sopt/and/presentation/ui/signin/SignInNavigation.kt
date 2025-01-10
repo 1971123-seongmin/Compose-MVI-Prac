@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
-import org.sopt.and.domain.repository.GoogleSignInRepository
+import org.sopt.and.domain.repository.TokenRepository
 
 fun NavController.navigateSignIn(navOptions: NavOptions? = null) {
     navigate(
@@ -17,7 +17,7 @@ fun NavController.navigateSignIn(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.signInGraph(
     navigateToRegister: () -> Unit,
     navigateToHome: () -> Unit,
-    googleSignInRepository: GoogleSignInRepository
+    googleSignInRepository: TokenRepository
 ) {
     composable(SignInRoute.LOGIN_ROUTE) {
         SignInRoute(

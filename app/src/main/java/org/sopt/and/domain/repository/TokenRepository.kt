@@ -2,6 +2,6 @@ package org.sopt.and.domain.repository
 
 import androidx.credentials.Credential
 
-interface GoogleSignInRepository {
+interface TokenRepository {
     suspend fun signIn(): Result<Credential>
 }
