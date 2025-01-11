@@ -57,7 +57,7 @@ class AuthAuthenticator @Inject constructor(
             }.getOrNull()
 
             // 재발급된 토큰 추출 (실패시 삭제)
-            val tokenBody = newResponse?.body()?.refreshResponseToGoogleLogin() ?: run {
+            val tokenBody = newResponse?.body()?.refreshResponseToAuthToken() ?: run {
                 deleteUserRefreshTokenUseCase() // RefreshToken 삭제
                 goToLoginActivity()
                 return@withLock null
