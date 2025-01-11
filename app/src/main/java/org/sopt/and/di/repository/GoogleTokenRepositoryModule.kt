@@ -10,7 +10,7 @@ import org.sopt.and.domain.repository.GoogleTokenRepository
 
 @Module
 @InstallIn(ActivityComponent::class) // ActivityScoped로 관리, 구글로그인 전용 DI
-abstract class TokenRepositoryModule {
+abstract class GoogleTokenRepositoryModule {
     // GoogleSignInRepository 추가
     @Binds
     @ActivityScoped
