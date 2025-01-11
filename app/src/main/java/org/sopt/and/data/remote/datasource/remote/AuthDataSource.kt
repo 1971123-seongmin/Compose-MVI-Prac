@@ -20,10 +20,6 @@ class AuthDataSource @Inject constructor(
     suspend fun postLogin(googleLoginRequest: GoogleLoginRequest): GoogleLoginResponse {
         return authApi.postLogin(googleLoginRequest)
     }
-    // refresh Token
-    suspend fun postRefresh(refreshRequest: RefreshRequest): Response<RefreshResponse> {
-        return authApi.postRefresh(refreshRequest)
-    }
 
     suspend fun registerUser(userRegisterRequestDto: UserRegisterRequestDto): NullableBaseResponse<UserRegisterResponse> {
         return authApi.registerUser(userRegisterRequestDto)
