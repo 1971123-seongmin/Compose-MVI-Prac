@@ -11,12 +11,16 @@ import okhttp3.Route
 import org.sopt.and.data.api.AuthApi
 import org.sopt.and.data.model.request.RefreshRequest
 import org.sopt.and.data.remote.datasource.local.TokenLocalDataSource
+import org.sopt.and.domain.usecase.DeleteUserRefreshTokenUseCase
+import org.sopt.and.domain.usecase.UpdateUserRefreshTokenUseCase
 import timber.log.Timber
 import javax.inject.Inject
 
 class AuthAuthenticator @Inject constructor(
     private val context: Context,
     private val tokenLocalDataSource: TokenLocalDataSource,
+    private val updateUserRefreshTokenUseCase: UpdateUserRefreshTokenUseCase,
+    private val deleteUserRefreshTokenUseCase: DeleteUserRefreshTokenUseCase,
     private val authApi: AuthApi,
     private val maxRetry: Int = 5,
 ) : Authenticator {
@@ -30,7 +34,7 @@ class AuthAuthenticator @Inject constructor(
             Timber.e("토큰 재발급 요청 시도")
             // 지정 최대 시도 횟수를 초과하면 로그인 화면으로 이동
             if (response.responseCount() > maxRetry) {
-                tokenLocalDataSource.removeRefreshToken() // RefreshToken 삭제
+                deleteUserRefreshTokenUseCase() // RefreshToken 삭제
                 goToLoginActivity()
                 return@withLock null
             }
@@ -44,7 +48,7 @@ class AuthAuthenticator @Inject constructor(
             }.onSuccess {
                 if (!it.isSuccessful) {
                     Timber.e("Refresh API HTTP Exception : $it")
-                    tokenLocalDataSource.removeRefreshToken() // RefreshToken 삭제
+                    deleteUserRefreshTokenUseCase() // RefreshToken 삭제
                     goToLoginActivity() // 로그인 화면으로 이동
                     return@withLock null
                 }
@@ -54,14 +58,13 @@ class AuthAuthenticator @Inject constructor(
 
             // 재발급된 토큰 추출 (실패시 삭제)
             val tokenBody = newResponse?.body()?.refreshResponseToGoogleLogin() ?: run {
-                tokenLocalDataSource.removeRefreshToken() // RefreshToken 삭제
+                deleteUserRefreshTokenUseCase() // RefreshToken 삭제
                 goToLoginActivity()
                 return@withLock null
             }
 
             // 재발급된 토큰 저장 및 새 요청 생성
-            tokenLocalDataSource.saveAccessToken(tokenBody.accessToken)
-            tokenLocalDataSource.saveRefreshToken(tokenBody.refreshToken)
+            updateUserRefreshTokenUseCase(tokenBody)
             response.request.newBuilder()
                 .removeHeader("Authorization")
                 .addHeader("Authorization", "Bearer ${tokenBody.accessToken}")
