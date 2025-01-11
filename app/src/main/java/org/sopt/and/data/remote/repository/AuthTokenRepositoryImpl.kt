@@ -24,6 +24,10 @@ class AuthTokenRepositoryImpl @Inject constructor(
         return runBlocking { tokenLocalDataSource.getRefreshToken() }
     }
 
+    override suspend fun removeAccessToken() {
+        tokenLocalDataSource.removeAccessToken()
+    }
+
     override suspend fun removeRefreshToken() {
         tokenLocalDataSource.removeRefreshToken()
     }
