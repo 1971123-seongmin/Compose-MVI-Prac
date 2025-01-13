@@ -24,12 +24,13 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun postLogin(
         socialType: SocialType,
         idToken: String
-    ): AuthToken {
-        val googleLoginResponse = authDataSource.postLogin(GoogleLoginRequest(socialType, idToken))
-        // tokenLocalDataSource.saveAccessToken(googleLoginResponse.accessToken)
-        // tokenLocalDataSource.saveAccessToken(googleLoginResponse.refreshToken)
-        // 여기서 이렇게 서버에서 온 토큰을 직접 저장해야하는지 모르겠습니다..
-        return AuthToken(googleLoginResponse.accessToken, googleLoginResponse.refreshToken)
+    ): Result<Unit> {
+        return runCatching {
+            val googleLoginResponse =
+                authDataSource.postLogin(GoogleLoginRequest(socialType, idToken))
+            tokenLocalDataSource.saveAccessToken(googleLoginResponse.accessToken)
+            tokenLocalDataSource.saveRefreshToken(googleLoginResponse.refreshToken)
+        }
     }
 
     override suspend fun registerUser(
@@ -41,6 +42,7 @@ class AuthRepositoryImpl @Inject constructor(
             AuthMapper.mapperToUserIdEntity(response.result)
         }
     }
+
     override suspend fun loginUser(loginUserEntity: LoginUserEntity): Result<UserTokenEntity> {
         return runCatching {
             val requestDto = AuthMapper.mapperToUserLoginRequestDto(loginUserEntity)
@@ -51,5 +53,5 @@ class AuthRepositoryImpl @Inject constructor(
             tokenEntity
         }
     }
-
 }
+
