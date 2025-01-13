@@ -17,24 +17,21 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import org.sopt.and.BuildConfig
-import org.sopt.and.data.api.AuthApi
+import org.sopt.and.data.api.ReissueTokenApi
 import org.sopt.and.data.interceptor.AccessTokenInterceptor
 import org.sopt.and.data.remote.datasource.local.TokenLocalDataSource
 import org.sopt.and.domain.usecase.DeleteUserRefreshTokenUseCase
 import org.sopt.and.domain.usecase.UpdateUserRefreshTokenUseCase
 import org.sopt.and.utils.TokenManager
+import org.sopt.and.utils.qualifier.AuthNotRequired
+import org.sopt.and.utils.qualifier.AuthRequired
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class MainServer
 
     @Provides
     @Singleton
@@ -81,6 +78,7 @@ object NetworkModule {
 
     // 만료된 액세스 토큰이 포함된 요청이 서버에서 거부되었을 때(HTTP 401 응답)
     // 자동으로 토큰을 재발급받는 역할을 수행
+    @AuthRequired
     @Provides
     @Singleton
     fun provideRefreshInterceptor(
@@ -88,16 +86,17 @@ object NetworkModule {
         tokenLocalDataSource: TokenLocalDataSource,
         updateUserRefreshTokenUseCase: UpdateUserRefreshTokenUseCase,
         deleteUserRefreshTokenUseCase: DeleteUserRefreshTokenUseCase,
-        authApi: AuthApi,
-    ): AuthAuthenticator = AuthAuthenticator(context, tokenLocalDataSource, updateUserRefreshTokenUseCase, deleteUserRefreshTokenUseCase, authApi)
+        @AuthRequired reissueTokenApi: ReissueTokenApi
+    ): Authenticator = AuthAuthenticator(context, tokenLocalDataSource, updateUserRefreshTokenUseCase, deleteUserRefreshTokenUseCase, reissueTokenApi)
 
+    @AuthRequired
     @Provides
     @Singleton
-    fun provideOKHttpClient(
+    fun provideAuthOKHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         accessTokenInterceptor: AccessTokenInterceptor,
         authInterceptor: Interceptor,
-        refreshInterceptor: Authenticator,
+        @AuthRequired refreshInterceptor: Authenticator,
     ): OkHttpClient =
         OkHttpClient.Builder().apply {
             connectTimeout(30, TimeUnit.SECONDS)
@@ -109,12 +108,22 @@ object NetworkModule {
             authenticator(refreshInterceptor)
         }.build()
 
+    @AuthNotRequired
+    @Singleton
+    @Provides
+    fun provideOkHttpClientAuthNotRequired(
+        httpLoggingInterceptor: Interceptor,
+    ): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(httpLoggingInterceptor)
+        .build()
+
+    @AuthRequired
     @ExperimentalSerializationApi
-    @MainServer
     @Provides
     @Singleton
-    fun provideMainRetrofit(
-        okHttpClient: OkHttpClient, json: Json
+    fun provideAuthRetrofit(
+        @AuthRequired okHttpClient: OkHttpClient,
+        json: Json,
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_SERVER_URL)
@@ -122,5 +131,18 @@ object NetworkModule {
             .addConverterFactory(json.asConverterFactory((requireNotNull("application/json".toMediaTypeOrNull()))))
             .build()
     }
+
+
+    @AuthNotRequired
+    @Singleton
+    @Provides
+    fun provideRetrofitAuthNotRequired(
+        @AuthNotRequired okHttpClient: OkHttpClient,
+        json: Json,
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(BuildConfig.BASE_SERVER_URL)
+        .client(okHttpClient)
+        .addConverterFactory(json.asConverterFactory((requireNotNull("application/json".toMediaTypeOrNull()))))
+        .build()
 
 }
