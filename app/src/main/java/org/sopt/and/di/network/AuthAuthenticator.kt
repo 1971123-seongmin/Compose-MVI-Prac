@@ -8,7 +8,7 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
-import org.sopt.and.data.api.AuthApi
+import org.sopt.and.data.api.ReissueTokenApi
 import org.sopt.and.data.model.request.RefreshRequest
 import org.sopt.and.data.remote.datasource.local.TokenLocalDataSource
 import org.sopt.and.domain.usecase.DeleteUserRefreshTokenUseCase
@@ -21,8 +21,7 @@ class AuthAuthenticator @Inject constructor(
     private val tokenLocalDataSource: TokenLocalDataSource,
     private val updateUserRefreshTokenUseCase: UpdateUserRefreshTokenUseCase,
     private val deleteUserRefreshTokenUseCase: DeleteUserRefreshTokenUseCase,
-    private val authApi: AuthApi,
-    private val maxRetry: Int = 5,
+    private val reissueTokenApi: ReissueTokenApi,
 ) : Authenticator {
     private val mutex = Mutex()
 
@@ -30,21 +29,12 @@ class AuthAuthenticator @Inject constructor(
     // 액세스 토큰이 만료되면 자동으로 액세스 토큰을 재발급 요청 하는 함수
     override fun authenticate(route: Route?, response: Response): Request? = runBlocking {
         mutex.withLock {
-            Timber.e("HTTP 401 response : $response")
-            Timber.e("토큰 재발급 요청 시도")
-            // 지정 최대 시도 횟수를 초과하면 로그인 화면으로 이동
-            if (response.responseCount() > maxRetry) {
-                deleteUserRefreshTokenUseCase() // RefreshToken 삭제
-                goToLoginActivity()
-                return@withLock null
-            }
-
             // 현재 리프레시 토큰 가져오기
             val currentRefreshToken = tokenLocalDataSource.getRefreshToken() ?: ""
 
             // 토큰 재발급 API 호출
             val newResponse = runCatching {
-                authApi.postRefresh(RefreshRequest(currentRefreshToken))
+                reissueTokenApi.postRefresh(RefreshRequest(currentRefreshToken))
             }.onSuccess {
                 if (!it.isSuccessful) {
                     Timber.e("Refresh API HTTP Exception : $it")
@@ -70,16 +60,6 @@ class AuthAuthenticator @Inject constructor(
                 .addHeader("Authorization", "Bearer ${tokenBody.accessToken}")
                 .build()
         }
-    }
-
-    // 무한 재시도 방지를 위해 재시도 요청 횟수 계산
-    private fun Response.responseCount(): Int {
-        var response: Response? = this
-        var result = 1
-        while (response?.priorResponse.also { response = it } != null) {
-            result++
-        }
-        return result
     }
 
     private fun goToLoginActivity() {
