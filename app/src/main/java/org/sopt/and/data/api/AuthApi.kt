@@ -20,12 +20,6 @@ interface AuthApi {
         @Body body: GoogleLoginRequest
     ) : GoogleLoginResponse
 
-    // 액세스 토큰 재발급 API
-    @POST("/api/v1/auth/reissue")
-    suspend fun postRefresh(
-        @Body refreshRequest: RefreshRequest
-    ) : Response<RefreshResponse>
-
     @POST("/user")
     suspend fun registerUser(
         @Body body: UserRegisterRequestDto
