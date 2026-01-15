@@ -1,5 +1,5 @@
 ## Compose MVI Practice
-<p> <b>Jetpack Compose MVI</b>와 <b>Orbit MVI</b>를 구글 소셜 로그인을 공부하기 위한 프로젝트</p>
+<p> <b>Compose MVI</b>와 <b>Orbit MVI</b>, 구글 소셜 로그인을 공부하기 위한 프로젝트</p>
 
 ## 개요
 목적 : Jetpack Compose MVI, Orbit MVI, Google 소셜 로그인 학습
