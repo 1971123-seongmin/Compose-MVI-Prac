@@ -6,7 +6,7 @@ import org.sopt.and.presentation.data.HomeData
 import org.sopt.and.presentation.type.MovieType
 import javax.inject.Inject
 
-class LocalHomeImageDataSource @Inject constructor() {
+class LoadHomeImageLocalDataSource @Inject constructor() {
     private val categories = persistentListOf(
         MovieType.NEW_CLASSIC,
         MovieType.DRAMA,

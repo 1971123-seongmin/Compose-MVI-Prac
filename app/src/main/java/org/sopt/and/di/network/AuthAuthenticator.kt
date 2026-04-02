@@ -1,0 +1,73 @@
+package org.sopt.and.di.network
+
+import android.content.Context
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import okhttp3.Authenticator
+import okhttp3.Request
+import okhttp3.Response
+import okhttp3.Route
+import org.sopt.and.data.api.ReissueTokenApi
+import org.sopt.and.data.model.request.RefreshRequest
+import org.sopt.and.data.remote.datasource.local.TokenLocalDataSource
+import org.sopt.and.domain.usecase.DeleteUserRefreshTokenUseCase
+import org.sopt.and.domain.usecase.UpdateUserRefreshTokenUseCase
+import timber.log.Timber
+import javax.inject.Inject
+
+class AuthAuthenticator @Inject constructor(
+    private val context: Context,
+    private val tokenLocalDataSource: TokenLocalDataSource,
+    private val updateUserRefreshTokenUseCase: UpdateUserRefreshTokenUseCase,
+    private val deleteUserRefreshTokenUseCase: DeleteUserRefreshTokenUseCase,
+    private val reissueTokenApi: ReissueTokenApi,
+) : Authenticator {
+    private val mutex = Mutex()
+
+    // OkHttp에서 HTTP 요청이 401 상태 코드를 반환하면 호출됨
+    // 액세스 토큰이 만료되면 자동으로 액세스 토큰을 재발급 요청 하는 함수
+    override fun authenticate(route: Route?, response: Response): Request? = runBlocking {
+        mutex.withLock {
+            // 현재 리프레시 토큰 가져오기
+            val currentRefreshToken = tokenLocalDataSource.getRefreshToken() ?: ""
+
+            // 토큰 재발급 API 호출
+            val newResponse = runCatching {
+                reissueTokenApi.postRefresh(RefreshRequest(currentRefreshToken))
+            }.onSuccess {
+                if (!it.isSuccessful) {
+                    Timber.e("Refresh API HTTP Exception : $it")
+                    deleteUserRefreshTokenUseCase() // RefreshToken 삭제
+                    goToLoginActivity() // 로그인 화면으로 이동
+                    return@withLock null
+                }
+            }.onFailure {
+                Timber.e("Refresh 재발급 API 호출 에러 : ${it.message}")
+            }.getOrNull()
+
+            // 재발급된 토큰 추출 (실패시 삭제)
+            val tokenBody = newResponse?.body()?.refreshResponseToAuthToken() ?: run {
+                deleteUserRefreshTokenUseCase() // RefreshToken 삭제
+                goToLoginActivity()
+                return@withLock null
+            }
+
+            // 재발급된 토큰 저장 및 새 요청 생성
+            updateUserRefreshTokenUseCase(tokenBody)
+            response.request.newBuilder()
+                .removeHeader("Authorization")
+                .addHeader("Authorization", "Bearer ${tokenBody.accessToken}")
+                .build()
+        }
+    }
+
+    private fun goToLoginActivity() {
+//        val handler = HandlerCompat.createAsync(Looper.getMainLooper())
+//        Intent(context.applicationContext, LoginActivity::class.java).run {
+//            handler.post { context.applicationContext.showToast(context.getString(R.string.token_out_dated)) }
+//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            context.startActivity(this)
+//        }
+    }
+}
